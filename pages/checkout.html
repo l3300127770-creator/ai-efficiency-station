@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>确认下单 - AI效率站</title>
+  <meta name="description" content="扫码付款，提交邮箱后自动发货。">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .checkout-hero {
+      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+      padding: var(--space-2xl) 0 var(--space-xl);
+      text-align: center;
+    }
+    .checkout-hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: var(--space-xs); }
+    .checkout-hero p { color: var(--text-secondary); }
+    .checkout-card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-xl);
+      border: 1px solid var(--border);
+    }
+    .checkout-product-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+    .checkout-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--danger);
+      margin-bottom: var(--space-md);
+    }
+    .checkout-price .original {
+      font-size: .9rem;
+      color: var(--text-light);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+    .qr-section {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+    .qr-section h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+    .qr-grid {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .qr-item {
+      text-align: center;
+    }
+    .qr-item img {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fff;
+    }
+    .qr-item p {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      margin-top: var(--space-xs);
+      font-weight: 600;
+    }
+    .checkout-note {
+      font-size: .82rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: var(--space-md);
+      line-height: 1.6;
+    }
+    .checkout-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .checkout-steps {
+      margin-top: var(--space-xl);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .checkout-steps h3 {
+      font-size: 1.05rem;
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+    .step-item {
+      display: flex;
+      gap: var(--space-md);
+      align-items: flex-start;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .step-text h4 { font-size: .95rem; margin-bottom: 2px; }
+    .step-text p { font-size: .82rem; color: var(--text-secondary); }
+    .faq-section {
+      max-width: 520px;
+      margin: var(--space-xl) auto;
+    }
+    .faq-item {
+      margin-bottom: var(--space-md);
+    }
+    .faq-item h4 {
+      font-size: .92rem;
+      margin-bottom: var(--space-xs);
+    }
+    .faq-item p {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../articles/ai-knowledge.html">AI知识</a>
+      <a href="../pages/shop.html" class="active">商店</a>
+      <a href="../pages/recommend.html">推荐好物</a>
+      <a href="../pages/donate.html">打赏支持</a>
+      <a href="../pages/about.html">关于</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- 下单区 -->
+<section class="checkout-hero">
+  <div class="container">
+    <h1>🧾 确认下单</h1>
+    <p>扫码付款后提交信息，10分钟内发货</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="checkout-card">
+      <!-- 商品信息（JS动态填充） -->
+      <div class="checkout-product-name" id="productName">加载中...</div>
+      <div class="checkout-price" id="productPrice">¥0</div>
+
+      <!-- 收款码 -->
+      <div class="qr-section">
+        <h3>📱 扫码付款（微信 / 支付宝）</h3>
+        <div class="qr-grid">
+          <div class="qr-item">
+            <img src="../img/qrcodes/wechat-pay.png" alt="微信收款码">
+            <p>💚 微信支付</p>
+          </div>
+          <div class="qr-item">
+            <img src="../img/qrcodes/alipay.jpg" alt="支付宝收款码">
+            <p>💙 支付宝</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 付款提示 -->
+      <div class="checkout-note">
+        ⚠️ 请在付款备注中填写你的<strong>联系邮箱</strong>，便于发货<br>
+        付款金额需与上方价格一致，否则可能影响发货
+      </div>
+
+      <!-- 操作按钮 -->
+      <div class="checkout-actions">
+        <a id="formLink" href="https://form.wjx.com/vm/eOvZSHS.aspx" class="btn btn-primary btn-lg" style="justify-content:center;" target="_blank" rel="noopener noreferrer">
+          ✅ 我已付款，提交发货信息
+        </a>
+        <a href="shop.html" class="btn btn-outline btn-sm" style="justify-content:center;opacity:.7;">
+          ← 返回商店
+        </a>
+      </div>
+    </div>
+
+    <!-- 购买流程 -->
+    <div class="checkout-steps">
+      <h3>📋 购买流程</h3>
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>选择商品</h4>
+          <p>在商店页选择你需要的产品</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>扫码付款</h4>
+          <p>使用微信或支付宝扫码支付，备注填写邮箱</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>提交信息</h4>
+          <p>点击"我已付款"按钮，填写邮箱和付款截图</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h4>收到资源</h4>
+          <p>10分钟内核对完成，资源发送到你的邮箱</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 常见问题 -->
+    <div class="faq-section">
+      <h3 style="text-align:center;margin-bottom:var(--space-lg);">❓ 常见问题</h3>
+      <div class="faq-item">
+        <h4>Q：付款后多久能收到？</h4>
+        <p>通常10分钟内完成核对并发货。高峰期可能稍有延迟，最长不超过2小时。</p>
+      </div>
+      <div class="faq-item">
+        <h4>Q：付款后没收到怎么办？</h4>
+        <p>请先检查邮箱垃圾箱。如果确实没有收到，请发邮件到 1683303069@qq.com，附上付款截图，我们会尽快处理。</p>
+      </div>
+      <div class="faq-item">
+        <h4>Q：支持退款吗？</h4>
+        <p>虚拟产品一经发送，不支持退款。如有问题请联系邮箱，我们会尽力解决。</p>
+      </div>
+      <div class="faq-item">
+        <h4>Q：可以开发票吗？</h4>
+        <p>目前为个人卖家，暂不支持开票。如需报销请提前联系确认。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../articles/ai-knowledge.html">AI知识</a>
+        <a href="../pages/shop.html">商店</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="disclaimer.html">免责声明</a>
+        <a href="privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+// 从URL参数读取商品信息
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name') || '未指定商品';
+  var price = params.get('price') || '0';
+  var original = params.get('original') || '';
+  var id = params.get('id') || '';
+
+  document.getElementById('productName').textContent = '📦 ' + decodeURIComponent(name);
+
+  var priceHtml = '¥' + price;
+  if (original) priceHtml += ' <span class="original">¥' + original + '</span>';
+  document.getElementById('productPrice').innerHTML = priceHtml;
+
+
+  // 更新页面标题
+  document.title = '购买 ' + decodeURIComponent(name) + ' - AI效率站';
+})();
+</script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>

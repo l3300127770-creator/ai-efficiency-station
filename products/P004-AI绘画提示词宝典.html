@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI绘画提示词宝典</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#7c3aed;--primary-light:#a78bfa;--primary-dark:#5b21b6;--bg:#f8f7ff;--card:#fff;--text:#1e1b4b;--text-secondary:#6b7280;--border:#e5e7eb;--radius:12px;--shadow:0 2px 12px rgba(124,58,237,0.08)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:var(--primary);text-decoration:none}
+.hero{background:linear-gradient(135deg,#7c3aed 0%,#a78bfa 50%,#c4b5fd 100%);color:#fff;padding:48px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 70%,rgba(255,255,255,0.08) 0%,transparent 50%);pointer-events:none}
+.hero h1{font-size:2.2rem;font-weight:800;margin-bottom:12px;letter-spacing:1px}
+.hero p{font-size:1rem;opacity:.9;max-width:640px;margin:0 auto 20px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.2);backdrop-filter:blur(4px);border-radius:20px;padding:6px 16px;font-size:.85rem;margin-bottom:16px}
+.guide{max-width:960px;margin:-24px auto 24px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 32px;position:relative;z-index:1}
+.guide h2{font-size:1.15rem;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.guide ol{padding-left:20px}
+.guide li{margin-bottom:8px;font-size:.92rem;color:var(--text-secondary)}
+.guide li strong{color:var(--text)}
+.toolbar{max-width:1200px;margin:0 auto 20px;padding:0 16px;position:sticky;top:0;z-index:100;background:var(--bg);padding-top:12px;padding-bottom:12px}
+.toolbar-inner{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search-box{flex:1;min-width:200px;position:relative}
+.search-box input{width:100%;padding:10px 14px 10px 38px;border:2px solid var(--border);border-radius:8px;font-size:.95rem;outline:none;transition:border .2s}
+.search-box input:focus{border-color:var(--primary)}
+.search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9ca3af}
+.filter-btns{display:flex;flex-wrap:wrap;gap:6px}
+.filter-btn{padding:7px 14px;border:2px solid var(--border);border-radius:20px;background:#fff;font-size:.82rem;cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--primary-light);color:var(--primary)}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.stats{max-width:1200px;margin:0 auto 16px;padding:0 16px;display:flex;gap:16px;flex-wrap:wrap}
+.stat-card{background:var(--card);border-radius:10px;padding:14px 20px;box-shadow:var(--shadow);flex:1;min-width:140px;text-align:center}
+.stat-card .num{font-size:1.5rem;font-weight:800;color:var(--primary)}
+.stat-card .label{font-size:.78rem;color:var(--text-secondary);margin-top:2px}
+.container{max-width:1200px;margin:0 auto;padding:0 16px 40px}
+.category-section{margin-bottom:36px}
+.category-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:3px solid var(--primary)}
+.category-icon{width:36px;height:36px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem}
+.category-header h2{font-size:1.2rem;color:var(--text)}
+.category-header .count{font-size:.78rem;color:var(--text-secondary);background:var(--bg);padding:2px 10px;border-radius:12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(124,58,237,0.15)}
+.card-top{padding:18px 20px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:.7rem;padding:3px 10px;border-radius:12px;font-weight:600}
+.tag-style{background:#ede9fe;color:var(--primary)}
+.tag-tool{background:#dbeafe;color:#2563eb}
+.card-body{padding:0 20px 16px;flex:1;display:flex;flex-direction:column}
+.prompt-en{background:#f5f3ff;border-radius:8px;padding:12px 14px;font-family:"Fira Code","SF Mono","Cascadia Code","Consolas",monospace;font-size:.82rem;color:#4c1d95;line-height:1.7;margin-bottom:10px;word-break:break-all;position:relative;max-height:120px;overflow-y:auto}
+.prompt-cn{font-size:.88rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.6}
+.params{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.param-tag{font-size:.72rem;background:#f3f4f6;padding:3px 8px;border-radius:6px;color:#374151;font-family:monospace}
+.effect{font-size:.82rem;color:#059669;background:#ecfdf5;border-radius:8px;padding:8px 12px;margin-bottom:12px;line-height:1.5}
+.effect::before{content:"✨ "}
+.card-footer{padding:0 20px 16px;display:flex;gap:8px}
+.copy-btn{flex:1;padding:9px 0;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.copy-btn:hover{background:var(--primary-dark)}
+.copy-btn:active{transform:scale(.97)}
+.ref-section{max-width:1200px;margin:0 auto 40px;padding:0 16px}
+.ref-section h2{font-size:1.2rem;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ref-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.ref-table th{background:var(--primary);color:#fff;padding:12px 16px;text-align:left;font-size:.85rem;font-weight:600}
+.ref-table td{padding:10px 16px;border-bottom:1px solid var(--border);font-size:.85rem}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:hover td{background:#f5f3ff}
+.code{font-family:monospace;background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:.82rem}
+footer{background:var(--text);color:#9ca3af;text-align:center;padding:28px 20px;font-size:.82rem;line-height:1.8}
+footer a{color:var(--primary-light)}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#1e1b4b;color:#fff;padding:12px 28px;border-radius:30px;font-size:.9rem;font-weight:600;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(124,58,237,0.3);opacity:0;transition:opacity .3s;z-index:99}
+.back-top.show{opacity:1}
+@media(max-width:768px){
+  .hero h1{font-size:1.5rem}
+  .cards{grid-template-columns:1fr}
+  .guide{padding:20px 18px;margin:-20px 12px 20px}
+  .toolbar-inner{flex-direction:column}
+  .filter-btns{justify-content:flex-start}
+  .stats{flex-direction:column}
+  .stat-card{display:flex;align-items:center;gap:8px;text-align:left}
+  .stat-card .num{font-size:1.2rem}
+}
+.no-result{text-align:center;padding:60px 20px;color:var(--text-secondary);font-size:1rem}
+.no-result .icon{font-size:3rem;margin-bottom:12px}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-badge">📖 2025 最新版 · 完全免费</div>
+  <h1>🎨 AI 绘画提示词宝典</h1>
+  <p>120+ 精选提示词 · 7大风格分类 · 复制即用 · 适用 Midjourney / Stable Diffusion / DALL-E</p>
+</div>
+<div class="guide">
+  <h2>📖 使用指南</h2>
+  <ol>
+    <li><strong>选风格：</strong>在下方分类中找到你喜欢的风格（如人像摄影、动漫二次元等）</li>
+    <li><strong>挑提示词：</strong>浏览卡片，找到满意的提示词效果</li>
+    <li><strong>点复制：</strong>点击卡片底部的"复制提示词"按钮</li>
+    <li><strong>粘贴使用：</strong>打开你常用的AI绘画工具（Midjourney / SD / DALL-E），粘贴提示词即可生成</li>
+    <li><strong>微调参数：</strong>根据需要修改 <code>--ar</code>（比例）、<code>--v</code>（版本）等参数来优化效果</li>
+  </ol>
+</div>
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" name="search" id="searchInput" placeholder="搜索提示词（中英文均可）…">
+    </div>
+    <div class="filter-btns" id="filterBtns">
+      <button type="button" class="filter-btn active" data-cat="all">全部</button>
+      <button type="button" class="filter-btn" data-cat="portrait">人像摄影</button>
+      <button type="button" class="filter-btn" data-cat="landscape">风景自然</button>
+      <button type="button" class="filter-btn" data-cat="illustration">插画艺术</button>
+      <button type="button" class="filter-btn" data-cat="icon">图标设计</button>
+      <button type="button" class="filter-btn" data-cat="anime">动漫二次元</button>
+      <button type="button" class="filter-btn" data-cat="photo">写实摄影</button>
+      <button type="button" class="filter-btn" data-cat="abstract">创意抽象</button>
+    </div>
+  </div>
+</div>
+<div class="stats">
+  <div class="stat-card"><div class="num" id="totalCount">0</div><div class="label">精选提示词</div></div>
+  <div class="stat-card"><div class="num">7</div><div class="label">风格分类</div></div>
+  <div class="stat-card"><div class="num">3</div><div class="label">主流工具覆盖</div></div>
+  <div class="stat-card"><div class="num" id="visibleCount">0</div><div class="label">当前显示</div></div>
+</div>
+<div class="container" id="mainContent"></div>
+<div class="ref-section">
+  <h2>📋 常用参数速查表</h2>
+  <table class="ref-table">
+    <thead><tr><th>参数</th><th>含义</th><th>常用值</th><th>适用工具</th></tr></thead>
+    <tbody>
+      <tr><td><span class="code">--ar</span></td><td>画面比例</td><td>1:1, 4:3, 16:9, 9:16, 2:3, 3:2</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--v</span></td><td>模型版本</td><td>5.2, 6, 6.1</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--s</span></td><td>风格化程度（越高越艺术）</td><td>0~1000，默认100</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--q</span></td><td>质量（渲染精细度）</td><td>.25, .5, 1, 2</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--c</span></td><td>混乱度（越高新颖越随机）</td><td>0~100</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--style raw</span></td><td>关闭美化，更写实</td><td>raw</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--no</span></td><td>排除元素</td><td>--no text, watermark</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">--tile</span></td><td>生成可平铺图案</td><td>（无值）</td><td>Midjourney</td></tr>
+      <tr><td><span class="code">Steps</span></td><td>采样步数</td><td>20~50</td><td>Stable Diffusion</td></tr>
+      <tr><td><span class="code">CFG Scale</span></td><td>提示词引导系数</td><td>5~12</td><td>Stable Diffusion</td></tr>
+      <tr><td><span class="code">Sampler</span></td><td>采样器</td><td>DPM++ 2M, Euler a</td><td>Stable Diffusion</td></tr>
+      <tr><td><span class="code">Negative</span></td><td>反向提示词（不要什么）</td><td>blurry, low quality, watermark</td><td>SD / DALL-E</td></tr>
+      <tr><td><span class="code">Seed</span></td><td>随机种子（固定风格）</td><td>任意整数</td><td>SD / Midjourney --seed</td></tr>
+    </tbody>
+  </table>
+</div>
+<footer>
+  <p>AI 绘画提示词宝典 © 2025 | 提示词仅供学习参考，请遵守各平台使用条款</p>
+  <p>部分提示词效果受模型版本和参数影响，建议多尝试微调</p>
+</footer>
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0})">↑</button>
+<script>const PROMPTS = [
+{cat:"portrait",style:"证件照",prompt:"Professional studio headshot of a young Asian woman, clean white background, soft studio lighting, natural skin texture, wearing a navy blue blazer, neutral expression, sharp focus, high resolution, passport photo style --ar 1:1 --v 6 --s 50",cn:"年轻亚洲女性的专业影棚头像，干净白色背景，柔和影棚灯光，自然皮肤质感，穿深蓝色西装外套，中性表情，锐利对焦，高分辨率，证件照风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 50",effect:"白底证件照效果，光线均匀自然，适合求职简历、社交媒体头像等正式场景"},
+{cat:"portrait",style:"证件照",prompt:"A professional ID photo of a middle-aged man in a dark suit, white background, front-facing, symmetrical lighting, 85mm lens, ultra sharp, no shadows, corporate style --ar 3:4 --v 6",cn:"中年男子专业证件照，深色西装，白色背景，正面朝向，对称布光，85mm镜头，超清晰，无阴影，商务风格",tool:"Midjourney",params:"--ar 3:4 --v 6",effect:"商务感十足的男性证件照，适合LinkedIn、公司官网等正式用途"},
+{cat:"portrait",style:"艺术照",prompt:"Fine art portrait of a woman with flowing red hair, surrounded by wildflowers, golden hour sunlight, shallow depth of field, shot on Canon EOS R5, 85mm f/1.4, dreamy bokeh, painterly quality --ar 2:3 --v 6 --s 300",cn:"红发飘逸女性的艺术肖像，周围环绕野花，黄金时段阳光，浅景深，Canon EOS R5拍摄，85mm f/1.4，梦幻散景，油画般质感",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"如同油画般的艺术人像，光影柔和梦幻，野花和金光营造浪漫氛围"},
+{cat:"portrait",style:"艺术照",prompt:"Cinematic portrait of a man standing in the rain, dramatic side lighting, neon reflections on wet pavement, moody atmosphere, dark tones, rain droplets frozen in air, photorealistic, 35mm film grain --ar 2:3 --v 6 --s 200",cn:"雨中男子的电影感肖像，戏剧性侧光，湿漉漉路面的霓虹倒影，忧郁氛围，深色调，空中的雨滴凝固，写实风格，35mm胶片颗粒感",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 200",effect:"极具电影质感的雨中人像，霓虹色彩与雨滴营造赛博朋克氛围"},
+{cat:"portrait",style:"时尚",prompt:"High fashion editorial photo of a model wearing avant-garde geometric clothing, bold makeup, studio backdrop in pastel pink, shot by Tim Walker style, dramatic poses, fashion magazine cover quality --ar 3:4 --v 6 --s 400",cn:"穿着前卫几何设计服装的模特时尚大片，大胆妆容，粉彩色工作室背景，Tim Walker风格，戏剧性姿势，时尚杂志封面质量",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 400",effect:"杂志封面级时尚大片，前卫造型配合粉嫩背景，视觉冲击力强"},
+{cat:"portrait",style:"时尚",prompt:"Vogue magazine style portrait, elegant woman in a flowing white silk dress, pearl jewelry, soft golden backlight, garden setting, medium format film look, Hasselblad quality --ar 2:3 --v 6 --s 250",cn:"Vogue杂志风格肖像，穿白色丝绸长裙的优雅女性，珍珠饰品，柔和金色逆光，花园场景，中画幅胶片质感，哈苏画质",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 250",effect:"高级感满满的时尚人像，丝绸质感和珍珠光泽在金色光线下极为华丽"},
+{cat:"portrait",style:"古风",prompt:"Traditional Chinese beauty in hanfu dress, standing under cherry blossoms, long black hair with jade hairpin, soft ink wash painting style mixed with photography, pastel colors, ethereal atmosphere --ar 2:3 --v 6 --s 350",cn:"穿汉服的中国古典美人，站在樱花树下，乌黑长发配玉簪，水墨画风格与摄影混合，淡彩色调，空灵氛围",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 350",effect:"古风韵味浓郁的汉服人像，水墨与摄影融合，如从古画中走出的仙子"},
+{cat:"portrait",style:"古风",prompt:"A handsome ancient Chinese scholar in traditional robes, holding a bamboo scroll, standing in a bamboo forest, misty morning light, ink wash aesthetic, soft muted colors, classical Chinese painting composition --ar 2:3 --v 6 --s 300",cn:"穿传统长袍的英俊古代中国书生，手持竹简，站在竹林中，薄雾晨光，水墨美学，柔和哑光色调，古典中国画构图",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"文人气质的古风形象，竹林薄雾营造出古典诗意"},
+{cat:"portrait",style:"赛博朋克",prompt:"Cyberpunk portrait of a woman with glowing neon face paint, cybernetic implants on temple, purple and cyan color scheme, dark rainy city background, holographic reflections, futuristic, blade runner aesthetic --ar 2:3 --v 6 --s 400",cn:"赛博朋克风格女性肖像，面部霓虹彩绘发光，太阳穴处赛博植入物，紫色和青色配色，阴暗雨夜城市背景，全息反射效果，未来主义，银翼杀手美学",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 400",effect:"霓虹光影下的赛博朋克人像，紫色青色交织，充满未来科技感"},
+{cat:"portrait",style:"赛博朋克",prompt:"Futuristic portrait of a male android, exposed mechanical parts on half of the face, neon circuit patterns glowing under skin, dark background with floating data particles, ultra-detailed, sci-fi concept art --ar 2:3 --v 6 --s 500",cn:"男性仿生人的未来主义肖像，半张脸露出机械部件，皮肤下发光的霓虹电路图案，暗色背景配漂浮数据粒子，超精细，科幻概念艺术",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 500",effect:"人机融合的震撼视觉，半人半机器的赛博朋克形象极具冲击力"},
+{cat:"portrait",style:"街头",prompt:"Street style photography of a cool young man in oversized hoodie and sneakers, urban alley background, graffiti walls, golden hour lighting, candid pose, shot on 35mm lens, film grain, hip-hop culture vibe --ar 2:3 --v 6 --s 100",cn:"酷帅年轻人的街拍风格摄影，穿宽松连帽衫和运动鞋，城市巷子背景，涂鸦墙，黄金时段光线，抓拍姿势，35mm镜头，胶片颗粒感，嘻哈文化氛围",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 100",effect:"潮流街拍风格，涂鸦墙和金色光线营造随性酷感"},
+{cat:"portrait",style:"街头",prompt:"Street photography portrait of an elderly Japanese man with deep wrinkles, wearing a simple cotton jacket, standing in a narrow Tokyo alley, warm afternoon light, black and white with subtle color accents, documentary style --ar 3:4 --v 6 --s 100",cn:"日本老年男子的街头摄影肖像，深深的皱纹，穿简单棉夹克，站在东京狭窄巷道中，温暖午后光线，黑白为主配少量彩色点缀，纪实风格",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 100",effect:"充满故事感的纪实人像，皱纹和光线传达岁月的厚重感"},
+{cat:"portrait",style:"证件照",prompt:"Modern professional headshot of a young woman, gray gradient background, Rembrandt lighting, wearing a white blouse, subtle smile, studio portrait, 50mm lens, sharp details, LinkedIn style --ar 1:1 --v 6 --s 80",cn:"年轻女性的现代专业头像，灰色渐变背景，伦勃朗光，穿白色衬衫，含蓄微笑，影棚肖像，50mm镜头，清晰细节，LinkedIn风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 80",effect:"专业又亲切的商务头像，伦勃朗光打造立体感，适合社交平台"},
+{cat:"portrait",style:"时尚",prompt:"Retro 1970s fashion portrait, woman with voluminous curly hair, earth-tone clothing, warm amber light, film photography aesthetic, Kodak Portra 400 film simulation, vintage color grading --ar 2:3 --v 6 --s 200",cn:"复古1970年代时尚肖像，蓬松卷发女性，大地色调服装，暖琥珀色灯光，胶片摄影美学，柯达Portra 400胶片模拟，复古调色",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 200",effect:"70年代复古时尚感，暖色调胶片质感让人回到黄金年代"},
+{cat:"portrait",style:"街头",prompt:"Urban portrait of a young woman sitting on fire escape stairs, summer evening light, sneakers dangling, candid moment, city skyline background, warm nostalgic tones, lifestyle photography --ar 2:3 --v 6 --s 120",cn:"坐在消防楼梯上的年轻女性城市肖像，夏日傍晚光线，悬空的运动鞋，自然瞬间，城市天际线背景，温暖怀旧色调，生活风格摄影",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 120",effect:"充满生活气息的城市人像，夏日傍晚的光线温暖而怀旧"},
+{cat:"portrait",style:"艺术照",prompt:"Double exposure portrait merging a woman face with autumn forest, creative photography, translucent overlapping, warm orange and red tones, ethereal mood, artistic composite, professional quality --ar 2:3 --v 6 --s 350",cn:"女性面部与秋季森林融合的双重曝光肖像，创意摄影，半透明重叠效果，温暖橙色和红色调，空灵情绪，艺术合成，专业质量",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 350",effect:"双重曝光艺术效果，人像与自然完美融合，如梦如幻"},
+{cat:"portrait",style:"古风",prompt:"Chinese opera performer portrait, elaborate Peking opera makeup, ornate headdress with phoenix motifs, rich red and gold colors, dramatic lighting, cultural heritage art, ultra detailed embroidery on costume --ar 2:3 --v 6 --s 400",cn:"中国戏曲演员肖像，精致京剧脸妆，凤凰图案华丽头饰，浓郁的红色和金色，戏剧性灯光，文化遗产艺术，服装刺绣超精细",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 400",effect:"国粹京剧的华丽视觉，色彩浓烈、细节精美，展现传统艺术之美"},
+{cat:"portrait",style:"赛博朋克",prompt:"Portrait of a girl with holographic butterfly wings, iridescent skin, floating around in a dark void, bioluminescent particles, sci-fi fantasy blend, otherworldly beauty, digital art --ar 2:3 --v 6 --s 500",cn:"拥有全息蝴蝶翅膀的女孩肖像，彩虹色皮肤，漂浮在黑暗虚空中，生物发光粒子，科幻与奇幻融合，超凡脱俗的美，数字艺术",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 500",effect:"科幻与奇幻完美融合的超现实人像，全息翅膀和发光粒子极为梦幻"},{cat:"landscape",style:"山水",prompt:"Majestic Chinese mountain landscape, misty peaks rising above clouds, pine trees on cliff edges, traditional Chinese ink painting style with subtle color, golden morning light breaking through fog, 8K resolution --ar 16:9 --v 6 --s 300",cn:"壮丽中国山水风景，云雾缭绕的山峰，悬崖边的松树，传统中国水墨画风格带淡淡色彩，金色晨光穿透薄雾，8K分辨率",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"气势磅礴的中国山水画卷，云海与晨光交织，如诗如画"},
+{cat:"landscape",style:"山水",prompt:"Guilin karst landscape at sunrise, misty Li River reflecting limestone mountains, bamboo raft on calm water, photorealistic, vivid greens and soft pinks, aerial perspective, National Geographic quality --ar 16:9 --v 6 --s 200",cn:"日出时的桂林喀斯特地貌，薄雾中的漓江倒映石灰岩山峰，竹筏漂浮在平静水面，照片级写实，鲜绿色和柔和粉色，透视角度，国家地理级画质",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 200",effect:"桂林山水甲天下的绝美风光，晨雾和倒影构成立体层次感"},
+{cat:"landscape",style:"日落",prompt:"Breathtaking sunset over the ocean, golden and purple sky, silhouette of a lone sailboat, sun reflecting on calm water creating a golden path, volumetric clouds, panoramic view, photorealistic --ar 16:9 --v 6 --s 250",cn:"海上令人窒息的日落美景，金色和紫色的天空，一艘孤帆的剪影，太阳在平静海面上映出金色水路，体积云，全景视野，照片级写实",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 250",effect:"壮丽的海上日落，金色水面与紫色天空构成完美色彩渐变"},
+{cat:"landscape",style:"日落",prompt:"Desert sunset with dramatic orange and red sky, lone camel silhouette walking across sand dunes, long shadows, warm golden light, cinematic wide shot, sand texture visible --ar 16:9 --v 6 --s 200",cn:"沙漠日落配戏剧性橙红色天空，一头孤驼剪影穿越沙丘，长长的阴影，温暖金色光线，电影级广角镜头，可见沙地纹理",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 200",effect:"沙漠黄昏的壮美场景，骆驼剪影与沙丘纹理充满异域风情"},
+{cat:"landscape",style:"星空",prompt:"Stunning Milky Way galaxy over a mountain lake, crystal clear reflection, millions of visible stars, purple and blue nebula colors, no light pollution, long exposure photography style, ultra high detail --ar 16:9 --v 6 --s 300",cn:"山间湖泊上空令人惊叹的银河系，清澈的倒影，数百万颗可见星星，紫色和蓝色星云色彩，无光污染，长曝光摄影风格，超高细节",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"银河倒映湖面的震撼星空，紫色星云与纯净倒影堪称宇宙级美景"},
+{cat:"landscape",style:"星空",prompt:"Northern lights aurora borealis dancing over snowy Scandinavian landscape, green and purple lights in the sky, frozen lake reflecting aurora, snow-covered pine trees, magical winter night --ar 16:9 --v 6 --s 350",cn:"在斯堪的纳维亚雪景上空舞动的北极光，天空中绿色和紫色光芒，冰冻湖泊倒映极光，积雪覆盖的松树，魔幻冬夜",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"北极光与雪原的梦幻组合，绿色极光在冰湖上空舞动，宛如童话世界"},
+{cat:"landscape",style:"森林",prompt:"Enchanted ancient forest, massive moss-covered trees, sunbeams filtering through dense canopy, mist rising from the forest floor, small stream with stepping stones, fairy tale atmosphere, hyper-realistic --ar 9:16 --v 6 --s 300",cn:"魔法古老森林，巨大苔藓覆盖的树木，阳光穿透密集树冠，薄雾从森林地面升起，小溪上铺着踏脚石，童话氛围，超写实",tool:"Midjourney",params:"--ar 9:16 --v 6 --s 300",effect:"如同置身魔法森林，光束穿透迷雾营造神秘梦幻的氛围"},
+{cat:"landscape",style:"森林",prompt:"Bamboo forest in Kyoto Japan, tall green bamboo stalks creating natural archway, dappled sunlight, path leading into the distance, peaceful and serene, soft green tones, medium format photography --ar 2:3 --v 6 --s 200",cn:"日本京都竹林，高大翠绿竹竿形成天然拱门，斑驳阳光，小径延伸向远方，宁静祥和，柔和绿色调，中画幅摄影",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 200",effect:"京都竹林小径的宁静之美，绿色竹海与阳光形成治愈系画面"},
+{cat:"landscape",style:"海洋",prompt:"Crystal clear turquoise tropical ocean, underwater and above water split shot, coral reef visible below, palm trees and white sand beach above, blue sky with fluffy clouds, vibrant colors --ar 16:9 --v 6 --s 250",cn:"清澈蓝绿色热带海洋，水面上下分割镜头，下方可见珊瑚礁，上方棕榈树和白色沙滩，蓝天白云，色彩鲜艳",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 250",effect:"水面上下分割的创意构图，同时展现海面天堂与海底世界"},
+{cat:"landscape",style:"海洋",prompt:"Dramatic ocean waves crashing against rocky coastline, huge splash, moody dark storm clouds, powerful natural force, long exposure smooth water effect, black and white photography style --ar 16:9 --v 6 --s 150",cn:"戏剧性的海浪撞击岩石海岸线，巨大浪花，阴沉的暴风云，强大自然力量，长曝光丝滑水流效果，黑白摄影风格",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"大自然力量的震撼展现，黑白风格突出浪花的力度与戏剧性"},
+{cat:"landscape",style:"城市夜景",prompt:"Panoramic cityscape of Shanghai at night, Pudong skyline with Oriental Pearl Tower, neon lights reflecting on Huangpu River, long exposure light trails from boats, vibrant blue hour, ultra-wide angle --ar 21:9 --v 6 --s 200",cn:"上海夜景全景，浦东天际线与东方明珠塔，霓虹灯光倒映黄浦江上，船只长曝光光轨，鲜艳的蓝调时刻，超广角",tool:"Midjourney",params:"--ar 21:9 --v 6 --s 200",effect:"上海外滩的璀璨夜景，霓虹与光轨展现国际都市的繁华"},
+{cat:"landscape",style:"城市夜景",prompt:"Tokyo city at night seen from above, dense grid of neon-lit streets, Shibuya crossing visible, cyberpunk aesthetic, rain-wet streets reflecting colorful lights, aerial drone shot --ar 16:9 --v 6 --s 300",cn:"俯瞰东京夜景，密集的霓虹灯街道网格，可见涩谷十字路口，赛博朋克美学，雨后街道倒映五彩灯光，航拍无人机视角",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"东京夜景的赛博朋克美学，雨后霓虹倒影充满未来感"},
+{cat:"landscape",style:"山水",prompt:"Zhangjiajie national park sandstone pillars rising through clouds, aerial view, dramatic vertical rock formations, lush green vegetation, misty atmosphere, early morning golden light --ar 9:16 --v 6 --s 250",cn:"张家界国家公园砂岩石柱穿云而出，俯瞰视角，壮观的垂直岩层，郁郁葱葱的绿色植被，薄雾氛围，清晨金色光线",tool:"Midjourney",params:"--ar 9:16 --v 6 --s 250",effect:"张家界的震撼地貌，石柱穿云如仙境，阿凡达取景地的壮美"},
+{cat:"landscape",style:"日落",prompt:"Lavender field in Provence France at sunset, rows of purple flowers stretching to the horizon, warm golden sky, soft clouds, romantic atmosphere, drone perspective --ar 16:9 --v 6 --s 300",cn:"法国普罗旺斯日落时分的薰衣草田，紫色花行延伸到地平线，温暖金色天空，柔和白云，浪漫氛围，无人机视角",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"普罗旺斯薰衣草田的浪漫日落，紫色花海与金色天空构成绝美色彩"},
+{cat:"landscape",style:"星空",prompt:"Starry night sky over a lone desert Joshua tree, milky way arching overhead, red desert rocks in foreground, astrophotography composition, 30 second exposure look, vivid star colors --ar 16:9 --v 6 --s 300",cn:"荒漠中孤零零约书亚树上空的星空，银河拱形横跨天际，前景为红色沙漠岩石，天文摄影构图，30秒曝光效果，鲜明星星色彩",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"沙漠星空的经典天文摄影构图，银河与约书亚树形成标志性画面"},
+{cat:"landscape",style:"森林",prompt:"Autumn forest path covered in red and golden fallen leaves, sunlight creating light and shadow patterns, winding dirt road disappearing into the distance, magical warm atmosphere --ar 3:4 --v 6 --s 200",cn:"铺满红色和金色落叶的秋季森林小径，阳光形成光影斑驳，蜿蜒土路消失在远方，魔幻般的温暖氛围",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 200",effect:"秋日森林的温暖治愈感，落叶铺成金色地毯，光影如诗"},
+{cat:"landscape",style:"海洋",prompt:"Bioluminescent plankton lighting up a dark ocean shore, glowing blue waves crashing on sand, starry sky above, magical nighttime beach, long exposure effect, otherworldly beauty --ar 16:9 --v 6 --s 350",cn:"生物发光浮游生物照亮黑暗的海岸，发光蓝色海浪拍打沙滩，上方星空，魔幻的夜间海滩，长曝光效果，超凡脱俗之美",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"蓝色荧光海滩的奇幻夜景，发光海浪如银河落入大海"},
+{cat:"landscape",style:"城市夜景",prompt:"Hong Kong Victoria Harbour at night, dense skyscrapers lit up, Symphony of Lights show, reflections on water, wide panoramic view, colorful and vibrant, 8K ultra HD --ar 21:9 --v 6 --s 200",cn:"香港维多利亚港夜景，密集的摩天大楼灯火通明，幻彩咏香江灯光秀，水面倒影，宽幅全景，色彩缤纷，8K超高清",tool:"Midjourney",params:"--ar 21:9 --v 6 --s 200",effect:"维多利亚港的璀璨夜景，密集灯光与水面倒影展现东方之珠的繁华"},{cat:"illustration",style:"扁平插画",prompt:"Flat illustration of a cozy home office workspace, warm color palette, minimalist furniture, plant on desk, laptop and coffee mug, geometric shapes, vector art style, clean lines --ar 16:9 --v 6 --s 150",cn:"温馨家庭办公室的扁平插画，暖色调，极简家具，桌上植物、笔记本电脑和咖啡杯，几何形状，矢量艺术风格，干净线条",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"清新温暖的扁平插画，适合用于网页设计、PPT配图等场景"},
+{cat:"illustration",style:"扁平插画",prompt:"Flat vector illustration of diverse people collaborating around a table, modern office setting, vibrant blue and orange color scheme, simple geometric shapes, clean design, minimal shadows --ar 16:9 --v 6 --s 100",cn:"多元化人群围桌协作的扁平矢量插画，现代办公场景，活力蓝色和橙色配色，简单几何形状，简洁设计，少量阴影",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 100",effect:"商务感十足的扁平插画，适合企业网站、产品介绍等场景"},
+{cat:"illustration",style:"水彩",prompt:"Watercolor painting of a European countryside cottage with a flower garden, soft pastel colors, loose brush strokes, white fence, wisteria climbing walls, dreamy spring atmosphere --ar 4:3 --v 6 --s 300",cn:"欧洲乡村小屋与花园的水彩画，柔和粉彩色调，松散笔触，白色栅栏，紫藤攀爬墙面，梦幻春日氛围",tool:"Midjourney",params:"--ar 4:3 --v 6 --s 300",effect:"清新治愈的水彩风格，紫藤花与小屋构成田园诗般的画面"},
+{cat:"illustration",style:"水彩",prompt:"Watercolor illustration of a rainy Tokyo street scene, umbrellas in various colors, reflections on wet pavement, soft blurred edges, Japanese aesthetic, warm street light glow --ar 4:3 --v 6 --s 300",cn:"雨天东京街景水彩插画，五颜六色的雨伞，湿漉漉路面的倒影，柔和模糊的边缘，日本美学，温暖的路灯灯光",tool:"Midjourney",params:"--ar 4:3 --v 6 --s 300",effect:"雨中东京的浪漫水彩画，色彩柔和朦胧，充满文艺气息"},
+{cat:"illustration",style:"油画",prompt:"Oil painting of a Mediterranean coastal village at golden hour, thick impasto brush strokes, warm terracotta rooftops, turquoise sea, boats in harbor, impressionist style, rich textures --ar 16:9 --v 6 --s 400",cn:"黄金时段地中海沿海村庄油画，厚涂笔触，暖色调赤陶屋顶，蓝绿色大海，港口船只，印象派风格，丰富纹理",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 400",effect:"印象派风格的地中海风景油画，厚涂笔触展现阳光与色彩的交融"},
+{cat:"illustration",style:"油画",prompt:"Van Gogh style oil painting of a starry night over a small European town, swirling sky, bold brush strokes, deep blues and bright yellows, expressive and emotional, post-impressionist --ar 16:9 --v 6 --s 500",cn:"梵高风格的星空油画，画面是欧洲小镇上空的星空，旋转的天空，大胆笔触，深蓝色和明亮黄色，富有表现力和情感，后印象派",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 500",effect:"梵高风格的星空再现，旋转的笔触和浓烈色彩极具艺术感染力"},
+{cat:"illustration",style:"素描",prompt:"Detailed pencil sketch of a vintage pocket watch with exposed gears, mechanical engineering drawing style, cross-hatching shading, sepia tint, white background, ultra fine details --ar 1:1 --v 6 --s 200",cn:"复古怀表的精细铅笔素描，露出齿轮，机械工程制图风格，交叉排线阴影，棕褐色调，白色背景，超精细细节",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"精密的机械素描风格，齿轮和细节展现手工艺美感"},
+{cat:"illustration",style:"素描",prompt:"Architectural pencil drawing of a Gothic cathedral, detailed stone carvings, flying buttresses, dramatic perspective looking up, graphite on paper, fine line work, realistic shading --ar 3:4 --v 6 --s 250",cn:"哥特式大教堂的建筑铅笔画，精细石雕，飞扶壁，仰视戏剧性透视，纸面石墨，精细线条，写实阴影",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 250",effect:"建筑素描的精湛技艺，仰视角度展现哥特建筑的宏伟壮观"},
+{cat:"illustration",style:"漫画",prompt:"Comic book style illustration of a superhero flying over a city skyline, bold outlines, dynamic action pose, halftone dot shading, vibrant primary colors, Marvel comic aesthetic --ar 3:4 --v 6 --s 200",cn:"漫画风格插画，超级英雄飞越城市天际线，粗线条轮廓，动态动作姿势，半调网点阴影，鲜艳原色，漫威漫画美学",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 200",effect:"经典美漫风格的超级英雄画面，粗线条和网点阴影充满漫画感"},
+{cat:"illustration",style:"漫画",prompt:"Japanese manga style illustration of a samurai standing in rain, katana drawn, dramatic speed lines, black and white ink, high contrast, dynamic composition, shonen manga aesthetic --ar 3:4 --v 6 --s 250",cn:"日漫风格插画，雨中站立的武士，拔刀出鞘，戏剧性速度线，黑白墨线，高对比度，动态构图，少年漫画美学",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 250",effect:"热血少年漫画风格，速度线和高对比度营造紧张战斗氛围"},
+{cat:"illustration",style:"像素风",prompt:"Pixel art of a fantasy RPG town scene, 16-bit retro game style, colorful buildings, market stalls, NPCs walking, cherry blossom trees, vibrant sunset sky, nostalgic SNES era --ar 16:9 --v 6 --s 100",cn:"奇幻RPG小镇场景的像素画，16位复古游戏风格，彩色建筑，市场摊位，NPC行走，樱花树，活力日落天空，怀旧超任时代",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 100",effect:"复古16位游戏风格的像素画，充满怀旧感和冒险氛围"},
+{cat:"illustration",style:"像素风",prompt:"Pixel art portrait of a cyberpunk hacker character, neon green mohawk, goggles on forehead, leather jacket, dark background with matrix-style code rain, 32x32 sprite style --ar 1:1 --v 6 --s 100",cn:"赛博朋克黑客角色的像素画肖像，霓虹绿色莫西干发型，护目镜在额头上，皮夹克，矩阵风格代码雨暗色背景，32x32像素风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 100",effect:"复古像素风格的赛博朋克角色，适合做游戏头像或NFT"},
+{cat:"illustration",style:"扁平插画",prompt:"Flat design illustration of a food delivery concept, rider on scooter, city buildings in background, orange and teal color scheme, simple shapes, modern UI illustration style --ar 16:9 --v 6 --s 100",cn:"外卖配送概念的扁平设计插画，骑手骑电动车，背景城市建筑，橙色和蓝绿色配色，简单形状，现代UI插画风格",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 100",effect:"适合互联网产品的扁平插画，现代感强，可用于APP和网站"},
+{cat:"illustration",style:"水彩",prompt:"Delicate watercolor botanical illustration of a peony flower, soft pink and white petals, green leaves, detailed veins and textures, scientific illustration style, white background --ar 3:4 --v 6 --s 300",cn:"精致的牡丹花水彩植物插画，柔和粉色和白色花瓣，绿色叶子，精细的叶脉和纹理，科学插画风格，白色背景",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 300",effect:"科学植物插画风格的水彩花卉，细节精致、色调柔美"},
+{cat:"illustration",style:"油画",prompt:"Abstract expressionist oil painting, bold splashes of red, blue and gold, thick textured paint, energetic brush strokes, large canvas feel, inspired by Jackson Pollock, gallery quality --ar 4:3 --v 6 --s 500",cn:"抽象表现主义油画，大胆的红色、蓝色和金色泼溅，厚纹理颜料，充满能量的笔触，大画幅感觉，受波洛克启发，画廊品质",tool:"Midjourney",params:"--ar 4:3 --v 6 --s 500",effect:"充满能量的抽象表现主义油画，色彩碰撞和纹理极为震撼"},
+{cat:"illustration",style:"素描",prompt:"Charcoal sketch of a lion portrait, realistic animal drawing, detailed mane texture, dramatic side lighting, dark smudged background, wildlife art, expressive and powerful --ar 3:4 --v 6 --s 300",cn:"狮子肖像的炭笔素描，写实动物绘画，精细鬃毛纹理，戏剧性侧光，深色晕染背景，野生动物艺术，富有表现力和力量感",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 300",effect:"炭笔素描的力量感，狮子鬃毛的细节和光影对比令人震撼"},
+{cat:"illustration",style:"漫画",prompt:"Tintin comic book style illustration of a young explorer in a Moroccan marketplace, ligne claire clear line style, bold flat colors, detailed background architecture, adventure comic aesthetic --ar 3:4 --v 6 --s 200",cn:"丁丁历险记漫画风格插画，年轻探险家在摩洛哥市场，清晰线条风格，大胆平涂色彩，精细背景建筑，冒险漫画美学",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 200",effect:"经典欧洲漫画风格，清晰线条和平涂色彩充满复古冒险感"},
+{cat:"illustration",style:"像素风",prompt:"Pixel art scene of a cozy Japanese ramen shop at night, warm interior glow, lanterns outside, rain falling, steam rising from bowls, 16-bit game aesthetic, isometric perspective --ar 16:9 --v 6 --s 100",cn:"温馨日式拉面店夜景像素画，温暖室内灯光，室外灯笼，下雨，碗中升起蒸汽，16位游戏美学，等距视角",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 100",effect:"温暖治愈的像素画拉面店，雨夜灯光和蒸汽营造温馨氛围"},{cat:"icon",style:"App图标",prompt:"App icon design for a meditation app, gradient purple and blue background, white lotus flower symbol, minimalist style, iOS icon format, soft shadows, 3D subtle depth, clean and modern --ar 1:1 --v 6 --s 200",cn:"冥想App图标设计，渐变紫色和蓝色背景，白色莲花符号，极简风格，iOS图标格式，柔和阴影，3D微妙深度，干净现代",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"精致的冥想应用图标，紫蓝渐变与莲花传递宁静感，符合iOS设计规范"},
+{cat:"icon",style:"App图标",prompt:"App icon for a weather forecast app, white cloud against bright blue sky gradient, sun peeking from behind, rounded square shape, flat design with subtle depth, Apple style --ar 1:1 --v 6 --s 150",cn:"天气预报App图标，白色云朵在亮蓝渐变天空上，太阳从后面探出，圆角方形，扁平设计带微妙深度，苹果风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 150",effect:"清新简洁的天气App图标，蓝天白云一眼就能识别应用功能"},
+{cat:"icon",style:"Logo",prompt:"Modern minimalist logo design for a coffee brand called Brew, single continuous line forming a coffee cup with steam, black on white background, geometric, clean vectors, professional branding --ar 1:1 --v 6 --s 200",cn:"名为Brew的咖啡品牌现代极简Logo，单条连续线条组成带蒸汽的咖啡杯，白底黑线，几何形状，干净矢量，专业品牌设计",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"极简线性Logo，单线条设计高级感十足，适合咖啡品牌"},
+{cat:"icon",style:"Logo",prompt:"Geometric abstract logo for a tech startup, interconnected nodes forming letter A, gradient from electric blue to purple, dark background, futuristic and innovative, scalable vector style --ar 1:1 --v 6 --s 250",cn:"科技初创公司几何抽象Logo，互联节点组成字母A，从电光蓝到紫色渐变，暗色背景，未来主义和创新感，可缩放矢量风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"科技感十足的Logo设计，渐变节点构成字母，适合科技公司"},
+{cat:"icon",style:"徽章",prompt:"Vintage badge design for a craft brewery, circular emblem with hop and wheat illustrations, distressed texture, retro typography, copper and dark green colors, stamp style, transparent background --ar 1:1 --v 6 --s 200",cn:"精酿啤酒厂复古徽章设计，圆形徽章配啤酒花和麦穗插图，做旧纹理，复古字体，铜色和深绿色，印章风格，透明背景",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"复古做旧风格的啤酒徽章，铜色与绿色搭配充满手工精酿感"},
+{cat:"icon",style:"徽章",prompt:"Scout-style merit badge emblem, mountain and compass design, embroidered patch look, earth tones, star border, achievement award aesthetic, vintage outdoors theme --ar 1:1 --v 6 --s 200",cn:"童子军风格成就徽章，山峰和指南针设计，刺绣补丁质感，大地色调，星星边框，成就奖章美学，复古户外主题",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"经典刺绣风格的户外徽章，复古质感和大地色调充满冒险精神"},
+{cat:"icon",style:"表情包",prompt:"Cute kawaii emoji set, 3D rendered smiling face with heart eyes, pink cheeks, yellow face, smooth plastic material, soft studio lighting, universal emoji style, white background --ar 1:1 --v 6 --s 150",cn:"可爱卡哇伊表情套装，3D渲染的爱心眼笑脸，粉色脸颊，黄色面部，光滑塑料材质，柔和影棚灯光，通用表情风格，白色背景",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 150",effect:"3D质感的可爱表情，光滑塑料材质和粉色腮红充满卡哇伊感"},
+{cat:"icon",style:"表情包",prompt:"Set of pixel art emoji expressions, 8-bit retro style, happy sad angry surprised faces, bold colors, black outlines, game boy aesthetic, arranged in a 2x2 grid --ar 1:1 --v 6 --s 100",cn:"像素艺术表情套装，8位复古风格，快乐悲伤愤怒惊讶的面部，大胆色彩，黑色轮廓，Game Boy美学，2x2网格排列",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 100",effect:"复古像素风格表情包，8位游戏感十足，适合做自定义表情"},
+{cat:"icon",style:"UI元素",prompt:"Modern UI dashboard widget icons set, line icons in a consistent style, home search profile settings, purple and gray color scheme, 4 icons in a row, glass morphism style, subtle shadows --ar 16:9 --v 6 --s 150",cn:"现代UI仪表盘小部件图标套装，统一风格线条图标，首页搜索个人设置，紫色和灰色配色，4个图标一排，玻璃拟态风格，微妙阴影",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"统一风格的UI图标集，玻璃拟态设计现代感十足，可参考用于APP设计"},
+{cat:"icon",style:"UI元素",prompt:"Neumorphism style UI buttons set, soft embossed and debossed buttons in purple tones, toggle switches, sliders, modern minimal interface elements, light gray background --ar 16:9 --v 6 --s 150",cn:"新拟态风格UI按钮套装，紫色调的柔和凸起和凹陷按钮，开关，滑块，现代极简界面元素，浅灰色背景",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"新拟态风格的UI元素，柔和的凹凸效果充满质感和现代感"},
+{cat:"icon",style:"App图标",prompt:"App icon for a music streaming service, 3D gradient equalizer bars in vibrant purple and pink, dark background, glowing neon effect, sleek modern design, Apple HIG style --ar 1:1 --v 6 --s 250",cn:"音乐流媒体服务App图标，3D渐变均衡器条纹，活力紫色和粉色，暗色背景，发光霓虹效果，时尚现代设计，苹果HIG风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"炫酷的音乐App图标，霓虹均衡器在暗色背景上极具视觉冲击"},
+{cat:"icon",style:"Logo",prompt:"Monogram logo design combining letters S and J, art deco style, gold metallic finish on dark navy background, elegant symmetrical composition, luxury brand aesthetic --ar 1:1 --v 6 --s 300",cn:"S和J字母组合的字母组合Logo，装饰艺术风格，深海军蓝背景上的金色金属质感，优雅对称构图，奢侈品牌美学",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 300",effect:"Art Deco风格的奢华字母Logo，金色与海军蓝的搭配高端大气"},
+{cat:"icon",style:"徽章",prompt:"Esports team logo emblem, fierce dragon mascot, angular geometric style, red and black color scheme, shield shape, aggressive and powerful, gaming tournament badge --ar 1:1 --v 6 --s 250",cn:"电竞战队Logo徽章，凶猛的龙吉祥物，棱角几何风格，红黑配色，盾形，侵略性和力量感，游戏锦标赛徽章",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"充满力量感的电竞Logo，龙形吉祥物和红黑配色彰显战队气势"},
+{cat:"icon",style:"表情包",prompt:"Blob emoji expressions, soft rounded amorphous shapes in pastel colors, happy blob crying blob angry blob, cute minimal style, arranged in a row, white background --ar 16:9 --v 6 --s 100",cn:"Blob表情包，柔和粉彩色的圆润无定形形状，开心blob、哭泣blob、生气blob，可爱极简风格，排成一排，白色背景",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 100",effect:"软萌的Blob表情包，圆润造型和粉彩配色让人忍不住想用"},
+{cat:"icon",style:"UI元素",prompt:"iOS-style notification bell icon with badge count, red notification dot, 3D rendered, subtle gradient, glass material effect, Apple design language, isolated on white background --ar 1:1 --v 6 --s 150",cn:"iOS风格通知铃铛图标带徽章计数，红色通知点，3D渲染，微妙渐变，玻璃材质效果，苹果设计语言，白色背景独立展示",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 150",effect:"iOS风格的通知图标，3D玻璃质感和红色通知点极为逼真"},
+{cat:"icon",style:"App图标",prompt:"App icon for a fitness tracking app, running shoe in motion, gradient from orange to red, speed lines, dynamic energy, rounded square iOS icon, bold and energetic --ar 1:1 --v 6 --s 200",cn:"健身追踪App图标，运动中的跑鞋，从橙色到红色渐变，速度线，动态能量感，圆角方形iOS图标，大胆且充满活力",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"充满运动活力的App图标，橙红渐变和速度线传递运动能量"},{cat:"anime",style:"日漫",prompt:"Anime illustration of a high school girl standing on a rooftop at sunset, wind blowing through her hair, school uniform, cherry blossom petals floating, golden hour lighting, Makoto Shinkai art style, emotional atmosphere --ar 16:9 --v 6 --s 300",cn:"日漫插画，站在天台上的高中女生，夕阳西下，风吹过发丝，校服，樱花花瓣飘落，黄金时段光线，新海诚画风，情感氛围",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"新海诚风格的唯美日漫，夕阳天台与樱花构成经典日式浪漫"},
+{cat:"anime",style:"日漫",prompt:"Anime key visual of a mysterious boy with glowing blue eyes, dark cloak billowing in wind, standing on a cliff edge overlooking a vast fantasy city, dramatic clouds, epic anime art style, 4K quality --ar 16:9 --v 6 --s 350",cn:"神秘男孩的日漫主视觉图，发光蓝色眼睛，暗色斗篷在风中飘扬，站在悬崖边俯瞰广阔奇幻城市，戏剧性云彩，史诗级动漫画风，4K画质",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"史诗感十足的动漫主视觉，蓝色眼眸与壮阔城景营造王道热血感"},
+{cat:"anime",style:"国漫",prompt:"Chinese donghua style illustration of a female warrior in traditional Tang dynasty armor, red silk ribbons flowing, holding a jade sword, mountain temple background, ink wash clouds, Chinese fantasy art --ar 2:3 --v 6 --s 300",cn:"国漫风格插画，穿唐代传统盔甲的女战士，红色丝带飘扬，手持玉剑，山中寺庙背景，水墨云彩，中国奇幻艺术",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"国漫风格的古风女战士，唐甲与水墨元素展现中国奇幻美学"},
+{cat:"anime",style:"国漫",prompt:"Chinese animation style scene of a Taoist cultivator meditating on a giant lotus flower above clouds, flowing white robes, golden spiritual energy particles, celestial palace in background, xianxia aesthetic --ar 16:9 --v 6 --s 350",cn:"国漫场景，修仙者盘坐在云端巨莲花上，白色飘逸长袍，金色灵力粒子，天宫背景，仙侠美学",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"仙侠修仙的经典画面，莲花与灵力粒子完美诠释国漫仙侠美学"},
+{cat:"anime",style:"Q版",prompt:"Chibi anime character of a cute cat girl, big sparkly eyes, oversized head, tiny body, pastel pink hair with cat ears, holding a star-shaped cookie, kawaii style, simple clean lines, white background --ar 1:1 --v 6 --s 150",cn:"Q版动漫角色，可爱猫娘，大大的闪亮眼睛，大头小身，粉彩色粉色头发配猫耳，手持星星饼干，卡哇伊风格，简洁干净线条，白色背景",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 150",effect:"超萌的Q版猫娘，大头小身比例和闪亮大眼让人忍不住想抱"},
+{cat:"anime",style:"Q版",prompt:"Chibi style anime food illustration, cute smiling onigiri rice ball with kawaii face, surrounded by smaller food items, soft pastel colors, manga screentone shading, adorable food art --ar 1:1 --v 6 --s 150",cn:"Q版动漫食物插画，可爱微笑的饭团配卡哇伊表情，周围环绕更小的食物，柔和粉彩色，漫画网点纸阴影，萌系食物艺术",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 150",effect:"萌到爆的Q版食物拟人化，适合做表情包或周边设计"},
+{cat:"anime",style:"机甲",prompt:"Mecha anime illustration, giant humanoid robot in dynamic battle pose, glowing blue energy core, detailed mechanical joints and armor plates, city ruins background, sparks and debris flying, super robot anime style --ar 2:3 --v 6 --s 350",cn:"机甲动漫插画，巨型人形机器人动态战斗姿势，发光蓝色能量核心，精细机械关节和装甲板，城市废墟背景，火花和碎片飞溅，超级机器人动漫风格",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 350",effect:"热血机甲战斗场面，精密机械细节和蓝色能量核极具震撼力"},
+{cat:"anime",style:"机甲",prompt:"Realistic mecha anime design, sleek white and red Gundam-style mobile suit, hovering above Earth atmosphere, detailed panel lines and decals, space backdrop with stars, Sunrise animation quality --ar 16:9 --v 6 --s 350",cn:"写实机甲动漫设计，流线型白红色高达风格机动战士，悬浮在地球大气层上方，精细面板线和贴花，太空星空背景，日升社动画品质",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"高达风格的精细机甲设计，白色涂装与太空背景展现硬核机甲美学"},
+{cat:"anime",style:"魔法少女",prompt:"Magical girl anime transformation scene, sparkling dress materializing, colorful magical circles and ribbons swirling around, bright pastel colors, stars and hearts particles, dynamic pose, sparkly eyes, Sailor Moon inspired --ar 2:3 --v 6 --s 300",cn:"魔法少女变身场景，闪闪发光的连衣裙具现化，彩色魔法阵和丝带环绕，明亮粉彩色，星星和爱心粒子，动态姿势，闪亮眼睛，美少女战士启发",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"经典魔法少女变身场景，魔法阵和闪光粒子充满少女心"},
+{cat:"anime",style:"魔法少女",prompt:"Dark magical girl anime illustration, gothic lolita style outfit, holding a cursed dark grimoire, thorny roses and purple flames surrounding her, dual-colored heterochromatic eyes, dark fantasy anime art --ar 2:3 --v 6 --s 350",cn:"暗黑魔法少女动漫插画，哥特洛丽塔风格服装，手持诅咒暗黑魔导书，荆棘玫瑰和紫色火焰环绕，异色双瞳，暗黑奇幻动漫艺术",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 350",effect:"暗黑系魔法少女，哥特洛丽塔与紫焰营造独特的暗黑魔法美学"},
+{cat:"anime",style:"日漫",prompt:"Anime illustration of a lonely samurai walking through a bamboo forest in snow, katana at his side, melancholy atmosphere, muted color palette with red accent (his scarf), Makoto Shinkai meets Ghost of Tsushima --ar 16:9 --v 6 --s 300",cn:"孤独武士在雪中穿过竹林的动漫插画，腰间佩刀，忧郁氛围，哑光色调配红色点缀（围巾），新海诚遇上对马岛之魂",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"凄美的武士雪景，红色围巾在白雪中格外醒目，充满故事感"},
+{cat:"anime",style:"国漫",prompt:"Chinese fantasy donghua illustration, a young alchemist in a magical library, floating ancient scrolls and books, purple spiritual flames, intricate floor patterns, rich warm lighting, detailed character design --ar 16:9 --v 6 --s 350",cn:"中国奇幻国漫插画，年轻炼丹师在魔法藏书阁中，漂浮的古老卷轴和书籍，紫色灵焰，繁复地板花纹，浓郁暖光，精细角色设计",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"国漫仙侠风格的藏书阁场景，灵焰与古卷轴营造神秘奇幻感"},
+{cat:"anime",style:"Q版",prompt:"Chibi anime squad of 4 cute fantasy adventurers, warrior mage archer thief, each in distinct colorful outfits, smiling poses, game character select screen style, clean vector look --ar 16:9 --v 6 --s 150",cn:"4个可爱奇幻冒险者的Q版动漫组合，战士法师弓箭手盗贼，各穿独特彩色服装，微笑姿势，游戏角色选择界面风格，干净矢量风格",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"Q版冒险小队，适合做游戏角色选择界面或社交媒体头像组"},
+{cat:"anime",style:"机甲",prompt:"Post-apocalyptic mecha anime scene, worn and damaged giant robot half-buried in desert sand, lone pilot standing on its hand, sunset sky with toxic clouds, emotional and desolate, Nier Automata aesthetic --ar 16:9 --v 6 --s 350",cn:"后末日机甲动漫场景，磨损破损的巨型机器人半埋在沙漠中，孤独的飞行员站在它手掌上，有毒云层的夕阳天空，情感与荒凉，尼尔自动人形美学",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"末日荒凉与机甲残骸的悲壮场景，尼尔风格的孤独美学令人动容"},
+{cat:"anime",style:"魔法少女",prompt:"Magical girl anime key visual, team of 5 magical girls in colorful costumes posing together, each with unique magical weapon, rainbow magical aura, dramatic sky background, team poster composition --ar 2:3 --v 6 --s 300",cn:"魔法少女动漫主视觉图，5位彩色服装魔法少女一起摆姿势，每人持有独特魔法武器，彩虹魔法光环，天空戏剧性背景，团队海报构图",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"经典魔法少女团队海报，5人合体展示的主视觉极具宣传效果"},
+{cat:"anime",style:"日漫",prompt:"Anime style illustration of a cozy ramen shop interior at night, steam rising from bowls, warm orange lantern light, two friends chatting at counter, slice of life anime aesthetic, Studio Ghibli atmosphere --ar 16:9 --v 6 --s 250",cn:"温馨拉面店内景的动漫风格插画，碗中升起蒸汽，温暖橙色灯笼光，两个朋友在吧台聊天，日常系动漫美学，吉卜力工作室氛围",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 250",effect:"吉卜力风格的日常治愈场景，温暖灯光和拉面蒸汽让人感到温馨"},
+{cat:"anime",style:"国漫",prompt:"Chinese ink wash anime hybrid style, a lone swordsman standing on a cliff edge, long hair flowing in wind, massive full moon behind him, ink wash clouds below, poetic and cinematic, blend of anime and traditional Chinese art --ar 2:3 --v 6 --s 400",cn:"水墨动漫混合风格，孤独剑客站在悬崖边，长发在风中飘扬，身后巨大满月，下方水墨云海，诗意与电影感，动漫与中国传统艺术融合",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 400",effect:"水墨与动漫的完美融合，剑客月下崖边的场景极具东方诗意"},{cat:"photo",style:"产品摄影",prompt:"Product photography of a luxury perfume bottle, dark gradient background, dramatic rim lighting, crystal glass material, liquid splash frozen in air, professional studio shot, commercial quality, 8K --ar 4:5 --v 6 --s 200",cn:"奢华香水瓶的产品摄影，深色渐变背景，戏剧性轮廓光，水晶玻璃材质，液体飞溅凝固空中，专业影棚拍摄，商业品质，8K",tool:"Midjourney",params:"--ar 4:5 --v 6 --s 200",effect:"商业级产品摄影，轮廓光和液体飞溅让香水瓶显得奢华精致"},
+{cat:"photo",style:"产品摄影",prompt:"Minimalist product photo of AirPods on a white marble surface, soft shadow, clean composition, Apple style product photography, bright airy lighting, shallow depth of field --ar 1:1 --v 6 --s 100",cn:"AirPods在白色大理石台面上的极简产品摄影，柔和阴影，干净构图，苹果风格产品摄影，明亮通透光线，浅景深",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 100",effect:"苹果风格的极简产品摄影，白色大理石背景衬托产品精致感"},
+{cat:"photo",style:"美食",prompt:"Overhead food photography of a gourmet burger, melted cheese dripping, fresh lettuce and tomato, rustic wooden table, warm natural light, food styling, appetizing, magazine quality --ar 4:5 --v 6 --s 150",cn:"精致汉堡的俯拍美食摄影，融化的芝士滴落，新鲜生菜和番茄，质朴木桌，温暖自然光，食物摆盘造型，令人垂涎，杂志品质",tool:"Midjourney",params:"--ar 4:5 --v 6 --s 150",effect:"杂志级美食摄影，俯拍角度和芝士拉丝让人食欲大开"},
+{cat:"photo",style:"美食",prompt:"Japanese sushi platter food photography, fresh salmon and tuna nigiri on black slate plate, wasabi and pickled ginger, chopsticks, overhead shot, moody dark background, steam visible --ar 4:5 --v 6 --s 150",cn:"日式寿司拼盘美食摄影，新鲜三文鱼和金枪鱼握寿司放在黑色石板盘上，芥末和姜片，筷子，俯拍，暗调背景，可见蒸汽",tool:"Midjourney",params:"--ar 4:5 --v 6 --s 150",effect:"暗调风格的日料摄影，黑白对比让食材色彩更加鲜亮诱人"},
+{cat:"photo",style:"建筑",prompt:"Architectural photography of a modern glass skyscraper, dramatic upward perspective, blue sky with clouds reflecting in glass facade, geometric patterns, sharp lines, urban architecture --ar 9:16 --v 6 --s 150",cn:"现代玻璃摩天大楼的建筑摄影，戏剧性仰视透视，蓝天白云在玻璃外墙上倒映，几何图案，锐利线条，城市建筑",tool:"Midjourney",params:"--ar 9:16 --v 6 --s 150",effect:"仰视角建筑摄影，玻璃幕墙反射蓝天极具几何美感"},
+{cat:"photo",style:"建筑",prompt:"Interior architecture photo of a modern library, flowing wooden bookshelves, dramatic natural light from skylight, reading area below, warm wood tones, minimalist design, Aerial/ground combined view --ar 16:9 --v 6 --s 200",cn:"现代图书馆室内建筑摄影，流动的木质书架，天窗带来的戏剧性自然光，下方阅读区，温暖木色调，极简设计，俯拍/地面组合视角",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 200",effect:"现代图书馆的建筑之美，流动书架和天窗光线营造知性空间"},
+{cat:"photo",style:"微距",prompt:"Extreme macro photography of a dewdrop on a spider web, refracting the entire garden inside the droplet, morning golden light, crystal clear water sphere, ultra-sharp detail, focus stacking --ar 1:1 --v 6 --s 200",cn:"蜘蛛网上露珠的极微距摄影，水滴内折射出整个花园，清晨金色光线，水晶般清澈水球，超锐利细节，焦点堆叠",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"极微距下的露珠世界，水滴中折射出完整花园令人叹为观止"},
+{cat:"photo",style:"微距",prompt:"Macro photography of a butterfly wing, intricate scale patterns visible, iridescent purple and blue colors, black background, scientific detail, ring flash lighting, ultra high magnification --ar 1:1 --v 6 --s 200",cn:"蝴蝶翅膀微距摄影，可见精细鳞片纹理，虹彩紫色和蓝色，黑色背景，科学级细节，环形闪光灯照明，超高放大倍率",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 200",effect:"蝴蝶翅膀鳞片的微观世界，虹彩色彩在微距下展现惊人细节"},
+{cat:"photo",style:"运动",prompt:"Action sports photography of a surfer riding a massive wave, water spray frozen in time, golden hour backlight, dynamic composition, surfer silhouetted against the sun, dramatic ocean energy --ar 16:9 --v 6 --s 150",cn:"冲浪者驾驭巨浪的运动摄影，水花定格，黄金时段逆光，动态构图，冲浪者在阳光中形成剪影，海洋的戏剧性能量",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"极致运动瞬间的捕捉，金色逆光下冲浪者的剪影充满力量感"},
+{cat:"photo",style:"运动",prompt:"High-speed photography of a basketball player mid-dunk, sweat droplets visible, dramatic stadium lighting, powerful athletic pose, dynamic angle from below, motion frozen in time --ar 2:3 --v 6 --s 100",cn:"篮球运动员扣篮中的高速摄影，可见汗珠，戏剧性体育馆灯光，强力运动姿势，从下往上的动态角度，运动瞬间定格",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 100",effect:"力量与速度的完美定格，仰角拍摄让扣篮动作更加震撼"},
+{cat:"photo",style:"婚礼",prompt:"Wedding photography of a bride walking down a flower-lined aisle, soft backlight creating a dreamy glow, white dress flowing, guests in bokeh background, emotional candid moment, fine art wedding style --ar 2:3 --v 6 --s 200",cn:"新娘走过鲜花夹道的婚礼摄影，柔和逆光营造梦幻光芒，白色婚纱飘逸，散景中的宾客背景，情感瞬间抓拍，艺术婚礼风格",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 200",effect:"梦幻婚礼时刻，逆光和散景营造浪漫至极的氛围"},
+{cat:"photo",style:"婚礼",prompt:"Intimate wedding photo of couple dancing under string lights at outdoor reception, warm evening atmosphere, bokeh fairy lights, bride laughing, groom looking at her lovingly, candid style --ar 3:4 --v 6 --s 150",cn:"新人在户外婚礼招待会上串灯下跳舞的亲密婚礼照，温暖夜晚氛围，散景仙女灯，新娘在笑，新郎深情看着她，抓拍风格",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 150",effect:"温馨浪漫的婚礼抓拍，串灯散景与新人的笑容完美诠释爱情"},
+{cat:"photo",style:"产品摄影",prompt:"Flat lay product photography of a skincare routine set, white marble background, bottles and tubes arranged aesthetically, fresh flowers and eucalyptus leaves as props, bright clean lighting, Instagram style --ar 1:1 --v 6 --s 100",cn:"护肤品套装的平铺产品摄影，白色大理石背景，瓶罐美观排列，鲜花和尤加利叶作为道具，明亮干净光线，Instagram风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 100",effect:"Instagram风格的护肤平铺摄影，干净背景和绿植道具打造小清新"},
+{cat:"photo",style:"美食",prompt:"Artisan coffee latte art photography, heart-shaped foam design, ceramic cup on dark wood surface, steam rising, morning light from window, moody coffee shop atmosphere, bokeh background --ar 4:5 --v 6 --s 150",cn:"手工拉花咖啡摄影，心形奶泡设计，陶瓷杯在深色木面上，升起蒸汽，窗户晨光，咖啡店氛围感，散景背景",tool:"Midjourney",params:"--ar 4:5 --v 6 --s 150",effect:"咖啡馆氛围拉满的拉花摄影，晨光和蒸汽营造慵懒的早晨感"},
+{cat:"photo",style:"建筑",prompt:"Futuristic architecture photo of Zaha Hadid style building, flowing organic curves, white concrete and glass, dramatic sky, wide angle lens, hyper-modern design, clean urban environment --ar 16:9 --v 6 --s 200",cn:"扎哈·哈迪德风格建筑的未来主义建筑摄影，流动有机曲线，白色混凝土和玻璃，戏剧性天空，广角镜头，超现代设计，干净城市环境",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 200",effect:"扎哈风格的未来建筑，流动曲线与白色混凝土展现建筑艺术之美"},
+{cat:"photo",style:"微距",prompt:"Macro photography of ice crystals forming on a window pane, intricate fractal patterns, translucent blue and white, winter morning light, abstract natural art, extreme close-up --ar 1:1 --v 6 --s 250",cn:"窗玻璃上冰晶的微距摄影，精细分形图案，半透明白色和蓝色，冬日晨光，抽象自然艺术，极近距离",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"冰晶分形图案的微观之美，大自然的几何艺术在微距下令人惊叹"},
+{cat:"photo",style:"运动",prompt:"Night running photography, runner with headlamp on a mountain trail, light beam cutting through darkness, starry sky above, motion blur on legs, dramatic long exposure effect --ar 16:9 --v 6 --s 150",cn:"夜跑摄影，戴头灯的跑者在山间小径上，光束切过黑暗，上方星空，腿部运动模糊，戏剧性长曝光效果",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 150",effect:"夜跑的孤独与浪漫，头灯光束与星空营造超现实的运动画面"},
+{cat:"photo",style:"婚礼",prompt:"Bridal portrait in a grand cathedral, veil flowing in the light streaming through stained glass windows, colorful light patterns on the floor, bride looking up in awe, dramatic and emotional --ar 2:3 --v 6 --s 250",cn:"大教堂中的新娘肖像，面纱在彩色玻璃窗透入的光线中飘扬，地面彩色光影，新娘仰望感叹，戏剧性且情感丰富",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 250",effect:"教堂彩窗光线与婚纱的绝美组合，神圣而浪漫的婚礼瞬间"},{cat:"abstract",style:"3D渲染",prompt:"3D render of a floating crystal island in the sky, lush vegetation growing on crystal formations, waterfalls cascading into clouds, volumetric lighting, fantasy concept art, Octane render quality --ar 16:9 --v 6 --s 300",cn:"天空中漂浮的水晶岛屿3D渲染，水晶构造上生长着茂盛植被，瀑布倾泻入云中，体积光照明，奇幻概念艺术，Octane渲染品质",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"奇幻水晶岛屿的3D渲染，瀑布和植被让漂浮岛屿栩栩如生"},
+{cat:"abstract",style:"3D渲染",prompt:"3D abstract render of liquid metal morphing into organic shapes, iridescent chrome surface reflecting environment, dark studio background, dramatic spotlight, Houdini FX style, ultra realistic materials --ar 1:1 --v 6 --s 300",cn:"液态金属变形为有机形状的3D抽象渲染，虹彩铬表面反射环境，暗色工作室背景，戏剧性聚光灯，Houdini特效风格，超写实材质",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 300",effect:"液态金属的超现实3D渲染，虹彩铬面反射让画面极具科技美感"},
+{cat:"abstract",style:"光影艺术",prompt:"Light painting art in complete darkness, swirling trails of colorful light creating abstract spiral patterns, long exposure photography, electric blue and vibrant magenta, black background --ar 16:9 --v 6 --s 200",cn:"完全黑暗中的光绘艺术，彩色光线旋转轨迹创造抽象螺旋图案，长曝光摄影，电光蓝和活力洋红色，黑色背景",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 200",effect:"光绘摄影的绚烂世界，彩色光线轨迹在黑暗中绘制出抽象图案"},
+{cat:"abstract",style:"光影艺术",prompt:"Cinematic light rays streaming through a dark smoky room, volumetric god rays, dust particles visible in light beams, dramatic chiaroscuro lighting, moody atmosphere, film noir aesthetic --ar 16:9 --v 6 --s 250",cn:"穿过黑暗烟雾房间的电影感光线，体积光神光束，光束中可见灰尘粒子，戏剧性明暗对比照明，忧郁氛围，黑色电影美学",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 250",effect:"黑色电影般的光影戏剧，光线穿透烟雾的画面充满神秘感"},
+{cat:"abstract",style:"几何图形",prompt:"Sacred geometry mandala pattern, intricate golden lines on deep indigo background, flower of life pattern, fractal symmetry, spiritual and mystical, vector precision, glowing edges --ar 1:1 --v 6 --s 300",cn:"神圣几何曼陀罗图案，深靛蓝色背景上的精细金色线条，生命之花图案，分形对称，灵性与神秘，矢量精度，发光边缘",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 300",effect:"神圣几何的精密之美，金色线条在深蓝背景上展现出宇宙的秩序"},
+{cat:"abstract",style:"几何图形",prompt:"Isometric geometric landscape made of translucent colored glass blocks, rainbow light refractions, mathematical precision, clean minimal composition, studio lighting, 3D illustration style --ar 1:1 --v 6 --s 250",cn:"由半透明彩色玻璃方块组成的等距几何景观，彩虹光折射，数学精度，干净极简构图，影棚灯光，3D插画风格",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"彩色玻璃方块构建的等距世界，光影折射创造绚丽的几何景观"},
+{cat:"abstract",style:"超现实",prompt:"Surrealist art of melting clocks draped over a dreamlike landscape, Salvador Dali inspired, impossible architecture, floating objects defying gravity, warm desert tones, bizarre and dreamlike --ar 16:9 --v 6 --s 400",cn:"融化时钟悬挂在梦幻风景上的超现实艺术，达利风格，不可能的建筑，漂浮物体对抗重力，温暖沙漠色调，奇异而梦幻",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 400",effect:"达利式的超现实梦境，融化时钟和反重力元素挑战现实认知"},
+{cat:"abstract",style:"超现实",prompt:"Surrealist digital art of a giant whale swimming through clouds above a tiny village, bioluminescent patterns on its skin, miniature houses below, magical realism, dreamy atmosphere, golden hour light --ar 16:9 --v 6 --s 350",cn:"巨大鲸鱼游过小村庄上空云层的超现实数字艺术，皮肤上生物发光图案，下方迷你房屋，魔幻现实主义，梦幻氛围，黄金时段光线",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"天空巨鲸游过小镇的超现实画面，魔幻与现实的碰撞极具想象力"},
+{cat:"abstract",style:"极简",prompt:"Minimalist abstract composition, single thin black line on pure white background, negative space dominance, zen aesthetic, Japanese wabi-sabi philosophy, high contrast, architectural simplicity --ar 3:4 --v 6 --s 200",cn:"极简抽象构图，纯白背景上一条细黑线，留白主导，禅意美学，日本侘寂哲学，高对比度，建筑般的简洁",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 200",effect:"极简主义的极致表达，一条线和大量留白传递禅意与哲学思考"},
+{cat:"abstract",style:"极简",prompt:"Minimalist color field painting, soft gradient from warm peach to cool lavender, no objects or figures, pure color meditation, Rothko inspired, calming and contemplative, large canvas feel --ar 4:5 --v 6 --s 200",cn:"极简色域绘画，从温暖蜜桃色到冷薰衣草色的柔和渐变，无物体或人物，纯粹的色彩冥想，罗斯科启发，平静而沉思，大画幅感觉",tool:"Midjourney",params:"--ar 4:5 --v 6 --s 200",effect:"罗斯科风格的色域绘画，色彩渐变引发沉思与冥想"},
+{cat:"abstract",style:"3D渲染",prompt:"3D render of an infinite mirror room with neon geometric shapes floating in space, perspective illusion, vibrant purple and cyan colors, reflective surfaces, James Turrell inspired light installation --ar 16:9 --v 6 --s 300",cn:"无限镜屋的3D渲染，霓虹几何形状漂浮在空间中，透视错觉，活力紫色和青色，反射表面，詹姆斯·特瑞尔启发的灯光装置",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"无限镜屋的视觉错觉，霓虹几何体在镜面反射中创造出无限空间"},
+{cat:"abstract",style:"光影艺术",prompt:"Neon wireframe hologram of a human head floating in dark space, glowing purple and blue lines, data streams flowing around it, sci-fi UI elements, digital consciousness concept art --ar 16:9 --v 6 --s 300",cn:"漂浮在黑暗空间中人头的霓虹线框全息图，发光紫色和蓝色线条，数据流环绕，科幻UI元素，数字意识概念艺术",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 300",effect:"数字意识的科幻视觉，霓虹线框和数据流展现AI与人类思维的交融"},
+{cat:"abstract",style:"几何图形",prompt:"Abstract kinetic sculpture render, metallic gold and silver spheres connected by thin wires, caught in motion, multiple exposure effect, dynamic rotation, black background, metallic reflections --ar 1:1 --v 6 --s 250",cn:"抽象动力学雕塑渲染，金属金银球体由细线连接，捕捉运动瞬间，多重曝光效果，动态旋转，黑色背景，金属反射",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 250",effect:"动态雕塑的金属光泽与多重曝光，展现运动与平衡的抽象美"},
+{cat:"abstract",style:"超现实",prompt:"Surreal composition of a door standing alone in the middle of the ocean, light glowing from inside the cracked-open door, calm reflective water, dramatic sky, mysterious and thought-provoking --ar 2:3 --v 6 --s 300",cn:"独自矗立在大海中央的门的超现实构图，门缝中透出光芒，平静镜面水面，戏剧性天空，神秘且发人深省",tool:"Midjourney",params:"--ar 2:3 --v 6 --s 300",effect:"海上孤门的超现实画面，门缝光芒暗示通往另一个世界，充满哲学隐喻"},
+{cat:"abstract",style:"极简",prompt:"Minimalist typography art, single Chinese character 永 (eternity) in elegant brush calligraphy, white rice paper texture, one single bold ink stroke, zen simplicity, negative space --ar 3:4 --v 6 --s 200",cn:"极简字体艺术，单个汉字永以优雅毛笔书法呈现，白色宣纸纹理，一笔浓墨，禅意简洁，留白空间",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 200",effect:"书法与极简主义的融合，一个永字承载东方美学的精髓"},
+{cat:"abstract",style:"3D渲染",prompt:"3D render of a surreal staircase that loops infinitely like an Escher drawing, impossible geometry, marble texture, soft diffused lighting, mind-bending perspective, architectural impossibility --ar 1:1 --v 6 --s 300",cn:"无限循环楼梯的3D渲染，如埃舍尔画作，不可能的几何结构，大理石纹理，柔和漫射光，烧脑透视，建筑不可能性",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 300",effect:"埃舍尔式的不可能建筑，无限循环楼梯挑战空间认知"},
+{cat:"abstract",style:"光影艺术",prompt:"Bioluminescent abstract art, glowing jellyfish-like organisms floating in dark water, ethereal blue and green light, organic flowing shapes, underwater atmosphere, mesmerizing and hypnotic --ar 9:16 --v 6 --s 350",cn:"生物发光抽象艺术，类似水母的发光生物漂浮在暗色水中，空灵的蓝绿色光，有机流动形态，水下氛围，迷人且催眠",tool:"Midjourney",params:"--ar 9:16 --v 6 --s 350",effect:"深海生物发光的梦幻画面，水母般的发光体在黑暗中翩翩起舞"},
+{cat:"abstract",style:"几何图形",prompt:"Fractal art explosion, infinite recursive geometric pattern, vibrant rainbow colors, psychedelic symmetry, zoom into the Mandelbrot set, mathematical beauty, high detail render --ar 1:1 --v 6 --s 300",cn:"分形艺术爆炸，无限递归几何图案，活力彩虹色，迷幻对称，深入曼德博集合，数学之美，高细节渲染",tool:"Midjourney",params:"--ar 1:1 --v 6 --s 300",effect:"分形数学的视觉奇观，无限递归的几何图案在彩虹色彩中绽放"},
+{cat:"abstract",style:"超现实",prompt:"Surreal digital art of a giant ancient book lying open in a meadow, with miniature world growing from its pages, tiny forests rivers and mountains inside the book, magical golden light emanating from pages --ar 16:9 --v 6 --s 350",cn:"草地上摊开巨大古书的超现实数字艺术，书页中长出微型世界，书中微小的森林河流和山脉，页面散发金色魔法光芒",tool:"Midjourney",params:"--ar 16:9 --v 6 --s 350",effect:"书中自有世界的超现实诠释，古书页面中长出的迷你世界极具想象力"},
+{cat:"abstract",style:"极简",prompt:"Minimalist architectural photo of a lone white building against a perfectly clear blue sky, single cloud, geometric shadow on ground, Bauhaus inspired, clean lines, stark contrast --ar 3:4 --v 6 --s 150",cn:"纯净蓝天背景下孤独白色建筑的极简建筑摄影，一朵云，地面几何阴影，包豪斯启发，干净线条，鲜明对比",tool:"Midjourney",params:"--ar 3:4 --v 6 --s 150",effect:"包豪斯风格的极简建筑，蓝天白云与白色建筑形成纯净的几何构图"}
+];
+
+const CATEGORIES = {
+  portrait: {name:"人像摄影", icon:"👤", color:"#7c3aed"},
+  landscape: {name:"风景自然", icon:"🌄", color:"#059669"},
+  illustration: {name:"插画艺术", icon:"🎨", color:"#d97706"},
+  icon: {name:"图标设计", icon:"💎", color:"#2563eb"},
+  anime: {name:"动漫二次元", icon:"✨", color:"#ec4899"},
+  photo: {name:"写实摄影", icon:"📷", color:"#dc2626"},
+  abstract: {name:"创意抽象", icon:"🔮", color:"#7c3aed"}
+};
+
+let currentCat = "all";
+let searchQuery = "";
+
+function renderContent() {
+  const container = document.getElementById("mainContent");
+  container.innerHTML = "";
+  let filtered = PROMPTS;
+  if (currentCat !== "all") filtered = filtered.filter(p => p.cat === currentCat);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(p => 
+      p.prompt.toLowerCase().includes(q) || 
+      p.cn.includes(q) || 
+      p.style.includes(q)
+    );
+  }
+  document.getElementById("visibleCount").textContent = filtered.length;
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-result"><div class="icon">🔍</div><p>没有找到匹配的提示词，试试其他关键词？</p></div>';
+    return;
+  }
+  const groups = {};
+  filtered.forEach(p => {
+    if (!groups[p.cat]) groups[p.cat] = [];
+    groups[p.cat].push(p);
+  });
+  Object.keys(groups).forEach(catKey => {
+    const cat = CATEGORIES[catKey];
+    const section = document.createElement("div");
+    section.className = "category-section";
+    section.innerHTML = '<div class="category-header"><div class="category-icon" style="background:'+cat.color+'">'+cat.icon+'</div><h2>'+cat.name+'</h2><span class="count">'+groups[catKey].length+' 个提示词</span></div><div class="cards">'+groups[catKey].map(function(p){var idx=PROMPTS.indexOf(p);return '<div class="card"><div class="card-top"><div class="card-tags"><span class="tag tag-style">'+p.style+'</span><span class="tag tag-tool">'+p.tool+'</span></div></div><div class="card-body"><div class="prompt-en">'+escapeHtml(p.prompt)+'</div><div class="prompt-cn">'+p.cn+'</div><div class="params">'+p.params.split(/\s+/).map(function(param){return '<span class="param-tag">'+escapeHtml(param)+'</span>'}).join("")+'</div><div class="effect">'+p.effect+'</div></div><div class="card-footer"><button type="button" class="copy-btn" onclick="copyPrompt('+idx+')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> 复制提示词</button></div></div>'}).join("")+'</div>';
+    container.appendChild(section);
+  });
+}
+
+function escapeHtml(text) {
+  var d = document.createElement("div");
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+function copyPrompt(idx) {
+  var text = PROMPTS[idx].prompt;
+  navigator.clipboard.writeText(text).then(function(){
+    showToast("✅ 提示词已复制到剪贴板！");
+  }).catch(function(){
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("✅ 提示词已复制到剪贴板！");
+  });
+}
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(function(){t.classList.remove("show")}, 2000);
+}
+
+document.getElementById("filterBtns").addEventListener("click", function(e){
+  if (e.target.classList.contains("filter-btn")) {
+    document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active")});
+    e.target.classList.add("active");
+    currentCat = e.target.dataset.cat;
+    renderContent();
+  }
+});
+
+document.getElementById("searchInput").addEventListener("input", function(e){
+  searchQuery = e.target.value.trim();
+  renderContent();
+});
+
+window.addEventListener("scroll", function(){
+  document.getElementById("backTop").classList.toggle("show", window.scrollY > 400);
+});
+
+document.getElementById("totalCount").textContent = PROMPTS.length;
+renderContent();
+</script>
+</body>
+</html>

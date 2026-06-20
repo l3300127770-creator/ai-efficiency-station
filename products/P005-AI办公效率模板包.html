@@ -1,0 +1,1721 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI办公效率模板包</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f0fdf4;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#059669,#10b981,#34d399);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800;letter-spacing:1px}
+.hero p{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#059669}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#f0fdf4;border-radius:8px;text-decoration:none;color:#065f46;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#d1fae5;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#10b981;color:#fff;border-color:#10b981}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#065f46;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #10b981;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#ecfdf5,#d1fae5);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#065f46}
+.tag{display:inline-block;background:#10b981;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#059669;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#10b981;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;font-family:inherit;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#10b981;color:#fff}
+.btn-copy:hover{background:#059669;transform:translateY(-1px)}
+.btn-copy:active{transform:scale(.97)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#065f46;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#065f46;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#34d399;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#10b981;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999}
+.back-top.show{opacity:1}
+.back-top:hover{background:#059669;transform:translateY(-2px)}
+@media(max-width:600px){
+  .hero{padding:40px 16px 36px}
+  .hero h1{font-size:1.5em}
+  .card-body{padding:16px}
+  .toc{padding:20px 16px;margin:20px 10px}
+  .toc-grid{grid-template-columns:1fr}
+  .filter-bar{padding:0 10px}
+  .filter-btn{padding:6px 12px;font-size:.8em}
+  .section{margin:24px auto;padding:0 10px}
+  .section-title{font-size:1.2em}
+  .template-text,.prompt-text{font-size:.84em;padding:12px 14px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="badge">📋 职场必备 · 复制即用</span>
+  <h1>AI办公效率模板包</h1>
+  <p>涵盖周报、月报、年终总结、工作汇报、商务邮件、会议纪要六大核心场景，每个模板附带AI改写提示词，让你的职场写作效率提升10倍。</p>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>从目录中找到需要的模板类型</li>
+      <li>根据【适用场景】选择匹配的模板</li>
+      <li>将【模板内容】复制到文档中，替换方括号 [ ] 中的内容</li>
+      <li>如需润色，复制【AI改写提示词】到ChatGPT/文心一言/Kimi等AI工具中生成优化版本</li>
+    </ol>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>📑 快速导航</h2>
+  <div class="toc-grid">
+    <a href="#weekly">📊 周报模板（3个）</a>
+    <a href="#monthly">📈 月报模板（3个）</a>
+    <a href="#annual">🏆 年终总结模板（3个）</a>
+    <a href="#report">💼 工作汇报模板（3个）</a>
+    <a href="#email">✉️ 商务邮件模板（4个）</a>
+    <a href="#meeting">📝 会议纪要模板（4个）</a>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部模板</button>
+  <button type="button" class="filter-btn" data-filter="weekly">📊 周报</button>
+  <button type="button" class="filter-btn" data-filter="monthly">📈 月报</button>
+  <button type="button" class="filter-btn" data-filter="annual">🏆 年终总结</button>
+  <button type="button" class="filter-btn" data-filter="report">💼 工作汇报</button>
+  <button type="button" class="filter-btn" data-filter="email">✉️ 商务邮件</button>
+  <button type="button" class="filter-btn" data-filter="meeting">📝 会议纪要</button>
+</div>
+
+
+<!-- ==================== 一、周报模板 ==================== -->
+<div class="section" id="weekly" data-category="weekly">
+  <div class="section-title"><span class="icon">📊</span> 一、周报模板</div>
+  <p class="section-desc">用结构化的方式展示一周工作，让领导一目了然看到你的产出和思考。</p>
+
+  <!-- 周报1：技术岗 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🖥️ 技术岗周报模板</h3>
+      <span class="tag">技术开发</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于程序员、测试工程师、运维工程师等技术岗位的每周工作总结。重点展示技术成果、问题解决和下周计划。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tw1">【技术岗周报】[姓名] · [部门] · [日期范围]
+
+一、本周完成工作
+1. [功能名称] 开发完成
+   - 需求描述：[简述需求背景和目标]
+   - 技术方案：[采用的技术栈/框架/算法]
+   - 完成进度：100%，已提交代码评审并通过
+   - 关键成果：[如：接口响应时间从500ms优化到120ms]
+
+2. [Bug名称] 修复
+   - 问题描述：[具体现象和影响范围]
+   - 根因分析：[排查过程和根本原因]
+   - 解决方案：[修复方案简述]
+   - 修复验证：已在测试环境验证通过
+
+3. 技术文档更新
+   - 更新了 [模块名] 的接口文档
+   - 编写了 [功能名] 的技术设计文档
+
+二、本周遇到的问题与解决
+- 问题：[描述遇到的技术难点]
+- 影响：[对进度/功能的影响]
+- 解决方式：[如何解决的，参考了什么资料]
+- 经验沉淀：[总结出的经验或可复用方案]
+
+三、下周工作计划
+1. [任务名称]（预计 [X] 天完成）
+   - 目标：[预期达成的效果]
+   - 关键节点：[里程碑说明]
+2. [任务名称]（预计 [X] 天完成）
+3. [持续性工作]：如代码review、技术调研等
+
+四、需要的支持
+- [如有需要协调的资源或问题，在此说明]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tp1">请帮我优化以下技术岗周报。要求：1）语言更专业简洁；2）突出量化成果和数据；3）用STAR法则描述问题解决过程；4）下周计划要有明确的时间节点；5）整体结构清晰，适合发给技术leader阅读。以下是原始内容：
+[粘贴你的周报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>用具体数字量化成果，如"响应时间降低60%"比"优化了性能"更有说服力</li>
+          <li>问题解决部分展示你的排查思路，比单纯说"已修复"更能体现技术深度</li>
+          <li>下周计划拆解到具体任务，避免出现"继续开发"这类模糊描述</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tw1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tp1','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 周报2：运营岗 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>📱 运营岗周报模板</h3>
+      <span class="tag">运营市场</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于新媒体运营、用户运营、活动运营、内容运营等岗位的每周工作总结。重点展示数据变化和运营策略。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tw2">【运营岗周报】[姓名] · [部门] · [日期范围]
+
+一、核心数据概览
+| 指标         | 本周数据 | 上周数据 | 环比变化 |
+|-------------|---------|---------|---------|
+| 新增用户     | [数字]   | [数字]   | [+/-X%]  |
+| 日活用户(DAU) | [数字]   | [数字]   | [+/-X%]  |
+| 内容发布量   | [数字]   | [数字]   | [+/-X%]  |
+| 互动率       | [数字]%  | [数字]%  | [+/-X%]  |
+| 转化率       | [数字]%  | [数字]%  | [+/-X%]  |
+
+二、本周重点工作
+1. [活动/项目名称]
+   - 背景：[为什么做这件事]
+   - 动作：[具体做了什么，投放了什么渠道]
+   - 结果：[数据表现如何，如曝光量、参与人数、转化情况]
+   - 复盘：[做得好的地方 + 可优化的点]
+
+2. 内容运营
+   - 本周发布内容 [X] 篇，其中 [平台A] [X] 篇、[平台B] [X] 篇
+   - 爆款内容：[标题/主题]，阅读量 [数字]，互动 [数字]
+   - 内容方向调整：[根据数据反馈做了什么优化]
+
+3. 用户运营
+   - 用户反馈收集：共收到 [X] 条反馈，主要集中在 [问题类型]
+   - 社群运营：新增社群 [X] 个，群活跃度 [X]%
+
+三、下周计划
+1. [计划1]：预期目标 [具体数字]
+2. [计划2]：预期目标 [具体数字]
+3. 需要配合事项：[如设计出图、产品功能支持等]
+
+四、本周思考
+- [对某个运营策略或市场趋势的观察和思考]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tp2">请帮我优化以下运营岗周报。要求：1）数据呈现更清晰，善用对比突出增长；2）用"动作→结果→洞察"的逻辑描述每项工作；3）下周计划要SMART化（具体、可衡量、可达到、相关性、有时限）；4）语言简洁有力，适合汇报给运营总监。以下是原始内容：
+[粘贴你的周报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>数据对比是运营周报的灵魂，一定要展示环比或同比变化</li>
+          <li>不仅汇报"做了什么"，更要说"为什么这么做"和"学到了什么"</li>
+          <li>爆款内容要拆解成功因素，为后续内容策略提供参考</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tw2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tp2','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 周报3：通用 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>📋 通用周报模板</h3>
+      <span class="tag">通用</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于行政、人事、财务、产品、设计等各类岗位。结构简洁，填写方便，适合日常周报提交。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tw3">【周报】[姓名] · [部门] · [日期范围]
+
+一、本周工作完成情况
+1. [任务名称]
+   - 工作内容：[具体做了什么]
+   - 完成情况：[完成百分比或状态]
+   - 产出成果：[交付了什么/达成了什么结果]
+
+2. [任务名称]
+   - 工作内容：[具体做了什么]
+   - 完成情况：[完成百分比或状态]
+   - 产出成果：[交付了什么/达成了什么结果]
+
+3. [任务名称]
+   - 工作内容：[具体做了什么]
+   - 完成情况：[完成百分比或状态]
+   - 产出成果：[交付了什么/达成了什么结果]
+
+二、本周遇到的问题
+- 问题1：[描述问题] → 当前状态：[已解决/待解决/需要协助]
+- 问题2：[描述问题] → 当前状态：[已解决/待解决/需要协助]
+
+三、下周工作计划
+| 优先级 | 任务名称 | 预计完成时间 | 备注 |
+|-------|---------|------------|------|
+| P0    | [任务]   | [周几]      | [说明] |
+| P1    | [任务]   | [周几]      | [说明] |
+| P1    | [任务]   | [周几]      | [说明] |
+
+四、需要协调/支持的事项
+- [如有，在此说明需要谁配合什么事情]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tp3">请帮我优化以下周报内容。要求：1）让每项工作的描述更有条理，突出结果导向；2）语言简洁专业，避免口语化；3）问题部分要体现解决思路而非只是提问题；4）下周计划要有优先级排序和明确时间节点。请保持原始结构，只优化表达。以下是原始内容：
+[粘贴你的周报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>用"完成了什么"而非"做了什么"来描述工作，强调产出而非过程</li>
+          <li>下周计划按P0（紧急重要）、P1（重要不紧急）排序，展示你的优先级判断力</li>
+          <li>周报最好在周五下午4点前提交，养成固定节奏</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tw3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tp3','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 二、月报模板 ==================== -->
+<div class="section" id="monthly" data-category="monthly">
+  <div class="section-title"><span class="icon">📈</span> 二、月报模板</div>
+  <p class="section-desc">月报比周报更注重全局视角，重点展示月度数据趋势、阶段性成果和策略调整。</p>
+
+  <!-- 月报1：项目月报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🎯 项目月报模板</h3>
+      <span class="tag">项目管理</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于项目经理、产品经理等需要汇报项目整体进展的岗位。适合向管理层汇报阶段性成果和风险。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tm1">【项目月报】[项目名称] · [月份] · 负责人：[姓名]
+
+一、项目整体状态
+- 项目阶段：[需求分析/设计/开发/测试/上线/运维]
+- 整体进度：完成 [X]%（计划进度 [X]%，偏差说明：[超前/正常/延迟X天]）
+- 健康状态：🟢 正常 / 🟡 有风险 / 🔴 严重延期
+
+二、本月完成里程碑
+1. ✅ [里程碑1名称]
+   - 完成时间：[日期]
+   - 交付物：[具体产出]
+   - 验收情况：[已通过/待验收]
+
+2. ✅ [里程碑2名称]
+   - 完成时间：[日期]
+   - 交付物：[具体产出]
+   - 验收情况：[已通过/待验收]
+
+三、本月关键指标
+| 指标 | 目标值 | 实际值 | 达成率 |
+|-----|-------|-------|-------|
+| [指标1] | [数值] | [数值] | [百分比] |
+| [指标2] | [数值] | [数值] | [百分比] |
+| [指标3] | [数值] | [数值] | [百分比] |
+
+四、风险与问题
+| 风险/问题 | 影响程度 | 当前状态 | 应对措施 |
+|----------|---------|---------|---------|
+| [描述] | 高/中/低 | [状态] | [措施] |
+| [描述] | 高/中/低 | [状态] | [措施] |
+
+五、下月计划
+1. [计划任务] — 预计完成时间：[日期] — 负责人：[姓名]
+2. [计划任务] — 预计完成时间：[日期] — 负责人：[姓名]
+3. [计划任务] — 预计完成时间：[日期] — 负责人：[姓名]
+
+六、需要决策/支持的事项
+- 事项1：[描述，附上建议方案供领导决策]
+- 事项2：[描述，附上建议方案供领导决策]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tpm1">请帮我优化以下项目月报。要求：1）进度描述要直观，善用百分比和状态标识；2）风险部分要体现"风险等级→影响范围→应对策略"的完整逻辑；3）下月计划要有明确的里程碑和责任人；4）整体语言正式专业，适合向VP/总监级别汇报。以下是原始内容：
+[粘贴你的月报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>用红黄绿灯标识项目健康状态，让领导一眼看到风险</li>
+          <li>风险描述要包含"影响程度"和"应对措施"，不要只说有问题</li>
+          <li>进度偏差要说明原因和追赶计划，展示你对项目的掌控力</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tm1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tpm1','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 月报2：销售月报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>💰 销售月报模板</h3>
+      <span class="tag">销售</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于销售代表、销售主管、BD经理等需要汇报业绩和客户开发情况的岗位。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tm2">【销售月报】[姓名] · [部门] · [月份]
+
+一、本月业绩总览
+- 签单金额：[金额] 万元（目标 [金额] 万，达成率 [X]%）
+- 回款金额：[金额] 万元（目标 [金额] 万，达成率 [X]%）
+- 新签客户：[X] 家（目标 [X] 家）
+- 续费客户：[X] 家，续费率 [X]%
+- 管道金额：[金额] 万元（预计下月可转化 [金额] 万）
+
+二、重点客户进展
+1. [客户A]
+   - 需求阶段：[初步接触/需求确认/方案报价/商务谈判/合同签订]
+   - 本月动作：[拜访X次、演示X次、报价X次]
+   - 预计签单：[金额] 万，预计时间：[日期]
+   - 卡点：[决策人未到位/预算审批中/竞品对比等]
+
+2. [客户B]
+   - 需求阶段：[阶段]
+   - 本月动作：[具体动作]
+   - 预计签单：[金额] 万，预计时间：[日期]
+   - 卡点：[说明]
+
+三、本月成功案例/经验
+- 案例：[简述一个成功的签单过程]
+- 关键因素：[什么动作促成了签单]
+- 可复制点：[哪些经验可以应用到其他客户]
+
+四、竞品动态
+- [竞品名称] 近期动向：[价格调整/新功能上线/抢了哪个客户等]
+- 我方应对策略：[差异化优势/话术调整/资源支持需求]
+
+五、下月计划
+| 目标客户 | 预计金额 | 阶段 | 关键动作 |
+|---------|---------|------|---------|
+| [客户] | [金额] | [阶段] | [计划做什么] |
+| [客户] | [金额] | [阶段] | [计划做什么] |
+
+六、需要的支持
+- [如：需要技术同事配合演示/需要市场部提供行业案例/需要价格审批等]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tpm2">请帮我优化以下销售月报。要求：1）业绩数据用表格呈现，一目了然；2）客户进展用阶段漏斗逻辑描述，体现转化路径；3）重点突出赢单经验和管道预测；4）语言要体现销售的专业度和冲劲。以下是原始内容：
+[粘贴你的月报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>管道金额比当月签单更重要，展示未来1-2个月的潜在收入</li>
+          <li>客户卡点要说清楚，这样领导才知道怎么帮你协调资源</li>
+          <li>成功案例简要但要素齐全：客户背景→痛点→方案→结果</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tm2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tpm2','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 月报3：通用月报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>📋 通用月报模板</h3>
+      <span class="tag">通用</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于各类岗位的月度工作总结，结构清晰、填写快捷，适合常规月度汇报。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tm3">【月报】[姓名] · [部门] · [月份]
+
+一、本月核心成果（Top 3）
+1. [成果名称]
+   - 背景：[为什么要做这件事]
+   - 行动：[具体做了什么]
+   - 结果：[达成什么效果，用数据说明]
+
+2. [成果名称]
+   - 背景：[为什么要做这件事]
+   - 行动：[具体做了什么]
+   - 结果：[达成什么效果，用数据说明]
+
+3. [成果名称]
+   - 背景：[为什么要做这件事]
+   - 行动：[具体做了什么]
+   - 结果：[达成什么效果，用数据说明]
+
+二、本月工作数据汇总
+| 工作项 | 计划量 | 完成量 | 完成率 | 备注 |
+|-------|-------|-------|-------|------|
+| [项目A] | [数值] | [数值] | [%] | [说明] |
+| [项目B] | [数值] | [数值] | [%] | [说明] |
+| [日常] | [数值] | [数值] | [%] | [说明] |
+
+三、本月问题与改进
+- 问题：[描述问题] → 原因分析：[分析] → 改进措施：[措施] → 当前状态：[已改进/执行中]
+- 问题：[描述问题] → 原因分析：[分析] → 改进措施：[措施] → 当前状态：[已改进/执行中]
+
+四、下月工作计划
+| 优先级 | 工作内容 | 预期目标 | 预计时间 |
+|-------|---------|---------|---------|
+| P0 | [任务] | [目标] | [时间] |
+| P1 | [任务] | [目标] | [时间] |
+| P1 | [任务] | [目标] | [时间] |
+| P2 | [任务] | [目标] | [时间] |
+
+五、个人成长
+- 本月学习：[学了什么新技能/知识]
+- 下月目标：[计划提升什么能力]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tpm3">请帮我优化以下月报。要求：1）核心成果用STAR法则重写，突出价值和影响力；2）数据分析要有同比或环比对比；3）问题改进部分要体现闭环思维；4）语言专业简洁，适合管理层阅读。以下是原始内容：
+[粘贴你的月报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>核心成果只列3个最重要的，不要流水账式罗列所有工作</li>
+          <li>个人成长板块很加分，展示你有自我驱动和学习意识</li>
+          <li>月报建议在次月3号前提交，养成月初复盘的习惯</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tm3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tpm3','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 三、年终总结模板 ==================== -->
+<div class="section" id="annual" data-category="annual">
+  <div class="section-title"><span class="icon">🏆</span> 三、年终总结模板</div>
+  <p class="section-desc">年终总结是你一年工作的"成绩单"，直接关系到年终奖和晋升评估，务必认真对待。</p>
+
+  <!-- 年终总结1：个人 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>👤 个人年终总结模板</h3>
+      <span class="tag">个人</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于需要提交个人年度工作总结的员工。重点展示全年成果、能力成长和来年规划。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="ta1">【[年度] 年终个人工作总结】
+[姓名] · [部门] · [岗位]
+
+━━ 引言 ━━
+回顾[年度]年，在[领导/团队]的支持下，我围绕[核心职责/业务目标]，在[主要方向1]、[主要方向2]和[主要方向3]三个方面持续发力，较好地完成了各项工作目标。以下是本年度的工作总结。
+
+━━ 一、年度核心业绩 ━━
+1. [业绩1名称]
+   - 目标：[年初设定的目标是什么]
+   - 行动：[采取了哪些关键行动]
+   - 结果：[最终达成的数据/成果]
+   - 价值：[对团队/公司的意义]
+   - 量化亮点：[如：完成率120%、为公司节省X万元、效率提升X%]
+
+2. [业绩2名称]
+   - 目标：[目标]
+   - 行动：[行动]
+   - 结果：[结果]
+   - 价值：[价值]
+   - 量化亮点：[数据]
+
+3. [业绩3名称]
+   - 目标：[目标]
+   - 行动：[行动]
+   - 结果：[结果]
+   - 价值：[价值]
+   - 量化亮点：[数据]
+
+━━ 二、能力成长与突破 ━━
+1. 专业能力
+   - [描述在专业领域的成长，如掌握了什么新技能、解决了什么技术难题]
+   - [相关证书/培训/学习成果]
+
+2. 软实力提升
+   - [项目管理/跨部门协作/汇报表达/团队带教等方面的成长]
+   - [具体案例说明]
+
+3. 最大突破
+   - [描述年度内最重要的一次能力突破或认知升级]
+
+━━ 三、不足与反思 ━━
+1. [不足1]：[描述] → 改进方向：[具体改进计划]
+2. [不足2]：[描述] → 改进方向：[具体改进计划]
+
+━━ 四、[下一年]年工作规划 ━━
+1. 核心目标：[用一句话概括年度目标]
+2. 重点方向：
+   - 方向1：[描述] → 关键举措：[具体计划]
+   - 方向2：[描述] → 关键举措：[具体计划]
+   - 方向3：[描述] → 关键举措：[具体计划]
+3. 个人发展计划：
+   - 计划学习/提升：[具体内容]
+   - 时间节点：[分阶段计划]
+
+━━ 结语 ━━
+感谢团队和领导在这一年中的信任与支持。新的一年，我将继续保持[工作态度]，在[核心方向]上争取更大的突破，为团队创造更大的价值。</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="ta1p">请帮我优化以下个人年终总结。要求：1）引言要简洁有力，用一句话概括全年核心贡献；2）业绩部分用"目标→行动→结果→价值"四段式，突出量化数据和影响力；3）能力成长要有具体案例支撑，避免空泛描述；4）不足部分要真诚但有度，同时展现改进决心；5）整体语言要体现自信但不自夸的专业感。以下是原始内容：
+[粘贴你的年终总结]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>年终总结的核心是"展示价值"，每项成果都要回答"对公司/团队有什么价值"</li>
+          <li>用数据说话：完成率、增长率、节省金额、效率提升百分比等</li>
+          <li>不足要选"已经意识到并在改进"的问题，不要暴露致命短板</li>
+          <li>建议提前1-2周开始准备，不要等到最后一刻赶工</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('ta1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('ta1p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 年终总结2：项目总结 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🎯 项目年终总结模板</h3>
+      <span class="tag">项目</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于需要对单个项目进行年度总结的项目负责人或核心成员。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="ta2">【[年度] 年度项目总结】
+项目名称：[项目名] · 负责人：[姓名]
+
+━━ 一、项目概况 ━━
+- 项目周期：[起止时间]
+- 团队规模：[人数] 人，核心成员：[列出关键角色]
+- 项目目标：[年初/项目启动时设定的目标]
+- 当前状态：[已结项/持续运营中/阶段性完成]
+
+━━ 二、年度关键成果 ━━
+1. 核心指标达成
+   | 指标 | 年初目标 | 实际完成 | 达成率 |
+   |-----|---------|---------|-------|
+   | [指标1] | [数值] | [数值] | [%] |
+   | [指标2] | [数值] | [数值] | [%] |
+   | [指标3] | [数值] | [数值] | [%] |
+
+2. 重要里程碑
+   - [Q1]：[里程碑1] —— [结果]
+   - [Q2]：[里程碑2] —— [结果]
+   - [Q3]：[里程碑3] —— [结果]
+   - [Q4]：[里程碑4] —— [结果]
+
+3. 意外收获
+   - [非预期但有价值的成果]
+
+━━ 三、经验与教训 ━━
+做得好的：
+1. [经验1]：[具体说明] → [可复用的方法论]
+2. [经验2]：[具体说明] → [可复用的方法论]
+
+需要改进的：
+1. [教训1]：[具体说明] → [改进措施]
+2. [教训2]：[具体说明] → [改进措施]
+
+━━ 四、资源投入复盘 ━━
+- 人力投入：[人月数]
+- 预算使用：[预算金额 vs 实际花费]
+- 时间偏差：[计划 vs 实际周期]
+
+━━ 五、下一年展望 ━━
+- 继续推进：[未完成事项和计划]
+- 优化方向：[基于教训的改进计划]
+- 资源需求：[需要增加/调整的资源]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="ta2p">请帮我优化以下项目年终总结。要求：1）用数据驱动的方式呈现成果，对比目标与实际达成；2）经验教训部分要提炼成可复用的方法论；3）资源复盘要体现成本意识；4）语言要客观专业，适合在管理层汇报会上展示。以下是原始内容：
+[粘贴你的项目总结]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>按季度梳理里程碑，让读者看到项目推进的节奏感</li>
+          <li>"意外收获"板块是加分项，说明你善于发现和利用机会</li>
+          <li>资源复盘展示你的项目管理成熟度，领导会很看重这一点</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('ta2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('ta2p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 年终总结3：团队总结 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>👥 团队年终总结模板</h3>
+      <span class="tag">团队管理</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于团队负责人、部门主管撰写团队年度工作总结。重点展示团队整体成果和来年战略规划。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="ta3">【[年度] 年度团队工作总结】
+团队：[团队/部门名称] · 负责人：[姓名] · 团队人数：[X]人
+
+━━ 一、年度总览 ━━
+- 年度核心使命：[一句话描述团队存在的价值]
+- 关键成果摘要：
+  ✅ [成果1]：[一句话量化描述]
+  ✅ [成果2]：[一句话量化描述]
+  ✅ [成果3]：[一句话量化描述]
+
+━━ 二、业务成果 ━━
+1. [业务方向1]
+   - 目标：[年初目标]
+   - 成果：[达成结果]
+   - 亮点：[超出预期的部分]
+
+2. [业务方向2]
+   - 目标：[年初目标]
+   - 成果：[达成结果]
+   - 亮点：[超出预期的部分]
+
+3. [业务方向3]
+   - 目标：[年初目标]
+   - 成果：[达成结果]
+   - 亮点：[超出预期的部分]
+
+━━ 三、团队建设 ━━
+1. 人员发展
+   - 年初人数：[X] → 年末人数：[X]
+   - 晋升人数：[X] 人
+   - 关键招聘：[新加入的核心成员及其贡献]
+
+2. 能力建设
+   - 组织培训 [X] 场，覆盖 [主题]
+   - 建立/优化了 [流程/规范/工具]
+   - 团队效能提升：[具体指标变化]
+
+3. 团队文化
+   - [团队文化活动/建设成果]
+   - 团队满意度/稳定性：[数据或定性描述]
+
+━━ 四、问题与改进 ━━
+| 问题 | 根因分析 | 改进措施 | 当前进展 |
+|-----|---------|---------|---------|
+| [问题1] | [分析] | [措施] | [状态] |
+| [问题2] | [分析] | [措施] | [状态] |
+
+━━ 五、[下一年]年规划 ━━
+1. 战略方向：[团队的核心方向和定位调整]
+2. 业务目标：
+   - [目标1]：[量化指标]
+   - [目标2]：[量化指标]
+3. 团队计划：
+   - 编制计划：[扩编/精简/调整]
+   - 能力建设：[重点培养方向]
+   - 流程优化：[计划改进的流程]
+4. 资源需求：[需要公司支持的资源]
+
+━━ 致谢 ━━
+感谢团队每一位成员的付出和信任，感谢[上级领导/兄弟部门]的支持。[下一年]年，让我们继续并肩前行，创造更大的价值。</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="ta3p">请帮我优化以下团队年终总结。要求：1）开头摘要要精炼有力，3-5个bullet让领导快速Get全年亮点；2）业务成果要有全局视角，展示团队在公司战略中的价值；3）团队建设要体现管理者的用心和前瞻性；4）来年规划要有战略高度，与公司大方向对齐；5）语言风格要适合VP级别汇报。以下是原始内容：
+[粘贴你的团队总结]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>团队总结的核心是"展示了什么管理能力"，不只是"做了多少事"</li>
+          <li>人员发展板块非常重要，展示你在人才培养上的投入和成果</li>
+          <li>来年规划要和公司级OKR/KPI对齐，体现你的战略思维</li>
+          <li>致谢部分真诚简洁，体现团队领导者的格局</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('ta3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('ta3p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 四、工作汇报模板 ==================== -->
+<div class="section" id="report" data-category="report">
+  <div class="section-title"><span class="icon">💼</span> 四、工作汇报模板</div>
+  <p class="section-desc">工作汇报是向上管理的核心工具，好的汇报能让领导对你的工作放心、对你的人认可。</p>
+
+  <!-- 汇报1：项目汇报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🚀 项目进展汇报模板</h3>
+      <span class="tag">项目汇报</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于项目关键节点向领导汇报进展、申请决策支持。适合项目启动、阶段性汇报、结项汇报等场景。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tr1">【项目进展汇报】
+项目：[项目名称] · 汇报人：[姓名] · 汇报时间：[日期]
+
+一、项目背景（简述）
+[用2-3句话说明项目背景、核心目标和当前所处阶段]
+
+二、整体进度
+- 当前阶段：[需求/设计/开发/测试/上线/运维]
+- 整体完成度：[X]%
+- 是否在计划内：✅ 是 / ⚠️ 偏差 [X] 天（原因：[简述]）
+
+三、近期完成的关键事项
+1. [事项1]：[完成情况] — [关键产出]
+2. [事项2]：[完成情况] — [关键产出]
+3. [事项3]：[完成情况] — [关键产出]
+
+四、当前面临的问题与风险
+| 问题/风险 | 严重程度 | 影响范围 | 当前对策 | 是否需要决策支持 |
+|----------|---------|---------|---------|---------------|
+| [描述] | 高/中/低 | [影响] | [对策] | 是/否 |
+| [描述] | 高/中/低 | [影响] | [对策] | 是/否 |
+
+五、下一步计划
+1. [行动项] — 预计完成：[日期] — 负责人：[姓名]
+2. [行动项] — 预计完成：[日期] — 负责人：[姓名]
+3. [行动项] — 预计完成：[日期] — 负责人：[姓名]
+
+六、需要领导决策/支持的事项
+- 事项1：[描述问题] → 建议方案A：[说明] / 方案B：[说明] → 我的建议：[选择及理由]
+- 事项2：[描述问题] → 需要的支持：[说明]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tr1p">请帮我优化以下项目进展汇报。要求：1）整体结构要"先结论后展开"，开头一句话概括项目状态；2）进度描述要直观，善用百分比和状态标识；3）风险问题要有严重程度排序和应对方案；4）需要决策的部分要给出选项和建议，而非只提问题；5）语言简洁高效，适合在会议上快速阅读。以下是原始内容：
+[粘贴你的汇报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>向领导汇报问题时，一定要带着解决方案来，最好准备2个以上方案供选择</li>
+          <li>先说结论再展开细节，领导时间有限，需要快速Get核心信息</li>
+          <li>需要决策的事项标注出来，避免领导在大量信息中遗漏</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tr1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tr1p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 汇报2：进度汇报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>⏱️ 工作进度汇报模板</h3>
+      <span class="tag">进度汇报</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于日常工作进度同步，特别是领导临时问"那个事情做得怎么样了"的场景。也适合通过邮件/IM进行简短汇报。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tr2">【工作进度汇报】
+汇报人：[姓名] · 时间：[日期]
+
+一、事项进度总览
+| 事项 | 状态 | 进度 | 预计完成 | 备注 |
+|-----|------|------|---------|------|
+| [事项1] | 🟢进行中 | 80% | [日期] | 正常推进 |
+| [事项2] | 🟡有风险 | 60% | [日期] | 需要协调 |
+| [事项3] | ✅已完成 | 100% | [日期] | 已交付 |
+| [事项4] | 🔴延期 | 40% | [日期] | 原因说明 |
+
+二、重点事项详情
+1. [事项名称]（当前状态：[进行中/有风险/已完成]）
+   - 做了什么：[具体工作内容]
+   - 产出了什么：[交付物/结果]
+   - 下一步：[接下来要做什么]
+   - 卡点（如有）：[需要什么支持]
+
+2. [事项名称]
+   - 做了什么：[具体工作内容]
+   - 产出了什么：[交付物/结果]
+   - 下一步：[接下来要做什么]
+
+三、需要协调/提醒的事项
+- [如有需要提醒领导或需要协调的事情]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tr2p">请帮我优化以下工作进度汇报。要求：1）用红黄绿状态标识让进度一目了然；2）每个事项的描述遵循"做了什么→产出什么→下一步"的简洁逻辑；3）卡点要明确说明需要什么帮助；4）整体语言要简洁高效，适合快速阅读和即时回复。以下是原始内容：
+[粘贴你的汇报内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>状态标识（🟢🟡🔴✅）能让领导在3秒内抓住重点</li>
+          <li>有风险和延期的事项要放在前面说，展示你有风险意识</li>
+          <li>汇报频率建议：重要事项每日一报，常规事项每周一报</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tr2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tr2p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 汇报3：成果汇报 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🎉 工作成果汇报模板</h3>
+      <span class="tag">成果展示</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于阶段性成果展示、季度述职、晋升答辩、评优评先等需要高光展示工作成果的场景。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tr3">【工作成果汇报】
+汇报人：[姓名] · [岗位] · [时间段]
+
+━━ 开场（1分钟）━━
+大家好，我是[姓名]，负责[核心职责]。在过去[时间段]里，我聚焦在[核心方向]，取得了以下主要成果。
+
+━━ 核心成果展示 ━━
+成果一：[成果名称] 🏆
+- 背景挑战：[面临什么挑战/要解决什么问题]
+- 我的方案：[采取了什么策略和具体行动]
+- 最终成果：
+  • [量化成果1]（如：DAU从10万增长到25万，增长150%）
+  • [量化成果2]（如：用户投诉率从5%降到1.2%）
+  • [量化成果3]（如：获得公司季度最佳项目奖）
+- 价值意义：[对团队/业务/公司的意义]
+
+成果二：[成果名称] 🏆
+- 背景挑战：[面临什么挑战]
+- 我的方案：[策略和行动]
+- 最终成果：
+  • [量化成果1]
+  • [量化成果2]
+- 价值意义：[意义]
+
+成果三：[成果名称] 🏆
+- 背景挑战：[面临什么挑战]
+- 我的方案：[策略和行动]
+- 最终成果：
+  • [量化成果1]
+  • [量化成果2]
+- 价值意义：[意义]
+
+━━ 能力模型展示 ━━
+- 业务能力：[举例说明业务理解和落地能力]
+- 技术/专业能力：[举例说明专业深度]
+- 协作能力：[举例说明跨团队协作]
+- 创新能力：[举例说明创新思维和突破]
+
+━━ 未来规划 ━━
+- 短期（1-3个月）：[计划]
+- 中期（3-6个月）：[计划]
+- 长期（6-12个月）：[计划]
+
+━━ 结语 ━━
+[用1-2句话总结核心价值主张，表达未来期待]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tr3p">请帮我优化以下工作成果汇报。要求：1）每个成果用"挑战→方案→结果→价值"的故事线来讲述，增加感染力；2）量化数据要加粗或突出显示；3）能力模型部分要有具体案例而非空泛自评；4）未来规划要与当前成果衔接自然；5）整体适合在述职或晋升答辩中使用，语言要有自信感和说服力。以下是原始内容：
+[粘贴你的成果汇报]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>成果汇报要讲故事，"面对什么挑战→我怎么做的→取得了什么结果"比直接列数据更打动人</li>
+          <li>每个成果至少3个量化数据点，用数据构建说服力</li>
+          <li>能力模型展示要与岗位要求对标，针对性地展示匹配度</li>
+          <li>如果用于晋升答辩，建议控制在15-20分钟内，每个成果2-3分钟</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tr3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tr3p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 五、商务邮件模板 ==================== -->
+<div class="section" id="email" data-category="email">
+  <div class="section-title"><span class="icon">✉️</span> 五、商务邮件模板</div>
+  <p class="section-desc">商务邮件是职场沟通的正式载体，一封好邮件能提升你的专业形象，推动事情高效落地。</p>
+
+  <!-- 邮件1：合作邀请 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🤝 合作邀请邮件模板</h3>
+      <span class="tag">商务合作</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于主动寻求商务合作、渠道合作、资源互换等场景。需要展现诚意和价值。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="te1">主题：关于[合作方向]的合作邀请 — [你的公司/品牌名]
+
+[对方称呼] 您好：
+
+我是[你的公司名]的[你的姓名]，担任[你的职位]。一直关注贵司在[对方业务领域]的发展，特别是[具体提到对方的一个产品/项目/成就]，非常认可贵司在[领域]的专业度和影响力。
+
+【合作背景】
+我司目前在[你的业务领域]深耕[X年/月]，拥有[核心资源/能力/用户基础]。我们发现双方在[共同领域/目标用户/市场方向]上有很好的互补性，因此希望探讨合作的可能性。
+
+【合作方案】
+初步想法如下，具体可根据贵司需求灵活调整：
+1. 合作形式：[如：联合活动/内容互推/产品对接/资源互换/渠道合作]
+2. 我方可提供：
+   - [资源1]：[具体说明]
+   - [资源2]：[具体说明]
+3. 预期收益：
+   - 对贵司：[能带来什么价值]
+   - 对双方：[共同利益]
+
+【关于我们】
+[公司名]成立于[年份]，专注于[业务领域]。核心数据：
+- 用户/客户规模：[数字]
+- 行业影响力：[排名/奖项/媒体报道等]
+- 成功合作案例：[列举1-2个知名合作方]
+
+如果贵司有兴趣，我可以安排一次15-30分钟的电话或视频会议，详细介绍合作方案。我的联系方式如下：
+- 电话：[手机号]
+- 微信：[微信号]
+- 邮箱：[邮箱地址]
+
+期待您的回复，祝工作顺利！
+
+[你的姓名]
+[你的职位] · [你的公司]
+[日期]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tep1">请帮我优化以下合作邀请邮件。要求：1）开头要有个性化内容，展示我了解对方公司；2）合作价值要清晰，让对方看到"对我有什么好处"；3）语气专业但不死板，真诚但不卑微；4）Call to Action要明确，降低对方回复的门槛。以下是原始邮件内容：
+[粘贴你的邮件内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>邮件主题要一眼看出目的，避免"合作""在吗"等模糊标题</li>
+          <li>开头提到对方的具体产品或成就，说明你做过功课，不是群发邮件</li>
+          <li>重点展示"对方能得到什么"，而非一味介绍自己</li>
+          <li>提供具体联系方式和建议会议时长，降低对方决策成本</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('te1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tep1','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 邮件2：客户跟进 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>📞 客户跟进邮件模板</h3>
+      <span class="tag">客户管理</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于销售、BD、客户成功等岗位在商务沟通中的跟进邮件，包括初次接触后跟进、方案反馈跟进、沉默客户激活等。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="te2">主题：[上次沟通主题] 跟进 — [你的公司名] [你的姓名]
+
+[客户称呼] 您好：
+
+感谢上次[日期]的沟通/会议，和您交流[讨论的主题]让我收获很多。
+
+上次我们聊到了[简要回顾上次沟通的核心内容]，关于您提到的[客户关注的问题/需求]，我做了进一步的梳理：
+
+【补充信息/方案更新】
+1. [针对客户上次提出的问题/疑虑，给出补充说明或解决方案]
+2. [提供新的数据/案例/资料，增强说服力]
+3. [如有报价更新或优惠政策，在此说明]
+
+【下一步建议】
+基于上次沟通的内容，我建议接下来可以：
+- 方案A：[具体下一步动作，如安排产品演示/试用/合同讨论]
+- 方案B：[备选方案]
+您看哪个时间方便？我可以配合您的时间安排。
+
+附件中是[相关资料名称]，供您参考。
+
+如有任何问题，随时联系我（电话：[手机号]，微信：[微信号]）。
+
+祝工作顺利！
+
+[你的姓名]
+[职位] · [公司]
+[日期]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tep2">请帮我优化以下客户跟进邮件。要求：1）开头回顾上次沟通要自然不生硬；2）补充信息要针对客户的痛点，展示我在用心；3）下一步建议要具体明确，给出可选方案；4）语气要热情但不急迫，专业但有温度；5）避免让客户觉得是在催单。以下是原始内容：
+[粘贴你的邮件内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>跟进节奏：首次沟通后1-2天内跟进，之后每3-5天跟进一次</li>
+          <li>每次跟进都要提供新价值（新资料、新案例、新方案），而非简单问"考虑得怎样"</li>
+          <li>给出2个以上的下一步方案供选择，降低客户决策压力</li>
+          <li>如果连续3次无回复，换个触达方式（电话/微信/换个话题的邮件）</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('te2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tep2','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 邮件3：内部沟通 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🏢 内部沟通邮件模板</h3>
+      <span class="tag">内部协作</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于跨部门协调、需求提报、资源申请、信息通知等内部工作邮件。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="te3">主题：【[类别]】[核心事项] — 需要[对方部门/同事]协助/知悉
+
+[称呼] 您好：
+
+【背景说明】
+我在负责[项目/工作名称]，目前进展到[阶段]。因为[具体原因]，需要[对方部门/同事]的协助/支持，具体情况如下：
+
+【具体需求】
+1. 需求内容：[详细说明需要对方做什么]
+2. 期望产出：[需要对方交付什么]
+3. 时间要求：希望在[日期]前完成，原因是[说明时间紧迫性的原因]
+4. 背景资料：[如有附件或参考资料，在此列出]
+
+【对对方的价值/影响】
+这项工作完成后：
+- 对[对方部门]：[能带来什么好处]
+- 对整体项目：[推进什么进展]
+- 对公司：[更大的价值]
+
+【我方支持】
+为了方便贵方推进，我这边可以提供：
+- [支持1]：如提供数据、协助对接等
+- [支持2]：如参与讨论、同步进度等
+
+如有疑问，随时沟通。可以回复此邮件或直接联系我：
+- 电话：[手机号]
+- 微信：[微信号]
+- 工位：[楼栋/楼层/工位号]
+
+感谢支持！
+
+[你的姓名]
+[部门] · [职位]
+[日期]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tep3">请帮我优化以下内部沟通邮件。要求：1）需求描述要具体清晰，避免歧义；2）说明时间要求时要有合理解释，不要给人"催命"的感觉；3）展示对对方价值的部分要真诚，不要变成"这是为你们好"的说教；4）语气友好专业，促进跨部门协作关系。以下是原始内容：
+[粘贴你的邮件内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>邮件主题加上【类别】标签（如【需求】【通知】【协调】），方便对方快速分类处理</li>
+          <li>需求描述用编号列表，避免大段文字让对方抓不住重点</li>
+          <li>说明"对方能获得什么"是推动协作的关键，而不是强调"我需要你帮忙"</li>
+          <li>时间要求要给缓冲，不要卡着DDL发邮件</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('te3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tep3','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 邮件4：道歉邮件 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🙏 致歉邮件模板</h3>
+      <span class="tag">危机沟通</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于工作延误、失误、服务问题等需要向客户或同事道歉的场景。重点是态度真诚+方案明确。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="te4">主题：关于[具体事项]的致歉与解决方案
+
+[称呼] 您好：
+
+首先，对于[具体事项]给您带来的不便，我深表歉意。
+
+【事件说明】
+[简要说明发生了什么，客观陈述事实，不推卸责任]
+- 发生时间：[时间]
+- 具体情况：[简述问题]
+- 影响范围：[对对方造成了什么影响]
+
+【原因分析】
+经过内部排查，问题的根本原因是：
+- [原因1]
+- [原因2]
+（注：如不方便透露详细原因，可改为"经过内部排查，我们已定位问题所在"）
+
+【解决方案】
+针对此次问题，我们采取了以下措施：
+1. 紧急处理：[立即做了什么来止损/补救]
+2. 短期方案：[接下来几天会做什么来弥补]
+3. 长期改进：[为了避免类似问题再次发生，建立了什么机制]
+
+【补偿措施】（如适用）
+为表诚意，我们将为贵方提供[具体补偿，如延长服务期/折扣/赠送资源等]。
+
+我们深知此次问题影响了您对我们的信任，我们将以实际行动来弥补。如果您有任何疑问或进一步的需求，请随时联系我：
+- 电话：[手机号]
+- 微信：[微信号]
+
+再次致歉，感谢您的理解与支持。
+
+[你的姓名]
+[职位] · [公司]
+[日期]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tep4">请帮我优化以下致歉邮件。要求：1）开头直接道歉，不要铺垫太多；2）客观说明事实，不找借口但也不过度自责；3）解决方案要具体可执行，体现诚意和行动力；4）语气真诚恳切但保持专业，不要过于卑微；5）整体让人感受到"他们确实在认真对待这个问题"。以下是原始内容：
+[粘贴你的邮件内容]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>道歉邮件要及时发出，发现问题后24小时内必须回应</li>
+          <li>"解决方案"比"道歉"更重要，对方要的是问题能被解决</li>
+          <li>补偿措施要具体，不要说"我们会补偿"而不说明具体内容</li>
+          <li>切忌在邮件中甩锅给同事或第三方，展现担当比撇清关系更重要</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('te4','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tep4','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 六、会议纪要模板 ==================== -->
+<div class="section" id="meeting" data-category="meeting">
+  <div class="section-title"><span class="icon">📝</span> 六、会议纪要模板</div>
+  <p class="section-desc">会议纪要不是逐字记录，而是提炼决策、明确行动项。好的会议纪要能让没参会的人也能快速了解结论。</p>
+
+  <!-- 会议纪要1：项目会议 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🎯 项目会议纪要模板</h3>
+      <span class="tag">项目管理</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于项目启动会、需求评审会、项目周会、结项复盘会等项目相关会议。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tmt1">【会议纪要】[会议名称]
+会议时间：[年-月-日 时:分 — 时:分]
+会议地点：[会议室/线上会议链接]
+主持人：[姓名]
+记录人：[姓名]
+参会人：[姓名1、姓名2、姓名3...]
+缺席人：[姓名]（缺席原因：[说明]）
+
+━━ 会议主题 ━━
+[用1-2句话说明本次会议的核心议题和目标]
+
+━━ 议题讨论 ━━
+议题一：[议题名称]
+- 背景：[简述议题背景]
+- 讨论要点：
+  • [观点1] — [提出人]
+  • [观点2] — [提出人]
+  • [观点3] — [提出人]
+- 决策结论：[达成的共识/决策]
+- 未决事项：[如有，说明需后续讨论的内容]
+
+议题二：[议题名称]
+- 背景：[简述议题背景]
+- 讨论要点：
+  • [观点1] — [提出人]
+  • [观点2] — [提出人]
+- 决策结论：[达成的共识/决策]
+
+━━ 行动项（Action Items）━━
+| 编号 | 行动项 | 负责人 | 截止日期 | 当前状态 |
+|-----|-------|-------|---------|---------|
+| A01 | [具体任务描述] | [姓名] | [日期] | 待开始 |
+| A02 | [具体任务描述] | [姓名] | [日期] | 待开始 |
+| A03 | [具体任务描述] | [姓名] | [日期] | 待开始 |
+
+━━ 下次会议 ━━
+- 时间：[日期 时:分]
+- 议题预告：[下次计划讨论的内容]
+- 需准备事项：[参会人需要提前准备什么]
+
+━━ 附件 ━━
+- [附件1名称及简要说明]
+- [附件2名称及简要说明]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tmt1p">请帮我优化以下会议纪要。要求：1）精简讨论过程，只保留关键观点和最终结论；2）行动项要SMART化（具体、可衡量、有负责人、有截止时间）；3）用"决策结论"而非"大家认为"来表述；4）格式规范，适合发送给未参会的领导和同事。以下是原始会议记录：
+[粘贴你的会议记录]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>会议纪要要当天发出，最好在会议结束后2小时内</li>
+          <li>行动项是最重要的部分，每个行动项必须有明确的负责人和截止日期</li>
+          <li>记录"决策结论"而非"讨论过程"，领导要的是结果不是辩论</li>
+          <li>发给参会人确认后再抄送相关人员，避免信息有误</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tmt1','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tmt1p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 会议纪要2：头脑风暴 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>💡 头脑风暴会议纪要模板</h3>
+      <span class="tag">创意讨论</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于产品创意会、营销策划会、问题解决方案讨论等需要发散思维的会议。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tmt2">【头脑风暴纪要】[会议主题]
+时间：[日期 时:分 — 时:分]
+参与人：[姓名列表]
+主持人：[姓名] · 记录人：[姓名]
+
+━━ 讨论目标 ━━
+本次头脑风暴的核心问题：[明确的讨论主题]
+期望产出：[需要达成什么，如：确定3个营销方案方向/找到5个用户增长策略]
+
+━━ 创意收集 ━━
+（以下为本次会议收集到的所有创意，未经筛选）
+
+方案一：[创意名称]
+- 提出人：[姓名]
+- 核心思路：[简述方案内容]
+- 预期效果：[可能带来什么结果]
+- 实施难度：⭐/⭐⭐/⭐⭐⭐（低/中/高）
+
+方案二：[创意名称]
+- 提出人：[姓名]
+- 核心思路：[简述方案内容]
+- 预期效果：[可能带来什么结果]
+- 实施难度：⭐/⭐⭐/⭐⭐⭐
+
+方案三：[创意名称]
+- 提出人：[姓名]
+- 核心思路：[简述方案内容]
+- 预期效果：[可能带来什么结果]
+- 实施难度：⭐/⭐⭐/⭐⭐⭐
+
+方案四：[创意名称]
+- 提出人：[姓名]
+- 核心思路：[简述方案内容]
+- 预期效果：[可能带来什么结果]
+- 实施难度：⭐/⭐⭐/⭐⭐⭐
+
+（继续添加...）
+
+━━ 筛选与投票 ━━
+经讨论/投票，以下方案进入下一轮评估：
+| 排名 | 方案名称 | 得票数 | 入选理由 |
+|-----|---------|-------|---------|
+| 1 | [方案名] | [X票] | [为什么选它] |
+| 2 | [方案名] | [X票] | [为什么选它] |
+| 3 | [方案名] | [X票] | [为什么选它] |
+
+━━ 后续Action ━━
+| 任务 | 负责人 | 截止日期 | 备注 |
+|-----|-------|---------|------|
+| [对入选方案做可行性分析] | [姓名] | [日期] | [说明] |
+| [制作方案详细计划书] | [姓名] | [日期] | [说明] |
+| [安排下一次评审会] | [姓名] | [日期] | [说明] |
+
+━━ 被搁置但有价值的创意 ━━
+[记录一些虽然这次没选上但有潜力的创意，留作未来参考]
+- [创意名称]：[简述] — 搁置原因：[当前不适合的原因]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tmt2p">请帮我优化以下头脑风暴会议纪要。要求：1）保持所有创意的完整性，不要遗漏任何想法；2）为每个方案补充可行性分析维度（成本、时间、效果预期）；3）筛选结果要体现选择逻辑；4）"被搁置创意"部分要认真记录，体现对每个想法的尊重。以下是原始记录：
+[粘贴你的会议记录]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>头脑风暴的核心原则是"先不评判"，记录时保留所有创意，不要当场否定</li>
+          <li>用"实施难度"和"预期效果"两个维度做初筛，高效又公平</li>
+          <li>"被搁置创意"板块很关键，好创意不应该被遗忘，可以留到下次讨论</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tmt2','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tmt2p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 会议纪要3：周会 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>📅 团队周会纪要模板</h3>
+      <span class="tag">团队管理</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于团队每周例会、部门周会等定期性会议。重在同步信息、解决问题、对齐目标。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tmt3">【团队周会纪要】[团队名称]
+时间：[日期 时:分 — 时:分]
+参会人：[姓名列表]
+记录人：[姓名]
+
+━━ 上周Action项回顾 ━━
+| 编号 | 任务 | 负责人 | 状态 | 备注 |
+|-----|------|-------|------|------|
+| 上周01 | [任务] | [姓名] | ✅已完成 | [结果简述] |
+| 上周02 | [任务] | [姓名] | 🟡进行中 | [进度说明，预计完成时间] |
+| 上周03 | [任务] | [姓名] | 🔴未完成 | [原因说明] |
+
+━━ 各模块/个人汇报 ━━
+[模块A / 姓名1]
+- 上周完成：[关键产出]
+- 本周计划：[重点任务]
+- 需要协助：[如有]
+
+[模块B / 姓名2]
+- 上周完成：[关键产出]
+- 本周计划：[重点任务]
+- 需要协助：[如有]
+
+[模块C / 姓名3]
+- 上周完成：[关键产出]
+- 本周计划：[重点任务]
+- 需要协助：[如有]
+
+━━ 重点问题讨论 ━━
+问题1：[问题描述]
+- 讨论结论：[解决方案]
+- 行动项：[谁做什么，什么时候完成]
+
+问题2：[问题描述]
+- 讨论结论：[解决方案]
+- 行动项：[谁做什么，什么时候完成]
+
+━━ 重要通知/信息同步 ━━
+- [通知1：如公司政策调整、人员变动、重要客户反馈等]
+- [通知2]
+
+━━ 本周Action项 ━━
+| 编号 | 任务 | 负责人 | 截止日期 | 优先级 |
+|-----|------|-------|---------|-------|
+| 本周01 | [任务] | [姓名] | [日期] | P0 |
+| 本周02 | [任务] | [姓名] | [日期] | P1 |
+| 本周03 | [任务] | [姓名] | [日期] | P1 |
+
+━━ 下次会议 ━━
+时间：[下周同一时间]
+特别议程：[如有特别需要讨论的议题，在此预告]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tmt3p">请帮我优化以下团队周会纪要。要求：1）上周Action项回顾要简洁明了，用状态标识快速展示完成情况；2）各模块汇报要提炼关键信息，去掉流水账；3）问题讨论要聚焦结论和解决方案；4）本周Action项要按优先级排序；5）整体控制在1-2页，适合快速浏览。以下是原始记录：
+[粘贴你的会议记录]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>先回顾上周Action项再开始新议题，确保闭环管理</li>
+          <li>每个人的汇报控制在3-5分钟，避免冗长</li>
+          <li>重点问题要当面讨论得出结论，不要留到"会后再议"</li>
+          <li>周会纪要发出后，本周的Action项要持续跟踪直到完成</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tmt3','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tmt3p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 会议纪要4：客户会议 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>🤝 客户会议纪要模板</h3>
+      <span class="tag">客户沟通</span>
+    </div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">适用场景</div>
+        <p style="font-size:.9em;color:#4b5563">适用于拜访客户、客户到访、方案汇报、需求对接等与外部客户相关的会议。</p>
+      </div>
+      <div class="block">
+        <div class="block-label">模板内容</div>
+        <div class="template-text" id="tmt4">【客户会议纪要】
+客户：[客户公司名称]
+会议时间：[日期 时:分 — 时:分]
+会议地点：[地点]
+我方参会人：[姓名列表]
+客户方参会人：[姓名 + 职位列表]
+
+━━ 会议目的 ━━
+[本次会议的核心目标，如：需求调研/方案汇报/合作洽谈/问题沟通]
+
+━━ 客户方核心信息 ━━
+1. 客户需求/关注点
+   - [需求1]：[详细描述]
+   - [需求2]：[详细描述]
+   - [需求3]：[详细描述]
+
+2. 客户痛点/问题
+   - [痛点1]：[描述] → 客户期望解决方式：[说明]
+   - [痛点2]：[描述] → 客户期望解决方式：[说明]
+
+3. 客户决策相关信息
+   - 决策人：[姓名 + 职位]
+   - 预算范围：[如有提及]
+   - 时间计划：[客户的期望时间节点]
+   - 竞品情况：[是否在对比其他供应商]
+
+━━ 我方回应 ━━
+1. 针对[需求1]：
+   - 我方方案/回应：[说明]
+   - 客户反馈：[客户的反应]
+
+2. 针对[需求2]：
+   - 我方方案/回应：[说明]
+   - 客户反馈：[客户的反应]
+
+━━ 双方达成的共识 ━━
+1. [共识1]
+2. [共识2]
+3. [共识3]
+
+━━ 待跟进事项 ━━
+| 事项 | 我方负责人 | 客户方对接人 | 完成时间 | 优先级 |
+|-----|----------|------------|---------|-------|
+| [事项1] | [姓名] | [姓名] | [日期] | 高 |
+| [事项2] | [姓名] | [姓名] | [日期] | 中 |
+| [事项3] | [姓名] | [姓名] | [日期] | 中 |
+
+━━ 下次沟通安排 ━━
+- 时间：[日期]
+- 形式：[电话/视频/上门拜访]
+- 主题：[下次沟通的重点]
+
+━━ 特别备注 ━━
+[记录会议中的其他有价值信息，如客户个人偏好、公司内部动向、潜在风险等]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="tmt4p">请帮我优化以下客户会议纪要。要求：1）客户需求部分要结构化整理，区分"明确需求"和"潜在需求"；2）我方回应要体现专业性和针对性；3）待跟进事项要按优先级排序，确保不遗漏；4）特别备注要记录有价值的"软信息"（如决策人偏好、内部关系等）；5）格式要专业规范，适合发送给客户确认。以下是原始记录：
+[粘贴你的会议记录]</div>
+      </div>
+      <div class="block">
+        <div class="block-label">使用技巧</div>
+        <ul class="tips-list">
+          <li>客户会议纪要要在24小时内发给客户确认，展示专业和重视</li>
+          <li>记录客户参会人的职位，便于后续判断决策链</li>
+          <li>"特别备注"板块记录客户的非正式信息（如个人喜好、提到的内部消息），对后续跟进很有价值</li>
+          <li>发给客户前先内部审核，避免出现内部敏感信息或不当表述</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('tmt4','模板内容')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('tmt4p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Toast提示 -->
+<div class="toast" id="toast"></div>
+
+<!-- 回到顶部按钮 -->
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- 底部 -->
+<div class="footer">
+  <p><strong>AI办公效率模板包</strong></p>
+  <p>让每一份职场文档都专业高效</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+
+<script>
+// 复制功能
+function copyText(id,label){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var text=el.innerText||el.textContent;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)});
+  }else{
+    fallbackCopy(text,label);
+  }
+}
+function fallbackCopy(text,label){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}
+  document.body.removeChild(ta);
+}
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.classList.remove('show')},2200);
+}
+
+// 分类筛选
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+    this.classList.add('active');
+    var f=this.getAttribute('data-filter');
+    document.querySelectorAll('.section').forEach(function(sec){
+      if(f==='all'||sec.getAttribute('data-category')===f){
+        sec.style.display='';
+      }else{
+        sec.style.display='none';
+      }
+    });
+  });
+});
+
+// 回到顶部按钮
+window.addEventListener('scroll',function(){
+  var btn=document.getElementById('backTop');
+  if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}
+});
+</script>
+</body>
+</html>

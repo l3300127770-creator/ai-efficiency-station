@@ -1,0 +1,1363 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI提示词模板包 - 10大场景100+即用模板</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--primary-light:#dbeafe;--primary-50:#eff6ff;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;--green-500:#22c55e;--shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);--shadow-lg:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05);--radius:12px;--radius-sm:8px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:var(--gray-50);color:var(--gray-800);line-height:1.6}
+.header{background:linear-gradient(135deg,var(--primary) 0%,#7c3aed 100%);color:#fff;padding:3rem 1.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.header::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 60%);pointer-events:none}
+.header h1{font-size:2.2rem;font-weight:800;margin-bottom:.6rem;position:relative}
+.header h1 .emoji{font-size:2.4rem;vertical-align:middle}
+.header p{font-size:1.05rem;opacity:.9;max-width:640px;margin:0 auto 1.5rem;position:relative}
+.header .stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;position:relative}
+.header .stat-item{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border-radius:var(--radius-sm);padding:.6rem 1.4rem;font-weight:600}
+.header .stat-item span{font-size:1.4rem;font-weight:800}
+.usage{max-width:900px;margin:0 auto 1.5rem;padding:1rem 1.5rem;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--gray-200)}
+.usage h3{font-size:1rem;color:var(--primary);margin-bottom:.5rem}
+.usage ol{padding-left:1.4rem;font-size:.92rem;color:var(--gray-600)}
+.usage ol li{margin-bottom:.2rem}
+.toolbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);padding:.8rem 1.5rem;box-shadow:var(--shadow)}
+.toolbar-inner{max-width:1200px;margin:0 auto;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.search-box{flex:1;min-width:200px;position:relative}
+.search-box input{width:100%;padding:.6rem 1rem .6rem 2.4rem;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-size:.95rem;outline:none;transition:border .2s}
+.search-box input:focus{border-color:var(--primary)}
+.search-box .icon{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--gray-500);font-size:1rem}
+.cat-pills{display:flex;gap:.4rem;flex-wrap:wrap;overflow-x:auto;padding-bottom:2px}
+.cat-pill{padding:.35rem .8rem;border-radius:999px;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-600);transition:all .2s;white-space:nowrap;user-select:none}
+.cat-pill:hover{border-color:var(--primary);color:var(--primary)}
+.cat-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.main{max-width:1200px;margin:1.5rem auto;padding:0 1.5rem 3rem}
+.scene-section{margin-bottom:2.5rem;scroll-margin-top:80px}
+.scene-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--primary-light)}
+.scene-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.scene-header h2{font-size:1.3rem;color:var(--gray-900)}
+.scene-header .count{font-size:.8rem;background:var(--primary-light);color:var(--primary);padding:.15rem .5rem;border-radius:999px;font-weight:600}
+.scene-desc{font-size:.9rem;color:var(--gray-500);margin-bottom:1rem}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
+.prompt-card{background:#fff;border-radius:var(--radius);border:1px solid var(--gray-200);overflow:hidden;transition:all .25s;box-shadow:var(--shadow)}
+.prompt-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.card-top{padding:1rem 1.2rem .8rem;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.card-tag{display:inline-block;font-size:.72rem;font-weight:600;padding:.15rem .5rem;border-radius:999px;white-space:nowrap}
+.card-title{font-size:.95rem;font-weight:700;color:var(--gray-900);flex:1;line-height:1.4}
+.copy-btn{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--gray-200);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray-500);font-size:.85rem;transition:all .2s}
+.copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-50)}
+.copy-btn.copied{border-color:var(--green-500);color:var(--green-500);background:#f0fdf4}
+.prompt-body{padding:0 1.2rem 1rem}
+.prompt-text{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:.8rem;font-size:.85rem;color:var(--gray-700);line-height:1.7;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto}
+.usage-tip{margin-top:.6rem;font-size:.82rem;color:var(--gray-500);background:var(--primary-50);border-radius:var(--radius-sm);padding:.5rem .7rem;border-left:3px solid var(--primary)}
+.usage-tip strong{color:var(--primary)}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--gray-900);color:#fff;padding:.7rem 1.4rem;border-radius:999px;font-size:.9rem;font-weight:500;z-index:9999;opacity:0;transition:all .35s cubic-bezier(.4,0,.2,1);pointer-events:none;box-shadow:var(--shadow-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .check{color:var(--green-500);margin-right:.3rem}
+.footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid var(--gray-200);color:var(--gray-500);font-size:.85rem;background:#fff}
+.back-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .3s;z-index:99}
+.back-top.show{opacity:1;pointer-events:auto}
+.tag-office{background:#dbeafe;color:#1e40af}.tag-media{background:#fce7f3;color:#9d174d}.tag-video{background:#fef3c7;color:#92400e}.tag-ecom{background:#d1fae5;color:#065f46}.tag-learn{background:#ede9fe;color:#5b21b6}.tag-code{background:#e0e7ff;color:#3730a3}.tag-design{background:#fff1f2;color:#9f1239}.tag-market{background:#fef9c3;color:#854d0e}.tag-service{background:#ccfbf1;color:#115e59}.tag-life{background:#f0fdf4;color:#166534}
+.bg-office{background:#dbeafe}.bg-media{background:#fce7f3}.bg-video{background:#fef3c7}.bg-ecom{background:#d1fae5}.bg-learn{background:#ede9fe}.bg-code{background:#e0e7ff}.bg-design{background:#fff1f2}.bg-market{background:#fef9c3}.bg-service{background:#ccfbf1}.bg-life{background:#f0fdf4}
+@media(max-width:768px){.header{padding:2rem 1rem 1.5rem}.header h1{font-size:1.5rem}.main{padding:0 1rem 2rem}.cards-grid{grid-template-columns:1fr}.toolbar-inner{flex-direction:column}.cat-pills{width:100%}}
+</style>
+</head>
+<body>
+<header class="header">
+<h1><span class="emoji">🚀</span> AI提示词模板包</h1>
+<p>覆盖10大热门场景，100+即用提示词模板，复制粘贴即可让AI帮你高效完成任务！适合所有人，零基础也能用。</p>
+<div class="stats">
+<div class="stat-item">📋 <span>10</span> 大场景</div>
+<div class="stat-item">✨ <span>100+</span> 提示词</div>
+<div class="stat-item">🎯 即拿即用</div>
+</div>
+</header>
+<div style="max-width:900px;margin:1.5rem auto;padding:0 1.5rem">
+<div class="usage">
+<h3>📖 使用说明</h3>
+<ol>
+<li>在下方目录点击场景分类，或使用搜索框快速找到你需要的提示词</li>
+<li>找到合适的提示词后，点击卡片右上角的 📋 复制按钮，提示词会自动复制到剪贴板</li>
+<li>打开任意AI工具（ChatGPT、文心一言、通义千问、豆包等），粘贴提示词即可</li>
+<li>根据你的实际需求，修改【方括号】中的内容，让AI回答更精准</li>
+<li>可以组合使用多个提示词，先让AI完成基础任务，再用优化提示词打磨结果</li>
+</ol>
+</div>
+</div>
+<div class="toolbar">
+<div class="toolbar-inner">
+<div class="search-box"><span class="icon">🔍</span><input type="text" name="search" id="searchInput" placeholder="搜索提示词关键词（如：周报、标题、代码...）"></div>
+<div class="cat-pills" id="catPills">
+<button type="button" class="cat-pill active" data-cat="all">全部</button>
+<button type="button" class="cat-pill" data-cat="office">💼 办公效率</button>
+<button type="button" class="cat-pill" data-cat="media">✍️ 自媒体</button>
+<button type="button" class="cat-pill" data-cat="video">🎬 短视频</button>
+<button type="button" class="cat-pill" data-cat="ecom">🛒 电商</button>
+<button type="button" class="cat-pill" data-cat="learn">📚 学习</button>
+<button type="button" class="cat-pill" data-cat="code">💻 编程</button>
+<button type="button" class="cat-pill" data-cat="design">🎨 设计</button>
+<button type="button" class="cat-pill" data-cat="market">📣 营销</button>
+<button type="button" class="cat-pill" data-cat="service">🤝 客服</button>
+<button type="button" class="cat-pill" data-cat="life">🏠 生活</button>
+</div>
+</div>
+</div>
+<main class="main"><section class="scene-section" id="office"><div class="scene-header"><div class="scene-icon bg-office">💼</div><h2>办公效率</h2><span class="count">10个提示词</span></div><p class="scene-desc">写周报、做PPT、整理会议纪要、写邮件、做计划...让AI成为你的办公助手</p><div class="cards-grid"><div class="prompt-card" data-cat="office" data-keywords="周报 工作总结 weekly report"><div class="card-top"><div><span class="card-tag tag-office">周报</span><div class="card-title">万能周报生成器</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一份本周工作周报。我的岗位是【岗位名称】，本周主要完成了以下工作：
+1. 【工作内容1】
+2. 【工作内容2】
+3. 【工作内容3】
+遇到的问题：【遇到的问题】
+下周计划：【下周计划】
+请用专业、简洁的语言整理成正式周报格式，包含"本周工作完成情况"、"遇到的问题与解决方案"、"下周工作计划"三个部分。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>将【】中的内容替换为你的实际工作内容，AI会自动帮你润色语言、理清逻辑。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="PPT 演示文稿 大纲 汇报"><div class="card-top"><div><span class="card-tag tag-office">PPT</span><div class="card-title">PPT大纲一键生成</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计一份PPT大纲。主题是【主题名称】，汇报对象是【领导/客户/同事】，时长约【X】分钟。
+请包含：
+1. 封面页（标题+副标题）
+2. 目录页
+3. 每页的核心观点
+4. 关键数据或案例支撑
+5. 总结与行动计划
+请列出每页的标题、要点和建议配图方向。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>告诉AI汇报对象是谁，它会自动调整语言风格和详略程度。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="会议纪要 会议记录 整理"><div class="card-top"><div><span class="card-tag tag-office">会议纪要</span><div class="card-title">会议纪要整理助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我把以下会议录音/笔记整理成正式的会议纪要。
+会议主题：【主题】
+参会人员：【人员列表】
+会议时间：【日期时间】
+原始内容：
+【粘贴会议笔记或录音转文字】
+
+请整理成包含：
+1. 会议基本信息
+2. 讨论要点摘要
+3. 决议事项（明确责任人和截止日期）
+4. 待办事项清单
+5. 下次会议安排</div><div class="usage-tip"><strong>💡 使用技巧：</strong>即使是零散的笔记，AI也能帮你整理成结构化的会议纪要。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="邮件 email 邮件撰写"><div class="card-top"><div><span class="card-tag tag-office">邮件</span><div class="card-title">商务邮件撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一封商务邮件。
+收件人：【收件人称呼和职位】
+邮件目的：【请求会议/项目汇报/合作邀请/催办等】
+核心内容：【要传达的关键信息】
+语气要求：【正式/友好/严肃/委婉】
+
+请生成完整邮件，包含主题行、称呼、正文、结束语和签名。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>指定语气风格，比如"委婉拒绝"或"热情邀约"，AI会精准把握分寸。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="计划 项目计划 时间安排"><div class="card-top"><div><span class="card-tag tag-office">计划</span><div class="card-title">项目计划制定</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定一份详细的项目计划。
+项目名称：【项目名称】
+项目目标：【最终要达成的目标】
+总时间周期：【X周/月】
+可用资源：【团队人数、预算等】
+关键约束：【截止日期、技术限制等】
+
+请输出：
+1. 项目阶段划分
+2. 关键里程碑节点
+3. 每阶段的具体任务清单
+4. 责任分工建议
+5. 风险点和应对策略</div><div class="usage-tip"><strong>💡 使用技巧：</strong>说明清楚约束条件，AI会帮你做更合理的优先级排序。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="述职 报告 年终总结"><div class="card-top"><div><span class="card-tag tag-office">述职报告</span><div class="card-title">述职报告撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一份述职报告。
+岗位：【岗位名称】
+任职时间：【时间段】
+主要业绩：
+1. 【业绩1，附数据】
+2. 【业绩2，附数据】
+3. 【业绩3，附数据】
+个人成长：【学到的技能或提升】
+不足之处：【需要改进的地方】
+未来规划：【下一步目标】
+
+请写一份结构清晰、数据说话的述职报告，约800-1200字。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>尽量带上具体数据（如"提升了30%"），AI会让业绩描述更有说服力。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="Excel 表格 数据整理 函数"><div class="card-top"><div><span class="card-tag tag-office">Excel</span><div class="card-title">Excel公式与数据分析</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">我需要在Excel中完成以下任务：
+数据描述：【描述数据结构，如：A列是日期，B列是销售额...】
+目标：【如：按月汇总/查找重复/条件求和/制作图表】
+
+请告诉我：
+1. 需要使用的Excel公式
+2. 操作步骤（一步一步教我）
+3. 如果需要VBA宏代码，也请提供
+4. 常见出错点和注意事项</div><div class="usage-tip"><strong>💡 使用技巧：</strong>描述清楚数据的列名和结构，AI给的公式可以直接复制使用。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="通知 公告 通知撰写"><div class="card-top"><div><span class="card-tag tag-office">通知</span><div class="card-title">公司通知/公告撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我撰写一份公司内部通知/公告。
+通知类型：【人事变动/放假通知/制度更新/活动通知】
+核心信息：【需要传达的关键内容】
+生效时间：【何时生效】
+涉及范围：【全员/某部门/某区域】
+
+请生成正式通知格式，包含标题、正文、执行要求、发布部门和日期。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>说明通知类型，AI会自动匹配合适的公文格式和措辞。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="简历 求职 自我介绍"><div class="card-top"><div><span class="card-tag tag-office">简历</span><div class="card-title">简历优化与撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我优化/撰写简历。
+目标岗位：【岗位名称】
+工作经验：【X年，曾任职于...】
+教育背景：【学校和专业】
+核心技能：【列出3-5个关键技能】
+主要成就：【用数据说明的业绩】
+
+请帮我：
+1. 撰写吸引人的个人简介
+2. 用STAR法则优化工作经历
+3. 提炼与目标岗位匹配的关键词
+4. 给出简历排版建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>附上目标岗位的JD，AI会帮你精准匹配关键词，提升通过率。</div></div></div><div class="prompt-card" data-cat="office" data-keywords="翻译 翻译润色 中英翻译"><div class="card-top"><div><span class="card-tag tag-office">翻译</span><div class="card-title">专业翻译与润色</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请将以下内容翻译成【目标语言】，要求：
+- 语言风格：【正式/学术/口语/商务】
+- 行业领域：【科技/金融/医学/法律】
+- 保持专业术语准确
+- 译文要自然流畅
+
+原文：
+【粘贴需要翻译的内容】
+
+翻译完成后，请列出文中关键专业术语的对照表。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>指定行业领域，AI会使用该领域的专业术语，避免"外行话"。</div></div></div></div></section><section class="scene-section" id="media"><div class="scene-header"><div class="scene-icon bg-media">✍️</div><h2>自媒体写作</h2><span class="count">10个提示词</span></div><p class="scene-desc">写标题、写正文、改写、扩写、缩写...让你的内容创作效率翻倍</p><div class="cards-grid"><div class="prompt-card" data-cat="media" data-keywords="标题 爆款标题 吸引点击"><div class="card-top"><div><span class="card-tag tag-media">标题</span><div class="card-title">爆款标题生成器</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我生成10个吸引眼球的标题。
+文章主题：【主题内容】
+目标平台：【公众号/小红书/头条/知乎】
+
+要求：
+1. 包含数字的标题
+2. 制造好奇心的悬念型标题
+3. 痛点+解决方案型标题
+4. 对比/反差型标题
+5. 每个标题控制在20字以内
+请在每个标题后面标注使用了哪种技巧。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>指定平台很重要——小红书标题偏活泼，知乎偏专业，公众号偏情绪化。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="正文 文章 内容创作 写作"><div class="card-top"><div><span class="card-tag tag-media">正文</span><div class="card-title">文章正文写作</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一篇【公众号/小红书/头条】的文章。
+主题：【文章主题】
+目标读者：【读者画像】
+风格：【干货型/故事型/观点型/教程型】
+字数：【X字左右】
+
+要求：
+1. 开头要有吸引力
+2. 使用小标题分段
+3. 每个观点用案例或数据支撑
+4. 结尾有互动引导
+5. 语言通俗易懂</div><div class="usage-tip"><strong>💡 使用技巧：</strong>告诉AI目标读者是谁，它会自动调整用词和案例选择。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="改写 洗稿 降重 伪原创"><div class="card-top"><div><span class="card-tag tag-media">改写</span><div class="card-title">内容改写/降重</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我改写以下内容：
+1. 保持核心观点不变
+2. 用完全不同的表达方式
+3. 调整句子结构，替换同义词
+4. 保持可读性和流畅度
+
+原文：
+【粘贴需要改写的内容】
+
+请输出改写版本，并说明做了哪些主要改动。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>可以多次改写同一内容，用于不同平台发布，避免重复。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="扩写 扩充 丰富内容"><div class="card-top"><div><span class="card-tag tag-media">扩写</span><div class="card-title">内容扩写丰富</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请将以下短文扩展为完整文章。
+目标字数：【X字】
+
+原文：
+【粘贴需要扩写的短文】
+
+要求：
+1. 保持原文主线和观点
+2. 每个观点增加1-2个具体案例
+3. 加入数据增强说服力
+4. 增加过渡段落
+5. 结尾做总结升华</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先写要点大纲，再用这个提示词扩写，比直接写长文效率更高。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="缩写 精简 压缩 总结"><div class="card-top"><div><span class="card-tag tag-media">缩写</span><div class="card-title">内容精简缩写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请将以下长文精简到【目标字数】字以内。
+
+原文：
+【粘贴需要精简的内容】
+
+要求：
+1. 保留核心观点和关键信息
+2. 删除冗余例子
+3. 合并重复表述
+4. 使用更简洁的句式
+5. 确保逻辑完整</div><div class="usage-tip"><strong>💡 使用技巧：</strong>长文转短文发小红书、朋友圈，或者摘要发Newsletter，都非常实用。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="小红书 种草 笔记"><div class="card-top"><div><span class="card-tag tag-media">小红书</span><div class="card-title">小红书种草笔记</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一篇小红书种草笔记。
+产品/事物：【名称】
+使用体验：【真实感受和效果】
+核心卖点：【最打动你的2-3个点】
+目标人群：【适合谁用】
+
+要求：
+1. 标题带emoji
+2. 口语化风格
+3. 结构：痛点→体验→对比→推荐
+4. 结尾加话题和标签（5-8个）
+5. 300-500字</div><div class="usage-tip"><strong>💡 使用技巧：</strong>描述真实体验，AI会帮你包装成小红书风格，比纯AI生成更可信。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="公众号 公众号文章 微信"><div class="card-top"><div><span class="card-tag tag-media">公众号</span><div class="card-title">公众号深度文章</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一篇公众号深度文章。
+主题：【文章主题】
+类型：【观点输出/经验分享/行业分析/热点评论】
+目标读者：【读者画像】
+核心观点：【一句话概括】
+
+要求：
+1. 开头用故事/数据/提问引发兴趣
+2. 3-5个分论点，层层递进
+3. 每个论点配案例或数据
+4. 语言专业但不枯燥
+5. 结尾有金句总结
+6. 2000-3000字</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先给AI一个核心观点，它会帮你构建完整的论证逻辑链。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="知乎 回答 问答 知乎回答"><div class="card-top"><div><span class="card-tag tag-media">知乎</span><div class="card-title">知乎高赞回答</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一篇知乎回答。
+问题：【知乎上的问题】
+我的身份/经验：【你的背景】
+核心观点：【你的看法】
+
+要求：
+1. 开头直击要点
+2. 总-分-总结构
+3. 结合个人经验增加可信度
+4. 使用加粗、列表提高可读性
+5. 语气专业但接地气
+6. 结尾引导点赞关注</div><div class="usage-tip"><strong>💡 使用技巧：</strong>知乎用户偏爱"有料"的回答，给AI提供你的真实经验效果更好。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="选题 内容规划 话题"><div class="card-top"><div><span class="card-tag tag-media">选题</span><div class="card-title">内容选题策划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我策划【X】个内容选题。
+账号定位：【领域/赛道】
+目标平台：【公众号/小红书/抖音/B站】
+粉丝画像：【年龄、性别、兴趣】
+
+请为每个选题提供：
+1. 选题标题（3个备选）
+2. 用户痛点/需求分析
+3. 内容大纲（3-5个要点）
+4. 预估热度评分（1-10分）
+5. 最佳发布时间建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>定期用这个提示词做选题规划，可以保持稳定的更新频率。</div></div></div><div class="prompt-card" data-cat="media" data-keywords="SEO 关键词 优化 搜索排名"><div class="card-top"><div><span class="card-tag tag-media">SEO</span><div class="card-title">SEO关键词优化</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我优化内容的SEO表现。
+目标关键词：【主关键词】
+发布平台：【网站/公众号/小红书/知乎】
+当前内容：
+【粘贴你的文章内容】
+
+请帮我：
+1. 分析关键词密度
+2. 建议长尾关键词（5-10个）
+3. 优化标题
+4. 小标题中融入关键词
+5. 优化meta描述
+6. 建议内链外链方向</div><div class="usage-tip"><strong>💡 使用技巧：</strong>SEO优化适合网站文章和知乎回答，能显著提升搜索流量。</div></div></div></div></section><section class="scene-section" id="video"><div class="scene-header"><div class="scene-icon bg-video">🎬</div><h2>短视频创作</h2><span class="count">10个提示词</span></div><p class="scene-desc">写脚本、写文案、写标题、选题策划...让短视频创作更高效</p><div class="cards-grid"><div class="prompt-card" data-cat="video" data-keywords="短视频脚本 视频脚本 抖音脚本"><div class="card-top"><div><span class="card-tag tag-video">脚本</span><div class="card-title">短视频脚本生成</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一个短视频脚本。
+平台：【抖音/快手/视频号/B站】
+时长：【15秒/30秒/1分钟/3分钟】
+主题：【主题内容】
+目标：【涨粉/带货/品牌宣传/知识分享】
+
+请按以下格式输出：
+【画面】画面描述
+【台词】口播内容/旁白
+【字幕】屏幕文字
+【时长】每段秒数
+【BGM建议】背景音乐风格</div><div class="usage-tip"><strong>💡 使用技巧：</strong>说明账号风格，AI会匹配相应的节奏和语言风格。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="口播文案 视频文案 口播稿"><div class="card-top"><div><span class="card-tag tag-video">文案</span><div class="card-title">口播文案撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一段短视频口播文案。
+话题：【你要讲的话题】
+时长：【X秒】
+风格：【轻松聊天/专业讲解/情感共鸣/搞笑吐槽】
+
+要求：
+1. 前3秒必须有钩子
+2. 中间简洁有力
+3. 结尾有行动号召
+4. 口语化表达
+5. 标注需要重读和停顿的地方</div><div class="usage-tip"><strong>💡 使用技巧：</strong>前3秒是关键，让AI多生成几个开头版本，选最抓人的那个。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="视频标题 短视频标题 封面标题"><div class="card-top"><div><span class="card-tag tag-video">标题</span><div class="card-title">视频标题与封面文案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请生成短视频的标题和封面文字。
+视频内容：【简述视频讲什么】
+平台：【抖音/快手/B站/视频号】
+
+请提供：
+1. 【标题】5个备选（每个15字以内）
+2. 【封面文字】3个版本（6字以内）
+3. 【话题标签】10个相关标签
+要求：标题有悬念感或利益点。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>封面文字要大而简洁，6个字以内，一眼就能看到。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="选题 短视频选题 内容策划"><div class="card-top"><div><span class="card-tag tag-video">选题</span><div class="card-title">短视频选题策划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我策划【X】个短视频选题。
+账号领域：【美食/健身/职场/科技/情感/教育】
+粉丝画像：【年龄、性别、兴趣】
+
+请为每个选题提供：
+1. 选题名称
+2. 视频角度
+3. 情绪价值（涨知识/治愈/搞笑/震撼）
+4. 预估数据表现（1-10分）
+5. 最佳发布时间段</div><div class="usage-tip"><strong>💡 使用技巧：</strong>结合当前热点做选题，蹭热点的流量往往更好。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="带货脚本 直播脚本 直播带货"><div class="card-top"><div><span class="card-tag tag-video">带货</span><div class="card-title">直播/带货脚本</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一个直播带货脚本。
+产品名称：【产品名】
+价格：【价格和优惠信息】
+核心卖点：【3个卖点】
+目标人群：【谁会买】
+
+请按以下结构输出：
+1. 【开场引流】（30秒）
+2. 【痛点共鸣】（1分钟）
+3. 【产品展示】（2分钟）
+4. 【信任背书】（30秒）
+5. 【逼单话术】（1分钟）</div><div class="usage-tip"><strong>💡 使用技巧：</strong>逼单话术要制造紧迫感，"限量XX件"比"快来买"有效得多。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="故事 短视频故事 叙事"><div class="card-top"><div><span class="card-tag tag-video">故事</span><div class="card-title">短视频故事脚本</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一个故事类短视频脚本。
+类型：【励志/反转/搞笑/感人/悬疑】
+时长：【1-3分钟】
+主题：【想传达的道理或情绪】
+
+要求：
+1. 开头3秒设置悬念
+2. 起承转合，节奏紧凑
+3. 结尾有反转或情感升华
+4. 台词口语化
+5. 标注镜头建议
+按【画面】+【台词】+【镜头】格式输出。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>反转类视频最容易爆，关键是结尾出乎意料但又合情合理。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="评论区互动 粉丝互动 引导评论"><div class="card-top"><div><span class="card-tag tag-video">互动</span><div class="card-title">评论区互动话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请设计短视频评论区互动话术。
+视频主题：【视频内容简述】
+
+请提供：
+1. 视频结尾引导评论的话术（5个版本）
+2. 评论区置顶评论（3个版本）
+3. 回复粉丝评论模板（10条）
+4. 引发讨论的提问（3个）
+5. 评论区抽奖活动话术</div><div class="usage-tip"><strong>💡 使用技巧：</strong>在视频结尾抛出争议性问题是提高评论量的最有效手段。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="BGM 背景音乐 配乐"><div class="card-top"><div><span class="card-tag tag-video">配乐</span><div class="card-title">BGM与音效建议</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请为以下短视频推荐背景音乐和音效。
+视频类型：【vlog/知识讲解/产品展示/情感故事/搞笑】
+情绪：【温馨/燃/搞笑/紧张/治愈】
+
+请推荐：
+1. 3首适合的BGM
+2. 关键节点的音效建议
+3. 音量控制建议
+4. 免费可商用音乐资源</div><div class="usage-tip"><strong>💡 使用技巧：</strong>知识类视频BGM音量要低（20%-30%），情感类可以高一些。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="文案改写 优化文案 文案润色"><div class="card-top"><div><span class="card-tag tag-video">优化</span><div class="card-title">视频文案优化</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我优化以下短视频文案。
+
+原始文案：
+【粘贴你的文案】
+
+优化方向：
+1. 开头钩子是否够强？给出3个更强的版本
+2. 标注可删掉的废话
+3. 加强结尾行动号召
+4. 调整节奏
+5. 改掉书面语
+
+输出优化完整版本并标注改动原因。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>录一遍口播后回听，把磕巴的地方让AI优化，效果立竿见影。</div></div></div><div class="prompt-card" data-cat="video" data-keywords="系列策划 系列内容 连载"><div class="card-top"><div><span class="card-tag tag-video">系列</span><div class="card-title">系列内容策划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请策划一个系列短视频内容。
+系列主题：【如"30天学做饭"】
+总期数：【X期】
+每期时长：【X秒/分钟】
+
+请为每期提供：
+1. 期数标题
+2. 核心内容点
+3. 开头钩子
+4. 结尾预告
+5. 各期衔接逻辑
+确保每期独立可看，连在一起更有价值。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>系列内容是涨粉利器，"关注看下一期"是最自然的引导关注方式。</div></div></div></div></section><section class="scene-section" id="ecom"><div class="scene-header"><div class="scene-icon bg-ecom">🛒</div><h2>电商运营</h2><span class="count">10个提示词</span></div><p class="scene-desc">写商品描述、写评价回复、写营销文案...提升你的电商转化率</p><div class="cards-grid"><div class="prompt-card" data-cat="ecom" data-keywords="商品描述 详情页 卖点 产品文案"><div class="card-top"><div><span class="card-tag tag-ecom">商品描述</span><div class="card-title">商品详情页文案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写商品详情页文案。
+产品名称：【产品名】
+类别：【类目】
+核心卖点：【3-5个卖点】
+目标人群：【谁会买】
+价格区间：【价格段】
+
+请输出：
+1. 商品标题（含关键词，30字以内）
+2. 5点卖点描述（突出用户利益）
+3. 场景化使用描述
+4. 信任背书（材质/工艺/认证）
+5. 促销引导文案</div><div class="usage-tip"><strong>💡 使用技巧：</strong>卖点要转化为用户利益——"纯棉"不如"亲肤透气不闷汗"。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="评价回复 差评回复 好评回复"><div class="card-top"><div><span class="card-tag tag-ecom">评价回复</span><div class="card-title">客户评价回复模板</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我生成电商客户评价回复模板。
+店铺类型：【类目】
+
+请分别生成以下情况的回复模板，每种3个版本：
+1. 好评回复（热情感谢，引导复购）
+2. 中评回复（感谢+了解不足+改进承诺）
+3. 差评回复（真诚道歉+问题分析+解决方案+补偿）
+4. 追评回复
+5. 有图好评回复</div><div class="usage-tip"><strong>💡 使用技巧：</strong>差评回复不是给差评客户看的，是给其他潜在买家看的——要展示你的服务态度。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="营销文案 促销 活动文案"><div class="card-top"><div><span class="card-tag tag-ecom">营销文案</span><div class="card-title">促销活动文案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写电商促销活动文案。
+活动类型：【618/双11/清仓/新品首发/周年庆/限时秒杀】
+优惠力度：【具体折扣/满减/赠品】
+活动时间：【起止时间】
+
+请输出：
+1. 活动主标题
+2. 副标题（利益点）
+3. 促销标签文案
+4. 详情页文案
+5. 催付话术
+6. 倒计时话术</div><div class="usage-tip"><strong>💡 使用技巧：</strong>限时限量比打折更能促进下单，"最后XX件"比"5折优惠"更有效。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="客服话术 售前 售后 自动回复"><div class="card-top"><div><span class="card-tag tag-ecom">客服话术</span><div class="card-title">客服自动回复话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我编写电商客服自动回复话术。
+店铺类型：【类目】
+常见问题：
+1. 【高频问题1，如：什么时候发货】
+2. 【高频问题2，如：支持退换吗】
+3. 【高频问题3】
+
+请为每个问题生成：
+1. 自动回复版本（简短）
+2. 人工回复版本（详细有温度）
+3. 追问时的二次回复</div><div class="usage-tip"><strong>💡 使用技巧：</strong>自动回复的关键是快和准，3秒内响应，回答直接解决问题。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="直播间 话术 直播文案"><div class="card-top"><div><span class="card-tag tag-ecom">直播文案</span><div class="card-title">电商直播话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写电商直播话术。
+直播类型：【日常带货/大促/新品发布/粉丝福利】
+主要品类：【商品类别】
+
+请输出话术框架：
+1. 【开场】欢迎+福利预告
+2. 【引流款】低价引流品话术
+3. 【利润款】主推品：痛点→展示→对比→价格→逼单
+4. 【互动话术】每10分钟穿插
+5. 【收尾】感谢+预告下次
+6. 【突发应对】冷场/黑粉/技术问题</div><div class="usage-tip"><strong>💡 使用技巧：</strong>直播话术的核心是"说人话"，太官方会劝退观众。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="选品 产品分析 市场调研"><div class="card-top"><div><span class="card-tag tag-ecom">选品</span><div class="card-title">选品分析与建议</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我分析以下产品的市场前景。
+产品名称：【产品名】
+类别：【类目】
+目标平台：【电商平台】
+
+请分析：
+1. 目标用户画像
+2. 产品核心卖点提炼
+3. 定价策略建议
+4. 主图/详情页应该突出什么
+5. 推广关键词建议
+6. 潜在风险和注意事项</div><div class="usage-tip"><strong>💡 使用技巧：</strong>选品前先让AI分析，比盲目上架成功率高很多。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="店铺介绍 品牌故事 关于我们"><div class="card-top"><div><span class="card-tag tag-ecom">品牌故事</span><div class="card-title">店铺品牌故事</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写一篇品牌故事。
+品牌名称：【品牌名】
+创立时间：【年份】
+主营产品：【品类】
+品牌理念：【你想传达的价值观】
+创始人背景：【简单介绍】
+
+请写一篇有温度的品牌故事，包含：
+1. 创立初衷
+2. 发展历程
+3. 品牌理念
+4. 产品哲学
+5. 对客户的承诺
+500-800字，真实感人。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>真实的故事比华丽的辞藻更能打动人，把真实的创业初心告诉AI。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="朋友圈 微商 私域文案"><div class="card-top"><div><span class="card-tag tag-ecom">私域文案</span><div class="card-title">朋友圈/私域营销文案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写5条朋友圈营销文案。
+产品：【产品名和卖点】
+目标客户：【微信好友中的目标人群】
+
+要求：
+1. 日常使用场景分享（不像广告）
+2. 客户好评/使用反馈
+3. 产品知识科普（提供价值）
+4. 限时优惠活动
+5. 生活方式展示
+每条配3-4张配图建议。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>朋友圈营销8:2法则——80%生活/价值内容，20%广告，才不会被屏蔽。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="用户画像 客户分析 目标客户"><div class="card-top"><div><span class="card-tag tag-ecom">用户分析</span><div class="card-title">目标用户画像分析</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我分析产品的目标用户画像。
+产品名称：【产品名】
+产品功能：【主要功能和用途】
+价格区间：【价格段】
+
+请输出完整用户画像：
+1. 核心用户群体
+2. 用户需求和痛点
+3. 购买决策因素
+4. 用户聚集的平台
+5. 能打动他们的文案角度
+6. 典型用户故事</div><div class="usage-tip"><strong>💡 使用技巧：</strong>用户画像越具体越好，"25岁白领小美"比"年轻女性"更容易写出打动人的文案。</div></div></div><div class="prompt-card" data-cat="ecom" data-keywords="竞品分析 竞争对手 对比"><div class="card-top"><div><span class="card-tag tag-ecom">竞品分析</span><div class="card-title">竞品分析报告</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我做一份竞品分析。
+我的产品：【产品描述】
+竞品1：【竞品名称和描述】
+竞品2：【竞品名称和描述】
+
+请从以下维度分析：
+1. 产品功能对比表
+2. 价格策略对比
+3. 用户评价关键词分析
+4. 竞品优势和劣势
+5. 我们的差异化机会
+6. 可借鉴的运营策略
+用表格形式呈现。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>竞品的差评是最好的选品和文案灵感来源——看看用户在抱怨什么。</div></div></div></div></section><section class="scene-section" id="learn"><div class="scene-header"><div class="scene-icon bg-learn">📚</div><h2>学习提升</h2><span class="count">10个提示词</span></div><p class="scene-desc">读书笔记、知识总结、学习计划、考试复习...让AI做你的学习伙伴</p><div class="cards-grid"><div class="prompt-card" data-cat="learn" data-keywords="读书笔记 读后感 书评"><div class="card-top"><div><span class="card-tag tag-learn">读书笔记</span><div class="card-title">读书笔记整理</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我整理《【书名】》的读书笔记。
+作者：【作者名】
+阅读目的：【为什么要读这本书】
+印象最深的内容：【你记住的要点或原话】
+
+请输出：
+1. 一句话总结本书核心观点
+2. 全书框架概览
+3. 3-5个关键概念解释
+4. 对我最有启发的3个观点
+5. 可以立刻应用的行动清单
+6. 金句摘录（5-8句）
+7. 推荐阅读人群</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先自己读完写下印象，再让AI帮你系统整理，记忆效果更好。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="知识总结 概念解释 学习笔记"><div class="card-top"><div><span class="card-tag tag-learn">知识总结</span><div class="card-title">复杂概念通俗解释</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请用通俗易懂的语言解释以下概念。
+概念/知识点：【要解释的内容】
+我的水平：【小白/有一定基础/进阶】
+背景：【专业或行业背景】
+
+请按照以下方式解释：
+1. 一句话定义
+2. 一个生活化的类比
+3. 核心原理（用大白话说清楚）
+4. 一个具体的应用场景
+5. 常见误区纠正
+6. 3道自测题</div><div class="usage-tip"><strong>💡 使用技巧：</strong>告诉AI你的水平，它会用你听得懂的方式解释，不会太高深或太浅。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="学习计划 备考 复习计划"><div class="card-top"><div><span class="card-tag tag-learn">学习计划</span><div class="card-title">个性化学习计划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定一份学习计划。
+学习目标：【要学什么，达到什么水平】
+可用时间：【每天/每周可投入多少小时】
+总时间周期：【X周/月】
+当前水平：【零基础/有一些基础/中级】
+
+请输出：
+1. 学习阶段划分
+2. 每阶段推荐的学习资源
+3. 每周的具体学习任务
+4. 每阶段的里程碑检验方式
+5. 常见瓶颈期和应对建议
+6. 学习方法建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>越诚实地描述你的时间和基础，AI给的计划越可行。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="考试复习 知识点 考试重点"><div class="card-top"><div><span class="card-tag tag-learn">考试复习</span><div class="card-title">考试复习助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我整理考试复习资料。
+考试名称：【考试名称】
+距考试还有：【X天】
+考试范围：【具体内容】
+薄弱环节：【哪些部分掌握不好】
+题型：【选择/填空/简答/论述/实操】
+
+请提供：
+1. 核心知识点清单（按重要程度排序）
+2. 高频考点标注
+3. 一句话速记口诀
+4. 易混淆概念对比表
+5. 模拟练习题
+6. 最后冲刺策略
+7. 考场答题技巧</div><div class="usage-tip"><strong>💡 使用技巧：</strong>让AI出模拟题来做，是检验学习效果最直接的方式。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="费曼学习法 教学 输出倒逼"><div class="card-top"><div><span class="card-tag tag-learn">费曼学习法</span><div class="card-title">费曼学习法练习</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请用费曼学习法帮我理解【某个知识点】。
+
+步骤1：请用最简单的语言（假设对方是12岁小孩）解释这个概念
+步骤2：用一个日常生活中的类比来说明
+步骤3：列出我可能"说不清楚"的地方（知识盲区）
+步骤4：针对盲区深入解释
+步骤5：让我再次用简单语言完整解释
+
+最后给我3个问题测试我是否真正理解了。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>如果你能用大白话给别人讲清楚，说明你真的懂了。AI会帮你找到"以为懂了但其实不懂"的地方。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="英语学习 英语口语 英语写作"><div class="card-top"><div><span class="card-tag tag-learn">英语学习</span><div class="card-title">英语学习助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请做我的英语学习助手。
+英语水平：【初级/中级/高级】
+学习目标：【日常口语/商务英语/考试/留学】
+当前痛点：【听力/口语/写作/词汇量】
+
+请提供：
+1. 10个高频实用例句（含音标和翻译）
+2. 常见错误用法纠正
+3. 场景对话练习
+4. 记忆技巧（词根词缀/联想记忆）
+5. 每日练习任务（15分钟）
+6. 推荐学习资源</div><div class="usage-tip"><strong>💡 使用技巧：</strong>让AI扮演英语老师，用对话方式练习口语，比背单词有效得多。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="思维导图 知识框架 结构化"><div class="card-top"><div><span class="card-tag tag-learn">思维导图</span><div class="card-title">知识框架/思维导图</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我用文字构建一个知识框架。
+主题：【要梳理的知识领域】
+目的：【入门/查漏补缺/系统复习】
+深度：【概览级/详细级/专家级】
+
+请用缩进层级结构输出：
+1. 一级节点：核心分支（3-7个）
+2. 二级节点：关键概念
+3. 三级节点：具体知识点
+4. 标注各节点之间的关联
+5. 用符号标注：⭐必学 ⭐⭐重要 ⭐⭐⭐进阶
+6. 学习路径建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先让AI生成框架，再用XMind等工具导入，5分钟搞定一张知识地图。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="论文 写论文 学术写作 文献综述"><div class="card-top"><div><span class="card-tag tag-learn">论文写作</span><div class="card-title">论文写作辅助</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我辅助论文写作。
+论文类型：【课程论文/毕业论文/期刊论文】
+主题：【题目】
+学科领域：【专业方向】
+目前进度：【选题/开题/初稿/修改】
+
+请帮我：
+1. 优化论文题目
+2. 生成论文大纲
+3. 撰写摘要模板（中英文）
+4. 研究背景和文献综述写作框架
+5. 参考文献格式（APA/GB-T 7714）
+6. 降重改写技巧</div><div class="usage-tip"><strong>💡 使用技巧：</strong>AI适合帮你搭框架和润色语言，核心研究内容和数据必须是自己的。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="面试准备 模拟面试 面试问题"><div class="card-top"><div><span class="card-tag tag-learn">面试准备</span><div class="card-title">模拟面试训练</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我准备面试。
+目标岗位：【岗位名称】
+公司类型：【行业和公司规模】
+面试轮次：【HR面/技术面/终面】
+
+请：
+1. 预测10个高频面试问题
+2. 用STAR法则设计回答框架
+3. 标注回答中的关键亮点
+4. 指出常见回答误区
+5. 设计3个反问面试官的问题
+6. 自我介绍模板（1分钟/3分钟）
+
+请模拟面试官，一个一个问我问题，我回答后给我反馈。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>用AI模拟面试最大的好处是可以反复练习，不会尴尬，直到对答如流。</div></div></div><div class="prompt-card" data-cat="learn" data-keywords="习惯养成 自律 21天 个人成长"><div class="card-top"><div><span class="card-tag tag-learn">习惯养成</span><div class="card-title">习惯养成计划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定一个21天习惯养成计划。
+想养成的习惯：【如：早起/运动/阅读/写作/冥想】
+目前作息：【描述现在的日常】
+之前的尝试：【之前失败的原因】
+每天可投入时间：【X分钟】
+
+请输出：
+1. 第1-7天：启动期
+2. 第8-14天：巩固期
+3. 第15-21天：习惯期
+4. 每天的具体任务
+5. 断签后的补救策略
+6. 奖励机制设计</div><div class="usage-tip"><strong>💡 使用技巧：</strong>关键原则是"简单到不可能失败"——想养成运动习惯，第一天的任务是"穿上运动鞋"。</div></div></div></div></section><section class="scene-section" id="code"><div class="scene-header"><div class="scene-icon bg-code">💻</div><h2>编程辅助</h2><span class="count">10个提示词</span></div><p class="scene-desc">写代码、解释代码、找bug、写文档...程序员的AI搭档</p><div class="cards-grid"><div class="prompt-card" data-cat="code" data-keywords="写代码 编程 开发 函数"><div class="card-top"><div><span class="card-tag tag-code">写代码</span><div class="card-title">代码生成助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我编写代码。
+编程语言：【Python/JavaScript/Java/C++/Go等】
+功能需求：【详细描述要实现什么功能】
+输入：【输入的数据格式和示例】
+期望输出：【期望的输出格式和示例】
+技术约束：【使用的框架/库/版本要求】
+
+请：
+1. 提供完整可运行的代码
+2. 添加详细的中文注释
+3. 包含输入验证和错误处理
+4. 提供测试用例（至少3个）
+5. 说明关键的设计决策</div><div class="usage-tip"><strong>💡 使用技巧：</strong>提供输入输出示例，AI写的代码会更准确，减少来回修改的次数。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="代码解释 解读代码 理解代码"><div class="card-top"><div><span class="card-tag tag-code">解释代码</span><div class="card-title">代码逐行解读</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我解释以下代码的含义和工作原理。
+
+```【语言】
+【粘贴代码】
+```
+
+请按照以下方式解释：
+1. 整体功能是什么（一句话概括）
+2. 逐行/逐块解释每部分的作用
+3. 关键变量和函数的含义
+4. 执行流程（用步骤描述）
+5. 涉及的核心概念/设计模式
+6. 可能的优化建议
+
+我的编程水平：【初学者/中级/高级】</div><div class="usage-tip"><strong>💡 使用技巧：</strong>说明你的水平，初学者可以得到更详细的解释，高手可以只看关键点。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="bug 调试 debug 报错"><div class="card-top"><div><span class="card-tag tag-code">找Bug</span><div class="card-title">Bug调试助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我找出以下代码中的bug。
+
+```【语言】
+【粘贴有问题的代码】
+```
+
+问题描述：【期望行为 vs 实际行为】
+错误信息：【如有报错信息请粘贴】
+运行环境：【操作系统、语言版本】
+
+请：
+1. 定位bug的具体位置（行号）
+2. 解释bug产生的原因
+3. 提供修复后的代码
+4. 解释修复原理
+5. 如何避免类似的bug</div><div class="usage-tip"><strong>💡 使用技巧：</strong>粘贴完整的报错信息，AI定位bug的速度会快很多。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="代码优化 性能优化 重构"><div class="card-top"><div><span class="card-tag tag-code">优化</span><div class="card-title">代码优化与重构</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我优化以下代码。
+
+```【语言】
+【粘贴需要优化的代码】
+```
+
+优化方向：【性能/可读性/安全性/内存使用/全部】
+
+请：
+1. 指出当前代码的问题（按严重程度排序）
+2. 提供优化后的完整代码
+3. 对比优化前后的差异
+4. 量化优化效果（如时间复杂度变化）
+5. 解释每个优化点的原理</div><div class="usage-tip"><strong>💡 使用技巧：</strong>指定优化方向很重要——性能优化和可读性优化有时是矛盾的。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="API 文档 接口文档 技术文档"><div class="card-top"><div><span class="card-tag tag-code">文档</span><div class="card-title">API/技术文档生成</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我为以下代码/API编写技术文档。
+
+```【语言】
+【粘贴代码或API定义】
+```
+
+文档类型：【README/API文档/函数注释/开发指南】
+
+请生成：
+1. 功能概述
+2. 安装/引入方式
+3. 使用方法（基础示例代码）
+4. 详细参数说明
+5. 返回值说明
+6. 错误码和异常处理
+7. 高级用法示例
+8. 常见问题FAQ</div><div class="usage-tip"><strong>💡 使用技巧：</strong>好的文档能减少80%的用户咨询，让AI帮你写文档是性价比最高的事。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="数据库 SQL 查询 数据库设计"><div class="card-top"><div><span class="card-tag tag-code">SQL</span><div class="card-title">SQL查询与数据库设计</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我编写SQL查询/设计数据库。
+数据库类型：【MySQL/PostgreSQL/SQLite/SQL Server】
+需求描述：【用自然语言描述你想查询/设计什么】
+现有表结构：【如有，请粘贴CREATE TABLE语句】
+
+请：
+1. 提供完整的SQL语句
+2. 详细注释每部分的作用
+3. 建议需要创建的索引
+4. 性能优化建议
+5. 提供测试数据INSERT语句
+6. 可能的SQL注入风险提醒</div><div class="usage-tip"><strong>💡 使用技巧：</strong>粘贴现有表结构，AI生成的SQL可以直接运行。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="正则表达式 regex 模式匹配"><div class="card-top"><div><span class="card-tag tag-code">正则表达式</span><div class="card-title">正则表达式生成</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我编写正则表达式。
+使用场景：【如：提取邮箱/验证手机号/匹配URL/解析日志】
+目标语言：【Python/JavaScript/Java/Go】
+应该匹配的文本：
+【示例1】
+【示例2】
+不应该匹配的文本：
+【反例1】
+【反例2】
+
+请：
+1. 提供正则表达式
+2. 逐部分解释每个符号的含义
+3. 在目标语言中的完整使用代码
+4. 测试用例</div><div class="usage-tip"><strong>💡 使用技巧：</strong>提供"应该匹配"和"不应该匹配"的示例，AI写出的正则会更精准。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="Git 版本控制 命令"><div class="card-top"><div><span class="card-tag tag-code">Git</span><div class="card-title">Git操作指南</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我完成Git操作。
+我想做的事情：【用自然语言描述，如"撤销上一次提交"、"合并两个分支"】
+当前状态：【描述当前分支、有无未提交的修改等】
+
+请：
+1. 提供完整的Git命令（可直接复制执行）
+2. 逐步解释每条命令的作用
+3. 执行前的注意事项
+4. 如果有风险，提供安全的替代方案
+5. 操作后如何验证是否成功
+6. 常见错误和回退方法</div><div class="usage-tip"><strong>💡 使用技巧：</strong>描述你当前的git状态，AI会避免给出可能丢失代码的危险命令。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="代码审查 code review 代码质量"><div class="card-top"><div><span class="card-tag tag-code">代码审查</span><div class="card-title">代码审查助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我做代码审查(Code Review)。
+
+```【语言】
+【粘贴需要审查的代码】
+```
+
+请从以下维度审查：
+1. 【正确性】逻辑是否正确，有无潜在bug
+2. 【安全性】有无安全漏洞
+3. 【性能】有无性能瓶颈
+4. 【可读性】命名、注释、结构是否清晰
+5. 【可维护性】耦合度是否合理
+6. 【最佳实践】是否符合编码规范
+
+按严重程度分类：🔴必须修复 / 🟡建议修改 / 🟢可选优化</div><div class="usage-tip"><strong>💡 使用技巧：</strong>提交代码前用AI做一次Code Review，能发现很多自己看不到的问题。</div></div></div><div class="prompt-card" data-cat="code" data-keywords="架构设计 系统设计 技术方案"><div class="card-top"><div><span class="card-tag tag-code">架构设计</span><div class="card-title">系统架构设计</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计系统架构。
+项目描述：【做什么系统/应用】
+核心功能：【列出主要功能模块】
+用户规模：【预估用户量/并发量】
+技术栈偏好：【前端/后端/数据库偏好】
+
+请输出：
+1. 整体架构图（文字描述层次关系）
+2. 技术栈推荐及理由
+3. 核心模块划分和职责
+4. 数据库设计（主要表和关系）
+5. API设计（核心接口列表）
+6. 部署架构建议
+7. 可扩展性设计
+8. 安全性考虑</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先描述清楚核心功能和用户规模，AI才能推荐合适的架构方案。</div></div></div></div></section><section class="scene-section" id="design"><div class="scene-header"><div class="scene-icon bg-design">🎨</div><h2>设计创意</h2><span class="count">10个提示词</span></div><p class="scene-desc">AI绘画提示词、配色方案、排版建议...激发你的设计灵感</p><div class="cards-grid"><div class="prompt-card" data-cat="design" data-keywords="AI绘画 Midjourney Stable Diffusion 绘画提示词"><div class="card-top"><div><span class="card-tag tag-design">AI绘画</span><div class="card-title">AI绘画提示词生成</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我生成AI绘画的提示词(Prompt)。
+我想画的画面：【用中文描述你想要的画面】
+使用工具：【Midjourney/Stable Diffusion/DALL-E】
+画面风格：【写实/动漫/油画/水彩/赛博朋克/极简】
+画面比例：【1:1/16:9/9:16/4:3】
+
+请输出：
+1. 英文版Prompt（可直接粘贴使用）
+2. 中文对照翻译
+3. 关键词解析（每个修饰词的作用）
+4. 负面提示词（Negative Prompt）
+5. 3个风格变体版本
+6. 推荐的参数设置</div><div class="usage-tip"><strong>💡 使用技巧：</strong>描述越具体，AI画出来越接近你的想象。加上光线、构图、色调等细节描述。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="配色 颜色 配色方案 色彩搭配"><div class="card-top"><div><span class="card-tag tag-design">配色</span><div class="card-title">配色方案推荐</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计配色方案。
+项目类型：【网站/App/海报/PPT/品牌Logo】
+行业领域：【科技/教育/餐饮/时尚/医疗/金融】
+品牌调性：【专业/活泼/高端/亲和/创新/稳重】
+
+请提供：
+1. 主色（1个）+ 辅助色（2-3个）+ 强调色（1个）
+2. 每个颜色的HEX、RGB值
+3. 配色在不同场景下的应用示例
+4. 浅色模式和深色模式建议
+5. 色彩搭配原理说明
+6. 优秀配色参考案例</div><div class="usage-tip"><strong>💡 使用技巧：</strong>告诉AI你的品牌调性，它会从色彩心理学角度推荐最合适的颜色。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="排版 布局 版式设计 页面设计"><div class="card-top"><div><span class="card-tag tag-design">排版</span><div class="card-title">排版布局建议</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计排版布局。
+设计类型：【网页/App/海报/名片/宣传册/社交媒体图】
+内容要素：【标题、图片、按钮、文字等】
+设计风格：【极简/现代/复古/活泼/商务】
+
+请提供：
+1. 布局方案描述
+2. 网格系统建议
+3. 字体搭配建议
+4. 字号层级
+5. 留白比例建议
+6. 视觉动线设计
+7. 响应式适配建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>排版的核心是"层次感"——让AI帮你建立清晰的信息层级。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="Logo 品牌标志 标识设计"><div class="card-top"><div><span class="card-tag tag-design">Logo</span><div class="card-title">Logo设计创意</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我构思Logo设计方案。
+品牌名称：【名称】
+行业：【行业】
+品牌调性：【希望传达的感觉】
+偏好风格：【文字Logo/图形Logo/图文组合】
+
+请提供：
+1. 5个创意方向
+2. 每个创意的设计理念
+3. 推荐的图形元素和符号
+4. 字体风格建议
+5. 配色方案建议
+6. AI绘画工具的Logo生成Prompt
+7. Logo使用场景考虑</div><div class="usage-tip"><strong>💡 使用技巧：</strong>Logo设计先从"品牌想传达什么感觉"出发，比直接想图形更有效。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="海报 设计 传单 宣传"><div class="card-top"><div><span class="card-tag tag-design">海报</span><div class="card-title">海报设计构思</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我构思海报设计方案。
+用途：【活动宣传/产品推广/节日祝福/招聘/课程推广】
+核心信息：【海报上必须出现的文字】
+尺寸：【A4/手机屏幕/朋友圈/公众号头图】
+风格：【简约/炫酷/文艺/商务/国潮】
+
+请提供：
+1. 3个创意方向（各附详细描述）
+2. 每个方案的版式布局
+3. 配色方案
+4. 字体推荐
+5. 视觉焦点设计
+6. AI生成海报素材的Prompt</div><div class="usage-tip"><strong>💡 使用技巧：</strong>海报信息不要太多，核心信息不超过3个——AI会帮你做减法。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="UI设计 用户界面 App设计"><div class="card-top"><div><span class="card-tag tag-design">UI设计</span><div class="card-title">UI设计方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计UI界面方案。
+产品类型：【App/网站/小程序/后台管理】
+核心功能：【主要功能模块】
+目标用户：【用户画像】
+设计风格：【iOS风格/Material Design/自定义】
+
+请提供：
+1. 信息架构（页面层级关系）
+2. 核心页面布局方案
+3. 设计规范建议（圆角/间距/字号/颜色）
+4. 交互设计建议
+5. 组件设计建议
+6. 深色模式适配建议
+7. 设计系统构建建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先确定设计规范（颜色、字号、间距），再做具体页面，效率更高。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="PPT设计 演示 幻灯片 视觉设计"><div class="card-top"><div><span class="card-tag tag-design">PPT设计</span><div class="card-title">PPT视觉设计建议</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计PPT的视觉方案。
+用途：【工作汇报/产品发布/教学课件/融资路演】
+主题：【主题】
+页数：【约X页】
+风格：【简约/商务/创意/科技/文艺】
+
+请提供：
+1. 整体设计风格定义
+2. 封面页设计方案
+3. 目录页设计方案
+4. 内容页的3种常用版式
+5. 数据展示页设计建议
+6. 过渡页设计
+7. 结尾页设计方案
+8. 动画和转场建议
+9. 免费素材资源推荐</div><div class="usage-tip"><strong>💡 使用技巧：</strong>好的PPT核心是"一图胜千言"——让AI帮你把文字信息转化为可视化表达。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="字体 字体搭配 排版字体"><div class="card-top"><div><span class="card-tag tag-design">字体</span><div class="card-title">字体搭配方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我推荐字体搭配方案。
+使用场景：【网页/App/印刷品/PPT/Logo】
+设计风格：【现代/传统/优雅/科技/可爱/商务】
+语言：【中文/英文/中英混排】
+
+请提供：
+1. 标题字体推荐（2-3个）
+2. 正文字体推荐（2-3个）
+3. 英文字体搭配建议
+4. 字号比例建议
+5. 行距和字间距建议
+6. 字体的免费商用说明
+7. 不同平台的字体替代方案</div><div class="usage-tip"><strong>💡 使用技巧：</strong>中文字体一定要注意版权！推荐使用思源系列、阿里巴巴普惠体等免费商用字体。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="图标 icon 图标设计"><div class="card-top"><div><span class="card-tag tag-design">图标</span><div class="card-title">图标设计指南</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计一套图标系统。
+图标用途：【App/Web/文档/品牌】
+需要的图标：【列出需要的图标名称】
+设计风格：【线性/填充/双色/扁平/拟物】
+
+请提供：
+1. 每个图标的设计描述和关键词
+2. 统一的设计规范（线宽/圆角/栅格）
+3. AI生成图标的有效Prompt（英文）
+4. 不同状态的设计（默认/激活/禁用）
+5. 图标导出格式建议
+6. 免费图标资源推荐</div><div class="usage-tip"><strong>💡 使用技巧：</strong>图标设计最重要的是"一致性"——所有图标保持相同的线宽、圆角和风格。</div></div></div><div class="prompt-card" data-cat="design" data-keywords="设计灵感 设计参考 案例分析"><div class="card-top"><div><span class="card-tag tag-design">灵感</span><div class="card-title">设计灵感与案例分析</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我分析优秀设计案例并提供灵感。
+我正在设计的项目：【简述你的项目】
+设计挑战：【遇到的具体设计问题】
+偏好风格：【喜欢的设计风格】
+
+请：
+1. 推荐5个相关的优秀设计案例
+2. 分析每个案例的设计亮点
+3. 提炼可借鉴的设计模式
+4. 适配到我的项目的建议
+5. 设计趋势分析
+6. 设计灵感搜索技巧
+7. 推荐的设计资源网站</div><div class="usage-tip"><strong>💡 使用技巧：</strong>设计之前先大量看优秀案例，让AI帮你分析"好在哪里"，比自己闷头想效率高。</div></div></div></div></section><section class="scene-section" id="market"><div class="scene-header"><div class="scene-icon bg-market">📣</div><h2>营销推广</h2><span class="count">10个提示词</span></div><p class="scene-desc">广告文案、社交媒体、活动策划...让你的营销更有效</p><div class="cards-grid"><div class="prompt-card" data-cat="market" data-keywords="广告文案 广告词 宣传语"><div class="card-top"><div><span class="card-tag tag-market">广告文案</span><div class="card-title">广告文案撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写广告文案。
+产品/服务：【名称和简述】
+投放平台：【朋友圈/抖音/百度/小红书/电梯广告】
+目标受众：【给谁看的】
+核心卖点：【最想突出的1-2个点】
+广告目标：【品牌曝光/引流获客/直接转化】
+
+请提供：
+1. 5个版本的广告文案
+2. 每版配标题+正文+行动号召(CTA)
+3. A/B测试建议
+4. 各版本的预期效果分析
+5. 投放时间建议
+6. 配图/视频创意建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>好的广告文案只说一件事——让AI从不同角度各写一版，再测试哪个效果好。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="社交媒体 社媒运营 内容日历"><div class="card-top"><div><span class="card-tag tag-market">社媒运营</span><div class="card-title">社交媒体内容日历</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定社交媒体内容日历。
+品牌/账号：【名称和行业】
+运营平台：【微博/微信/小红书/抖音/LinkedIn】
+运营目标：【涨粉/互动/转化/品牌建设】
+内容周期：【1周/1个月】
+
+请输出：
+1. 每日/每周的内容主题规划
+2. 内容类型分配比例
+3. 每条内容的标题和大纲
+4. 最佳发布时间建议
+5. 话题标签推荐
+6. 互动话题和活动建议
+用表格形式呈现。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>定期用这个提示词做内容规划，可以告别"今天发什么"的焦虑。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="活动策划 线上活动 线下活动"><div class="card-top"><div><span class="card-tag tag-market">活动策划</span><div class="card-title">营销活动策划方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我策划一场营销活动。
+活动目的：【拉新/促活/转化/品牌宣传】
+形式：【线上/线下/O2O】
+预算：【X元】
+目标人群：【谁来参加】
+活动时间：【持续多久】
+
+请输出完整方案：
+1. 活动主题和创意概念
+2. 活动流程设计
+3. 传播推广计划（预热→引爆→长尾）
+4. 物料清单
+5. 人员分工表
+6. 预算分配表
+7. 风险预案
+8. 效果评估方案</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先确定预算和KPI，AI才能给出可执行的方案。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="邮件营销 EDM newsletter"><div class="card-top"><div><span class="card-tag tag-market">邮件营销</span><div class="card-title">EDM邮件营销文案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我写邮件营销(EDM)文案。
+邮件目的：【新品通知/促销/内容推送/客户维护】
+目标客户：【客户画像和阶段】
+核心信息：【要传达的关键内容】
+
+请输出：
+1. 3个邮件标题版本（提高打开率）
+2. 预览文本
+3. 邮件正文
+4. CTA按钮文案（3个版本）
+5. 发送时间建议
+6. 邮件设计布局建议
+7. A/B测试计划</div><div class="usage-tip"><strong>💡 使用技巧：</strong>邮件标题决定打开率，正文决定转化率——让AI多写几个标题版本做测试。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="品牌定位 品牌策略 品牌故事"><div class="card-top"><div><span class="card-tag tag-market">品牌定位</span><div class="card-title">品牌定位与策略</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我做品牌定位分析。
+品牌名称：【名称】
+所属行业：【行业】
+主要产品/服务：【核心产品】
+目标市场：【面向的市场和人群】
+
+请输出：
+1. 品牌定位一句话
+2. 品牌价值主张
+3. 品牌个性描述
+4. 差异化优势分析
+5. 品牌口号(Slogan)候选方案（5个）
+6. 品牌故事框架
+7. 视觉调性建议
+8. 品牌传播策略建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>品牌定位的核心是"差异化"——找到你和竞品不一样的地方，然后放大它。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="SEO 搜索引擎优化 关键词"><div class="card-top"><div><span class="card-tag tag-market">SEO</span><div class="card-title">SEO优化策略</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定SEO优化策略。
+网站类型：【电商站/博客/企业官网/落地页】
+目标关键词：【主关键词】
+行业：【所在行业】
+
+请输出：
+1. 关键词研究（主词+长尾词列表）
+2. 关键词布局建议
+3. 标题和Meta描述优化
+4. 内容策略
+5. 内链和外链建设建议
+6. 技术SEO检查清单
+7. 3个月SEO执行计划
+8. 效果监测指标和工具推荐</div><div class="usage-tip"><strong>💡 使用技巧：</strong>SEO是长期工作，让AI帮你制定3个月计划，按部就班执行比短期突击更有效。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="KOL 网红 达人合作 种草"><div class="card-top"><div><span class="card-tag tag-market">KOL合作</span><div class="card-title">KOL/达人合作方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定KOL/达人合作方案。
+产品/品牌：【名称和简述】
+推广平台：【小红书/抖音/B站/微博】
+预算：【X元】
+目标：【品牌曝光/种草带货/口碑建设】
+
+请输出：
+1. 适合的KOL类型和层级
+2. KOL筛选标准
+3. 合作方式建议（置换/付费/佣金）
+4. Brief模板
+5. 内容方向建议
+6. 投放节奏规划
+7. 效果评估指标
+8. 避坑指南</div><div class="usage-tip"><strong>💡 使用技巧：</strong>中小预算优先选腰部达人（1万-10万粉），性价比最高，粉丝粘性也更好。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="用户增长 拉新 增长黑客"><div class="card-top"><div><span class="card-tag tag-market">用户增长</span><div class="card-title">用户增长策略</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定用户增长策略。
+产品类型：【App/SaaS/电商/线下门店/社群】
+当前用户规模：【X人】
+增长目标：【X个月内增长到X人】
+预算：【每月可投入的营销预算】
+
+请输出：
+1. AARRR模型分析
+2. 当前增长瓶颈诊断
+3. 低成本获客策略（5-10个方法）
+4. 裂变/邀请机制设计
+5. 用户激活流程优化
+6. 留存提升策略
+7. 渠道效果预估和预算分配
+8. 30天增长实验计划</div><div class="usage-tip"><strong>💡 使用技巧：</strong>增长的核心是"找到一个有效的渠道，然后加大投入"。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="公关 新闻稿 媒体通稿"><div class="card-top"><div><span class="card-tag tag-market">公关</span><div class="card-title">新闻稿/公关稿撰写</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我撰写新闻稿/公关稿。
+发布目的：【新品发布/融资消息/战略合作/活动报道】
+核心信息：【要传达的关键信息】
+发布渠道：【媒体/官网/公众号/行业媒体】
+
+请输出：
+1. 新闻标题（3个备选）
+2. 导语（第一段，5W1H）
+3. 正文（详细描述+数据支撑+引用）
+4. 企业简介
+5. 媒体联系信息格式
+6. 配图建议
+7. 不同媒体版本的调整建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>新闻稿的标题要"像新闻不像广告"，用事实说话比用形容词更可信。</div></div></div><div class="prompt-card" data-cat="market" data-keywords="社群运营 微信群 社群营销"><div class="card-top"><div><span class="card-tag tag-market">社群运营</span><div class="card-title">社群运营方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定社群运营方案。
+社群类型：【用户群/会员群/学习群/行业群/快闪群】
+社群目的：【用户维护/转化变现/品牌建设】
+目标人数：【X人】
+行业：【所在行业】
+
+请输出：
+1. 社群定位和价值主张
+2. 入群流程和欢迎话术
+3. 每日/每周运营SOP
+4. 内容规划
+5. 互动玩法设计
+6. 社群分层运营策略
+7. 变现路径设计
+8. 群规和管理机制
+9. 沉默群激活策略</div><div class="usage-tip"><strong>💡 使用技巧：</strong>社群运营的核心是"持续提供价值"——没有价值的群，再怎么运营都会变成死群。</div></div></div></div></section><section class="scene-section" id="service"><div class="scene-header"><div class="scene-icon bg-service">🤝</div><h2>客户服务</h2><span class="count">10个提示词</span></div><p class="scene-desc">回复模板、投诉处理、FAQ...提升你的客户服务质量</p><div class="cards-grid"><div class="prompt-card" data-cat="service" data-keywords="客户回复 沟通话术 客服"><div class="card-top"><div><span class="card-tag tag-service">回复模板</span><div class="card-title">客户服务回复模板库</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我建立客户回复模板库。
+业务类型：【行业和产品类型】
+服务渠道：【电话/在线客服/微信/邮件】
+
+请为以下场景各生成3个回复模板：
+1. 首次咨询欢迎语
+2. 产品/服务咨询回复
+3. 价格/优惠咨询
+4. 库存/发货时间查询
+5. 使用教程/操作指导
+6. 售后保修说明
+7. 等待/排队安抚话术
+8. 服务结束感谢语
+每个模板标注适用场景和语气说明。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>好的客服话术=专业+有温度。让AI帮你平衡这两个维度。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="投诉 客诉 投诉处理 不满意"><div class="card-top"><div><span class="card-tag tag-service">投诉处理</span><div class="card-title">投诉处理话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计客户投诉处理话术。
+业务类型：【行业】
+常见投诉类型：
+1. 【投诉类型1，如：产品质量问题】
+2. 【投诉类型2，如：物流延迟】
+3. 【投诉类型3，如：服务态度】
+公司可提供的补偿方案：【退款/换货/优惠券/赠品等】
+
+请为每种投诉生成：
+1. 第一时间响应话术
+2. 了解情况的提问话术
+3. 解决方案提出话术
+4. 补偿说明话术
+5. 后续跟进话术
+6. 如何处理不合理投诉</div><div class="usage-tip"><strong>💡 使用技巧：</strong>投诉处理黄金法则：先认同情绪，再解决问题。"我理解您的感受"比"这是规定"有效100倍。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="FAQ 常见问题 自动问答"><div class="card-top"><div><span class="card-tag tag-service">FAQ</span><div class="card-title">FAQ知识库搭建</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我搭建FAQ知识库。
+产品/服务：【名称和简述】
+当前收到的高频问题：【列出你知道的常见问题】
+
+请生成：
+1. 按类别分组的FAQ列表（至少30个问题+答案）
+2. 分类：购买前/使用中/售后/账户/技术
+3. 每个回答的结构：简短回答+详细说明
+4. 搜索关键词优化
+5. FAQ页面排版建议
+6. FAQ维护更新机制
+7. 机器人自动回复的关键词匹配规则</div><div class="usage-tip"><strong>💡 使用技巧：</strong>好的FAQ能减少50%以上的客服工单，是投入产出比最高的客服工具。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="售前咨询 产品介绍 转化"><div class="card-top"><div><span class="card-tag tag-service">售前咨询</span><div class="card-title">售前咨询转化话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计售前咨询转化话术。
+产品/服务：【名称和价格】
+目标客户：【谁会来咨询】
+常见顾虑：【客户通常犹豫什么】
+竞品对比：【客户常拿什么竞品比较】
+
+请生成：
+1. 开场破冰话术（3个版本）
+2. 需求挖掘的提问清单
+3. 产品卖点介绍话术（FAB法则）
+4. 处理"太贵了"的话术
+5. 处理"我再考虑一下"的话术
+6. 处理竞品对比的话术
+7. 促成下单的临门一脚话术</div><div class="usage-tip"><strong>💡 使用技巧：</strong>售前的核心是"帮客户做决定"，而不是"推销产品"——先了解需求，再匹配方案。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="售后 回访 客户满意度"><div class="card-top"><div><span class="card-tag tag-service">售后回访</span><div class="card-title">售后回访话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计售后回访话术。
+产品/服务类型：【类型】
+回访目的：【满意度调查/使用跟进/续费提醒/交叉销售】
+回访时间节点：【购买后X天/服务结束后X天】
+
+请生成：
+1. 开场白
+2. 使用情况了解的提问
+3. 满意度调查问题（5-8个核心问题）
+4. 不满意情况的应对话术
+5. 满意情况的引导好评话术
+6. 续费/复购引导话术
+7. 回访结束感谢话术
+8. 回访记录模板</div><div class="usage-tip"><strong>💡 使用技巧：</strong>回访时机很重要——太早客户还没体验，太晚客户已经忘了。一般购买后7-14天最佳。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="退款 退货 售后处理"><div class="card-top"><div><span class="card-tag tag-service">退款退货</span><div class="card-title">退款退货处理话术</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计退款退货处理话术。
+退货政策：【描述你的退换货政策】
+常见退货原因：【质量/不喜欢/尺码不对/与描述不符】
+可提供方案：【全额退款/换货/部分退款/维修】
+
+请生成：
+1. 退货申请响应话术
+2. 挽留话术（尝试解决问题而非直接退货）
+3. 不同退货原因的针对性话术
+4. 换货引导话术
+5. 退款流程说明话术
+6. 退货后的关怀话术
+7. 恶意退货的处理策略</div><div class="usage-tip"><strong>💡 使用技巧：</strong>退货不一定是坏事——处理得好，退货客户反而会成为忠实客户。关键是态度和速度。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="话术培训 客服培训 服务标准"><div class="card-top"><div><span class="card-tag tag-service">培训</span><div class="card-title">客服培训材料</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制作客服培训材料。
+公司/品牌：【名称和行业】
+培训目标：【新员工入职/技能提升/服务标准统一】
+当前问题：【客服存在的主要问题】
+
+请生成：
+1. 客服服务标准手册大纲
+2. 服务用语规范（应该说/不应该说对照表）
+3. 电话/在线客服标准流程
+4. 情绪管理技巧
+5. 常见场景角色扮演对话（5个）
+6. 服务质量评估标准
+7. 培训考核题目（20道选择题+5道情景题）
+8. 优秀客服案例分享模板</div><div class="usage-tip"><strong>💡 使用技巧：</strong>"应该说/不应该说"对照表是最实用的培训工具，新客服一看就懂。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="会员 VIP 会员体系"><div class="card-top"><div><span class="card-tag tag-service">会员体系</span><div class="card-title">会员服务体系设计</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计会员服务体系。
+业务类型：【行业】
+当前客户规模：【X人】
+客单价：【平均消费金额】
+预算：【可投入的会员权益预算】
+
+请输出：
+1. 会员等级设计（层级名称+升级条件）
+2. 各等级权益对比表
+3. 积分规则设计
+4. 会员专属活动方案
+5. 会员日设计
+6. 生日/节日关怀方案
+7. 会员激活和召回话术
+8. 会员数据分析指标</div><div class="usage-tip"><strong>💡 使用技巧：</strong>会员等级不要太多（3-4级即可），太复杂用户记不住，运营成本也高。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="自动回复 聊天机器人 智能客服"><div class="card-top"><div><span class="card-tag tag-service">智能客服</span><div class="card-title">智能客服话术设计</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计智能客服/聊天机器人的对话流程。
+产品/服务：【名称】
+使用平台：【微信/网站/APP/电话IVR】
+主要功能：【咨询/下单/查询/投诉】
+
+请设计：
+1. 欢迎语和功能菜单
+2. 意图识别的关键词映射表
+3. 各意图的对话流程设计（至少8个流程）
+4. 多轮对话的上下文衔接
+5. 无法识别时的兜底话术
+6. 转人工的触发条件和话术
+7. 机器人的"人设"设计
+8. 对话数据埋点建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>机器人的话术要"像人但不装人"——明确告诉用户是机器人，但语气亲切友好。</div></div></div><div class="prompt-card" data-cat="service" data-keywords="NPS 满意度调查 客户反馈"><div class="card-top"><div><span class="card-tag tag-service">满意度调查</span><div class="card-title">客户满意度调查设计</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我设计客户满意度调查。
+调查目的：【整体满意度/特定环节满意度/产品改进方向】
+调查方式：【在线问卷/电话回访/短信/App弹窗】
+业务类型：【行业】
+
+请输出：
+1. 调查问卷设计（10-15个核心问题）
+2. NPS(净推荐值)问题设计
+3. 开放式问题设计
+4. 问卷题目顺序逻辑
+5. 发放时机和话术
+6. 数据分析框架
+7. 低分反馈的跟进策略
+8. 调查结果的应用建议</div><div class="usage-tip"><strong>💡 使用技巧：</strong>问卷不要太长！5-10个问题最佳，超过15个完成率会大幅下降。</div></div></div></div></section><section class="scene-section" id="life"><div class="scene-header"><div class="scene-icon bg-life">🏠</div><h2>日常生活</h2><span class="count">10个提示词</span></div><p class="scene-desc">旅行规划、菜谱推荐、健身计划...让AI融入你的日常生活</p><div class="cards-grid"><div class="prompt-card" data-cat="life" data-keywords="旅行 旅游 旅行攻略 行程规划"><div class="card-top"><div><span class="card-tag tag-life">旅行</span><div class="card-title">旅行行程规划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我规划旅行行程。
+目的地：【城市/国家】
+出行时间：【X月X日-X月X日，共X天】
+出行人数：【X人，有无老人小孩】
+预算：【总预算X元/人】
+旅行偏好：【自然风光/人文历史/美食探店/网红打卡/休闲度假】
+特殊需求：【如：不能走太多路/素食/带宠物】
+
+请输出：
+1. 每日行程安排（精确到上午/下午/晚上）
+2. 每个景点的推荐游玩时间和门票价格
+3. 交通方案
+4. 住宿推荐（每晚2-3个选择）
+5. 必吃美食清单
+6. 行李打包清单
+7. 注意事项和避坑指南
+8. 预算分配表</div><div class="usage-tip"><strong>💡 使用技巧：</strong>告诉AI你的体力和偏好，它会安排合理的节奏，不会一天安排10个景点。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="菜谱 做饭 烹饪 食谱"><div class="card-top"><div><span class="card-tag tag-life">菜谱</span><div class="card-title">智能菜谱推荐</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请根据我的情况推荐菜谱。
+用餐人数：【X人】
+可用食材：【冰箱里有什么/想用什么食材】
+烹饪水平：【完全新手/会做基本菜/有经验】
+口味偏好：【清淡/重口/辣/甜/酸】
+饮食限制：【素食/减脂/过敏/忌口】
+可用时间：【准备花多少时间做饭】
+
+请推荐：
+1. 3-5道菜的完整菜单搭配
+2. 每道菜的详细步骤（精确到克数和时间）
+3. 备菜顺序建议
+4. 食材采购清单
+5. 烹饪小技巧
+6. 剩余食材的处理建议
+7. 营养搭配说明</div><div class="usage-tip"><strong>💡 使用技巧：</strong>"冰箱里有什么就做什么"是最实用的用法——把食材告诉AI，它帮你搭配组合。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="健身 运动 锻炼 减肥"><div class="card-top"><div><span class="card-tag tag-life">健身</span><div class="card-title">个性化健身计划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定健身计划。
+基本信息：【性别/年龄/身高/体重】
+健身目标：【减脂/增肌/塑形/提高体能/改善体态】
+当前水平：【完全不运动/偶尔运动/有运动基础】
+可用时间：【每周X天，每次X分钟】
+可用器械：【无器械/家庭小器械/健身房】
+
+请输出：
+1. 每周训练计划
+2. 每个训练日的详细动作安排
+3. 每个动作的组数、次数、休息时间
+4. 热身和拉伸方案
+5. 阶段性目标（4周/8周/12周）
+6. 配合运动的饮食建议
+7. 常见错误提醒</div><div class="usage-tip"><strong>💡 使用技巧：</strong>如实告诉AI你的身体状况和运动基础，它会安排循序渐进的计划，避免受伤。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="减脂 饮食 食谱 减肥餐"><div class="card-top"><div><span class="card-tag tag-life">减脂饮食</span><div class="card-title">减脂饮食方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我制定减脂饮食方案。
+基本信息：【性别/年龄/身高/体重】
+目标体重：【希望减到多少】
+日常活动量：【久坐/轻度活动/中度活动】
+做饭条件：【自己做/食堂/外卖为主】
+
+请输出：
+1. 每日热量目标和三大营养素比例
+2. 一周7天的食谱计划（早中晚+加餐）
+3. 每餐的食材用量（精确到克）
+4. 常见食物的热量对照表
+5. 外食选择建议
+6. 减脂期可以吃的零食清单
+7. 常见饮食误区纠正</div><div class="usage-tip"><strong>💡 使用技巧：</strong>减脂饮食的核心是"热量缺口"而不是"不吃"——AI会帮你安排既能减脂又不挨饿的方案。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="购物 清单 购物建议 选购"><div class="card-top"><div><span class="card-tag tag-life">购物</span><div class="card-title">购物决策助手</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我做购物决策。
+想买的东西：【商品名称】
+预算：【X元-X元】
+主要用途：【具体使用场景】
+核心需求：【最看重的功能或特点】
+
+请帮我：
+1. 列出选购时需要关注的核心参数
+2. 不同价位的推荐选择（入门/主流/高端）
+3. 各选择的优缺点对比
+4. 避坑指南
+5. 购买渠道建议
+6. 验货/使用注意事项
+7. 是否值得等促销</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先让AI列出核心参数和避坑点，再去选购，不容易被商家忽悠。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="理财 投资 财务规划 记账"><div class="card-top"><div><span class="card-tag tag-life">理财</span><div class="card-title">个人理财规划</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我做个人理财规划（仅供参考，不构成投资建议）。
+月收入：【X元】
+月固定支出：【X元】
+月可支配收入：【X元】
+当前存款：【X元】
+理财目标：【短期/中期/长期】
+风险偏好：【保守/稳健/积极】
+
+请提供：
+1. 收支分析和优化建议
+2. 应急备用金建议
+3. 资产配置比例建议
+4. 不同风险等级的理财工具介绍
+5. 每月储蓄和投资分配方案
+6. 保险配置建议
+7. 理财常见误区
+8. 新手入门行动清单
+
+声明：以上仅供参考学习，不构成投资建议。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>理财的第一步永远是"先存应急备用金"（3-6个月生活费），然后再考虑投资。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="时间管理 高效 日程安排"><div class="card-top"><div><span class="card-tag tag-life">时间管理</span><div class="card-title">时间管理优化</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我优化时间管理。
+我的身份：【学生/上班族/自由职业/创业者/全职妈妈】
+每天时间分配现状：
+- 工作/学习：【X小时】
+- 通勤：【X小时】
+- 休闲娱乐：【X小时】
+- 睡眠：【X小时】
+最困扰的问题：【拖延症/事情太多/效率低/没自己的时间】
+想挤出时间做的事：【想做但没时间做的事】
+
+请提供：
+1. 时间使用分析
+2. 每日时间块规划建议
+3. 针对问题的具体解决方案
+4. 番茄工作法/时间块法实操建议
+5. 减少时间浪费的技巧
+6. 如何挤出"自己的时间"
+7. 一周试验计划</div><div class="usage-tip"><strong>💡 使用技巧：</strong>先记录3天你的真实时间使用情况，再让AI分析，比凭感觉估计更准确。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="社交 沟通 人情世故 社交技巧"><div class="card-top"><div><span class="card-tag tag-life">社交</span><div class="card-title">社交沟通技巧</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我提升社交沟通能力。
+想提升的场景：【职场社交/朋友相处/恋爱沟通/家庭关系/陌生人社交】
+当前困扰：【具体的社交难题】
+我的性格：【内向/外向/社恐/直性子】
+
+请提供：
+1. 针对我性格的社交优势分析
+2. 具体场景的沟通话术（5个常用场景）
+3. 倾听技巧
+4. 高情商回复模板（面对夸奖/批评/尴尬/请求）
+5. 如何优雅地拒绝别人
+6. 微信聊天的社交礼仪
+7. 每日一个小练习</div><div class="usage-tip"><strong>💡 使用技巧：</strong>社交能力是可以训练的，让AI帮你模拟各种社交场景，提前练习对话。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="心理 情绪 心理健康 压力"><div class="card-top"><div><span class="card-tag tag-life">心理</span><div class="card-title">情绪管理与心理调适</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我进行情绪管理和心理调适。
+当前情绪状态：【焦虑/压力大/沮丧/迷茫/易怒/失眠】
+可能的原因：【工作压力/人际关系/经济压力/未来迷茫】
+持续时间：【多久了】
+
+请提供：
+1. 当前情绪的自我评估
+2. 即时缓解技巧（5分钟方法）
+3. 呼吸/冥想练习引导
+4. 认知重构方法
+5. 日常情绪调节习惯建议
+6. 情绪日记模板
+7. 何时需要寻求专业帮助的信号
+8. 推荐的心理健康资源
+
+声明：AI不能替代专业心理咨询。如果情绪问题持续或严重，请及时寻求专业帮助。</div><div class="usage-tip"><strong>💡 使用技巧：</strong>AI可以帮你梳理情绪和提供方法，但如果持续感到痛苦，请一定要寻求专业心理咨询。</div></div></div><div class="prompt-card" data-cat="life" data-keywords="节日 礼物 送礼 祝福语"><div class="card-top"><div><span class="card-tag tag-life">礼物</span><div class="card-title">送礼与祝福方案</div></div><button type="button" class="copy-btn" onclick="copyPrompt(this)">📋</button></div><div class="prompt-body"><div class="prompt-text">请帮我策划送礼/祝福方案。
+送礼对象：【关系+年龄+性别】
+场合：【生日/节日/纪念日/感谢/乔迁/结婚/毕业】
+预算：【X元-X元】
+对方兴趣：【已知的爱好或需求】
+
+请提供：
+1. 5个礼物推荐（附价格和购买渠道）
+2. 每个礼物的推荐理由
+3. 创意DIY礼物方案
+4. 贺卡/祝福语撰写（3个版本）
+5. 送礼时机和方式建议
+6. 不同预算的替代方案
+7. 送礼禁忌提醒</div><div class="usage-tip"><strong>💡 使用技巧：</strong>最好的礼物是"对方想要但自己不舍得买的东西"——告诉AI对方的兴趣，它会帮你想出惊喜。</div></div></div></div></section>
+</main>
+<footer class="footer">
+<p><strong>AI提示词模板包 v1.0</strong> | 覆盖10大场景，100+即用模板</p>
+<p style="margin-top:.4rem">📧 联系邮箱：contact@example.com | 💬 微信公众号：AI效率指南</p>
+<p style="margin-top:.4rem;font-size:.78rem;color:var(--gray-500)">© 2024-2026 版权所有 | 本产品内容仅供学习参考，请勿用于违法用途</p>
+<p style="margin-top:.3rem;font-size:.78rem;color:var(--gray-500)">提示词模板可自由使用和分享，但请保留版权信息</p>
+</footer>
+<div class="toast" id="toast"><span class="check">✅</span>已复制到剪贴板！</div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+function copyPrompt(btn){
+var card=btn.closest('.prompt-card');
+var text=card.querySelector('.prompt-text').innerText;
+navigator.clipboard.writeText(text).then(function(){
+btn.classList.add('copied');btn.innerHTML='✅';showToast();
+setTimeout(function(){btn.classList.remove('copied');btn.innerHTML='📋'},2000);
+}).catch(function(){
+var ta=document.createElement('textarea');
+ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+document.body.appendChild(ta);ta.select();document.execCommand('copy');
+document.body.removeChild(ta);
+btn.classList.add('copied');btn.innerHTML='✅';showToast();
+setTimeout(function(){btn.classList.remove('copied');btn.innerHTML='📋'},2000);
+});
+}
+var toastTimer;
+function showToast(){
+var t=document.getElementById('toast');
+clearTimeout(toastTimer);t.classList.add('show');
+toastTimer=setTimeout(function(){t.classList.remove('show')},2000);
+}
+document.getElementById('catPills').addEventListener('click',function(e){
+var pill=e.target.closest('.cat-pill');
+if(!pill)return;
+document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active')});
+pill.classList.add('active');
+var cat=pill.dataset.cat;
+document.querySelectorAll('.scene-section').forEach(function(s){
+if(cat==='all'){s.style.display='';return;}
+s.style.display=s.id===cat?'':'none';
+});
+document.getElementById('searchInput').value='';
+document.querySelectorAll('.prompt-card').forEach(function(c){c.style.display=''});
+});
+document.getElementById('searchInput').addEventListener('input',function(){
+var q=this.value.trim().toLowerCase();
+if(q){
+document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active')});
+document.querySelector('[data-cat="all"]').classList.add('active');
+}
+if(!q){
+document.querySelectorAll('.scene-section').forEach(function(s){s.style.display=''});
+document.querySelectorAll('.prompt-card').forEach(function(c){c.style.display=''});
+return;
+}
+document.querySelectorAll('.scene-section').forEach(function(s){
+var hasVisible=false;
+s.querySelectorAll('.prompt-card').forEach(function(c){
+var keywords=(c.dataset.keywords||'').toLowerCase();
+var title=c.querySelector('.card-title').innerText.toLowerCase();
+var prompt=c.querySelector('.prompt-text').innerText.toLowerCase();
+var match=keywords.includes(q)||title.includes(q)||prompt.includes(q);
+c.style.display=match?'':'none';
+if(match)hasVisible=true;
+});
+s.style.display=hasVisible?'':'none';
+});
+});
+window.addEventListener('scroll',function(){
+var btn=document.getElementById('backTop');
+btn.classList.toggle('show',window.scrollY>400);
+});
+</script>
+</body>
+</html>

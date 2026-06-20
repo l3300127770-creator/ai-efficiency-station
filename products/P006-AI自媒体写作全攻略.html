@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI自媒体写作全攻略</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f3ff;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#7c3aed,#8b5cf6,#a78bfa);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800;letter-spacing:1px}
+.hero .subtitle{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.hero .price{font-size:2em;font-weight:800;margin-bottom:16px;text-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hero .price s{font-size:.5em;opacity:.6;margin-right:8px;font-weight:400}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#7c3aed}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#f5f3ff;border-radius:8px;text-decoration:none;color:#5b21b6;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#ede9fe;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#8b5cf6;color:#fff;border-color:#8b5cf6}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#5b21b6;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #8b5cf6;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#f5f3ff,#ede9fe);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#5b21b6}
+.tag{display:inline-block;background:#8b5cf6;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#7c3aed;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#8b5cf6;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;font-family:inherit;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#8b5cf6;color:#fff}
+.btn-copy:hover{background:#7c3aed;transform:translateY(-1px)}
+.btn-copy:active{transform:scale(.97)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#5b21b6;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#5b21b6;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#a78bfa;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#8b5cf6;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999;pointer-events:none}
+.back-top.show{opacity:1;pointer-events:auto}
+@media(max-width:600px){
+  .hero h1{font-size:1.6em}
+  .hero .price{font-size:1.5em}
+  .toc{padding:18px 16px}
+  .toc-grid{grid-template-columns:1fr}
+  .card-header{padding:14px 16px}
+  .card-body{padding:16px}
+  .section-title{font-size:1.2em}
+  .filter-btn{padding:6px 14px;font-size:.82em}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="badge">✍️ 自媒体创作者必备</div>
+  <h1>AI自媒体写作全攻略</h1>
+  <p class="subtitle">小红书/公众号/头条AI写作模板，让你的内容效率提升10倍</p>
+  <div class="price"><s>¥99</s>¥19.9</div>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>点击下方<strong>目录导航</strong>快速跳转到你需要的模板</li>
+      <li>每个模板都包含<strong>完整示例</strong>，直接替换方括号[内容]即可使用</li>
+      <li>复制<strong>AI提示词</strong>到ChatGPT/文心一言/通义千问，自动生成内容</li>
+      <li>善用<strong>分类筛选</strong>找到模板、提示词或技巧</li>
+    </ol>
+  </div>
+</div>
+<div class="toc">
+  <h2>📑 目录导航</h2>
+  <div class="toc-grid">
+    <a href="#xiaohongshu">📕 一、小红书爆款笔记模板</a>
+    <a href="#gongzhonghao">📗 二、公众号文章写作模板</a>
+    <a href="#toutiao">📘 三、头条/百家号SEO文章模板</a>
+    <a href="#video">🎬 四、短视频脚本模板</a>
+    <a href="#rewrite">✏️ 五、AI改写与润色技巧</a>
+    <a href="#sop">📋 六、自媒体运营SOP</a>
+  </div>
+</div>
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部内容</button>
+  <button type="button" class="filter-btn" data-filter="template">📝 模板</button>
+  <button type="button" class="filter-btn" data-filter="prompt">🤖 提示词</button>
+  <button type="button" class="filter-btn" data-filter="tips">💡 技巧</button>
+</div>
+
+<!-- 一、小红书爆款笔记模板 -->
+<div class="section" id="xiaohongshu" data-category="template">
+  <div class="section-title"><span class="icon">📕</span> 一、小红书爆款笔记模板</div>
+  <p class="section-desc">小红书是种草+分享的平台，笔记要真实、有用、有情绪共鸣。以下模板覆盖好物推荐和经验分享两大热门类型。</p>
+  <div class="card">
+    <div class="card-header"><h3>🛍️ 好物推荐笔记模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">标题公式（5个万能公式）</div><div class="template-text" id="xhs_title">公式1：数字+痛点
+  → "用了3年的[产品]，终于找到平替了！省了2000块"
+
+公式2：人群+场景+效果
+  → "学生党宿舍必备！这5个小物件让生活幸福感翻倍"
+
+公式3：否定+反转
+  → "别再买[竞品]了！这个国货才是真正的性价比之王"
+
+公式4：疑问+答案
+  → "为什么皮肤越来越差？换掉这3样东西就好了"
+
+公式5：对比+结果
+  → "花200块 vs 花2000块，效果居然一样？！"</div></div>
+      <div class="block"><div class="block-label">正文结构模板</div><div class="template-text" id="xhs_template">姐妹们！！今天必须给你们安利这个[产品名称]🔥
+
+先说说我的情况：
+我是[肤质/体质/使用场景]，之前一直用[旧产品]，[描述痛点，如：总是卡粉、起皮、不好用...]
+
+直到朋友推荐了[产品名称]，用了一个月真的绝了！
+
+✨ 使用感受：
+1️⃣ [优点1]：[具体描述，如：质地很水润，一推就开]
+2️⃣ [优点2]：[具体描述，如：持妆效果8小时不脱妆]
+3️⃣ [优点3]：[具体描述，如：价格才XX元，性价比超高]
+
+⚠️ 小缺点（客观说）：
+[写1-2个小缺点，增加可信度，如：包装一般、味道有点淡]
+
+💡 使用小技巧：
+[分享一个实用技巧，如：搭配XX一起用效果更好]
+
+📌 总结：[一句话总结推荐理由]
+
+#好物推荐 #[品类]推荐 #[场景]好物 #[人群]必备</div></div>
+      <div class="block"><div class="block-label">标签策略</div><div class="template-text" id="xhs_tags">标签组合公式：大词+中词+长尾词，共8-12个
+
+示例（护肤品）：
+#好物推荐 #护肤品推荐 #平价护肤 #学生党护肤 #油皮护肤 #保湿面霜 #国货护肤 #秋冬护肤 #敏感肌友好 #护肤品测评
+
+策略要点：
+- 前3个用热门大标签（流量入口）
+- 中间3-5个用精准中标签（目标人群）
+- 最后2-4个用长尾小标签（竞争小，容易上推荐）
+- 每周更新标签，跟平台热点走</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>标题一定要有数字或emoji，小红书用户对数字特别敏感</li><li>正文第一句话要有情绪（如"姐妹们！！""绝了！"），提高停留时间</li><li>适当写1-2个小缺点，真实感比完美感更重要，用户更信任"有缺点的推荐"</li><li>图片比文字重要10倍，首图要突出产品+使用效果对比</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('xhs_title','标题公式')">📋 复制标题公式</button><button type="button" class="btn btn-copy" onclick="copyText('xhs_template','正文模板')">📋 复制正文模板</button><button type="button" class="btn btn-copy" onclick="copyText('xhs_tags','标签策略')">📋 复制标签策略</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>💡 经验分享笔记模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="xhs_exp">【经验分享笔记结构】
+
+标题：后悔没早知道！[领域]的[X]个实用技巧，第[X]个太绝了
+
+正文：
+天哪，我怎么现在才知道这些[领域]技巧😱
+
+作为一个[身份描述，如：3年自媒体博主/宝妈/上班族]，我踩过的坑真的数不清...
+
+今天把压箱底的[X]个经验分享给你们，每一条都是花钱买来的教训👇
+
+━━━━━━━━━━━━━━━
+
+✅ 技巧1：[技巧名称]
+❌ 错误做法：[常见错误]
+✅ 正确做法：[具体操作步骤]
+💡 效果：[使用后的变化/数据]
+
+✅ 技巧2：[技巧名称]
+❌ 错误做法：[常见错误]
+✅ 正确做法：[具体操作步骤]
+💡 效果：[使用后的变化/数据]
+
+✅ 技巧3：[技巧名称]
+❌ 错误做法：[常见错误]
+✅ 正确做法：[具体操作步骤]
+💡 效果：[使用后的变化/数据]
+
+━━━━━━━━━━━━━━━
+
+🌟 总结一下：
+[用一句话概括核心要点]
+
+💬 你们还有什么好经验？评论区交流呀~
+
+#经验分享 #[领域]干货 #[领域]技巧 #[身份]必看 #[话题标签]</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>"后悔没早知道"类标题在小红书点击率极高，利用用户的好奇心和FOMO心理</li><li>每个技巧必须有"错误做法"和"正确做法"对比，这样更有实操指导性</li><li>结尾引导评论互动，小红书算法会给互动率高的笔记更多流量</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('xhs_exp','经验分享模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🤖 AI提示词：小红书笔记生成</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">AI提示词</div><div class="prompt-text" id="xhs_prompt">你是一个小红书爆款笔记写手，精通小红书平台的内容风格和算法偏好。请帮我写一篇小红书笔记。
+
+【基本信息】
+- 产品/主题：[填写你要推荐的产品或分享的主题]
+- 目标人群：[如：大学生/宝妈/上班族/油皮女生]
+- 笔记类型：[好物推荐/经验分享/教程攻略/避雷指南]
+
+【要求】
+1. 标题：用小红书爆款标题公式，带emoji，有数字或疑问，吸引点击
+2. 正文风格：
+   - 第一句话要有强烈情绪（如"天哪！""绝了！""姐妹们！"）
+   - 用口语化表达，像跟闺蜜聊天一样
+   - 每段不超过3行，方便手机阅读
+   - 用emoji分隔段落，增加视觉节奏
+   - 适当用"━━"等符号做分隔线
+3. 内容结构：痛点引入→使用感受→具体优点（至少3个）→小缺点（增加真实感）→总结推荐
+4. 结尾：引导互动（如"你们觉得呢？""评论区聊聊"）
+5. 标签：生成10个相关标签，按热度排序
+
+【参考风格示例】
+"姐妹们！！这个面霜我真的是空瓶了3罐才来安利的🔥 之前一直用XX，虽然也不错但总觉得差点意思..."
+
+请直接输出完整笔记，包含标题、正文和标签。</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>在"产品/主题"处填入你要写的具体产品名或主题，越具体AI输出越精准</li><li>生成后建议加入自己的真实使用体验，纯AI生成的内容缺乏真实感</li><li>可以追加指令："请再给我3个不同风格的标题供选择"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('xhs_prompt','小红书AI提示词')">🤖 复制AI提示词</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 二、公众号文章写作模板 -->
+<div class="section" id="gongzhonghao" data-category="template">
+  <div class="section-title"><span class="icon">📗</span> 二、公众号文章写作模板</div>
+  <p class="section-desc">公众号文章需要有深度和逻辑性，以下模板覆盖干货教程和故事型两大主流文章类型。</p>
+  <div class="card">
+    <div class="card-header"><h3>📚 干货教程文章模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">开头Hook（3种风格）</div><div class="template-text" id="gz_hook">【风格1：数据冲击型】
+"据统计，90%的人在[领域]上都犯过同样的错误。你中招了吗？今天这篇文章，可能会颠覆你对[主题]的认知。"
+
+【风格2：痛点共鸣型】
+"你是不是也遇到过这种情况：明明很努力地[做某事]，结果却总是不尽人意？别急，不是你不够努力，而是方法不对。今天分享[X]个实操方法，帮你彻底解决这个问题。"
+
+【风格3：故事引入型】
+"上周，我的一个学员给我发消息说：'[引述一句有代表性的话，如：老师，我按照你说的方法，公众号涨了5000粉！]'其实3个月前，她还只是一个完全不懂[领域]的小白..."</div></div>
+      <div class="block"><div class="block-label">正文结构模板</div><div class="template-text" id="gz_template">【干货教程文章完整结构】
+
+━━ 第一部分：为什么（制造紧迫感）━━
+
+很多人觉得[主题]不重要，但实际上，[用数据或案例说明重要性]。
+
+举个例子：[一个具体案例，说明不重视这个问题会有什么后果]
+
+所以今天，我花[X]小时整理了这份[主题]指南，看完直接能用。
+
+━━ 第二部分：是什么（建立认知）━━
+
+在讲方法之前，先帮大家理清一个概念：[核心概念解释]
+
+简单来说就是：[用大白话解释]
+
+很多人之所以做不好[主题]，根本原因是[分析原因1/2/3]。
+
+━━ 第三部分：怎么做（核心干货，分3-5个步骤）━━
+
+方法一：[方法名称]
+- 适用场景：[什么时候用]
+- 具体步骤：第1步：[详细操作] → 第2步：[详细操作] → 第3步：[详细操作]
+- 效果预期：[使用后能达到什么效果]
+
+方法二：[方法名称]（同上结构）
+
+方法三：[方法名称]（同上结构）
+
+━━ 第四部分：常见误区（增加深度）━━
+
+❌ 误区1：[常见错误认知] → ✅ 正确理解：[纠正说明]
+❌ 误区2：[常见错误认知] → ✅ 正确理解：[纠正说明]
+
+━━ 第五部分：总结+CTA（行动号召）━━
+
+最后总结一下今天的重点：
+1️⃣ [要点1]  2️⃣ [要点2]  3️⃣ [要点3]
+
+如果你觉得这篇文章有用，欢迎：
+👉 点赞+收藏，下次需要的时候能找到
+👉 转发给身边需要的朋友
+👉 关注我，每周更新[领域]干货
+
+你还有什么问题？评论区告诉我，我会一一回复💬</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>开头3秒决定读者是否继续看，一定要有"钩子"——数据、痛点或故事</li><li>正文用"━━"分隔线划分板块，让读者有呼吸感</li><li>每个方法必须有"适用场景"，让读者知道什么时候该用</li><li>结尾CTA一定要具体，不要只说"欢迎关注"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('gz_hook','开头Hook')">📋 复制开头Hook</button><button type="button" class="btn btn-copy" onclick="copyText('gz_template','正文模板')">📋 复制正文模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>📖 故事型文章模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="gz_story">【故事型公众号文章结构】
+
+标题：[人物]+[事件]+[结果/反转]
+示例："从月薪3000到年入50万，她只做对了一件事"
+
+━━ 开篇：制造悬念 ━━
+[时间]，[人物]还是一个[低谷状态描述]。
+谁也没想到，[时间]后，她竟然[惊人的变化/结果]。
+这不是鸡汤，这是一个真实的故事。
+
+━━ 第一幕：困境（让读者产生共情）━━
+[人物]的起点并不好。[具体困境描述]
+那段时间，她[具体的困难经历]。
+"我记得最惨的一次是[一个细节场景]"，她后来回忆说。
+
+━━ 第二幕：转折（找到方法/遇到机会）━━
+转机出现在[时间/事件]。[描述她如何发现新的方法/机会]
+她决定[具体行动]。一开始也很难，[描述初期的困难]。
+但她没有放弃，而是[坚持的具体做法]。
+
+━━ 第三幕：蜕变（展示成果）━━
+[X个月/年]后，结果让所有人震惊：
+✅ [成果1，用具体数字]  ✅ [成果2，用具体数字]  ✅ [成果3，用具体数字]
+"其实没什么秘诀，就是[她总结的核心方法]"，她说。
+
+━━ 结尾：升华+引导 ━━
+[人物]的故事告诉我们：[提炼一个普适的道理]
+你可能觉得自己的起点也很低，但请记住：[鼓励性的话]
+如果你也在[困境]中，不妨试试[具体建议]。
+点个「在看」，把这份力量传递出去❤️</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>故事型文章的核心是"真实感"，用具体细节增加可信度</li><li>结构遵循"困境→转折→蜕变"三幕式</li><li>结尾一定要升华到普适道理，让读者觉得"这个故事跟我有关"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('gz_story','故事型模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🤖 AI提示词：公众号文章生成</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">AI提示词</div><div class="prompt-text" id="gz_prompt">你是一个资深公众号写手，擅长写深度干货文章和感人故事。请帮我写一篇公众号文章。
+
+【基本信息】
+- 文章主题：[填写文章主题]
+- 文章类型：[干货教程/故事型/观点型/盘点型]
+- 目标读者：[如：职场新人/创业者/宝妈/自媒体人]
+- 核心观点：[这篇文章最想传达的一个核心信息]
+
+【结构要求】
+1. 标题：用"数字+痛点"或"人物+反转"公式，吸引点击
+2. 开头（前3行）：必须有"钩子"，不能超过150字
+3. 正文：分3-5个核心板块，每个有小标题，每段不超4行，用"━━"分隔
+4. 结尾：总结3个要点 + 明确行动号召 + 情感共鸣
+
+【风格要求】
+- 专业但不学术，有深度但不晦涩
+- 用"你"直接跟读者对话
+- 每500字左右插入一个小总结或金句
+- 避免空洞大道理，多用具体可操作建议
+
+请直接输出完整文章。</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>"核心观点"只填一个，公众号文章忌讳什么都想说</li><li>AI生成后务必加入自己的真实案例和数据</li><li>可以追加："请帮我优化开头，让前3行更有吸引力"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('gz_prompt','公众号AI提示词')">🤖 复制AI提示词</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 三、头条/百家号SEO文章模板 -->
+<div class="section" id="toutiao" data-category="template">
+  <div class="section-title"><span class="icon">📘</span> 三、头条/百家号SEO文章模板</div>
+  <p class="section-desc">头条号和百家号靠算法推荐，标题和关键词布局决定文章的流量天花板。</p>
+  <div class="card">
+    <div class="card-header"><h3>🔍 SEO优化文章结构模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="seo_template">【头条/百家号SEO文章结构】
+
+━━ 标题 ━━
+[核心关键词]+[修饰词]+[吸引点击的元素]
+示例："2024年最值得入手的5款平价手机，第3款性价比炸裂"
+
+━━ 摘要/前言（100-150字）━━
+[核心关键词]是很多[目标人群]关心的问题。本文将从[角度1]、[角度2]、[角度3]三个方面，为你详细解答[核心问题]。
+
+━━ 正文结构 ━━
+一、[小标题1：包含关键词]（前100字出现核心关键词）
+二、[小标题2：包含关键词]（插入列表或表格）
+三、[小标题3：包含关键词]（加入用户常见问题）
+四、[小标题4：包含关键词]（提供实操步骤）
+
+五、常见问题FAQ
+Q1：[用户常搜问题1]？ → A：[简洁回答]
+Q2：[用户常搜问题2]？ → A：[简洁回答]
+Q3：[用户常搜问题3]？ → A：[简洁回答]
+
+━━ 总结（100字）━━
+[重申核心观点，再次包含关键词]
+
+【SEO布局要点】
+- 关键词密度：2%-3%
+- 关键词位置：标题、摘要、每个小标题、首段、末段
+- 文章字数：1500-2500字
+- 配图至少3张</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>头条号标题可以长一些（25-30字），信息量越大点击率越高</li><li>文章前100字必须出现核心关键词</li><li>FAQ板块是SEO神器，能覆盖大量长尾搜索词</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('seo_template','SEO文章模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🏷️ 标题SEO优化公式</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="seo_title">【头条/百家号标题SEO优化公式】
+
+公式1：年份+核心词+数量+利益点
+  → "2024年最全[关键词]攻略，这[X]个方法让你[利益]"
+
+公式2：疑问式
+  → "[关键词]到底怎么选？看完这篇你就明白了"
+
+公式3：对比式
+  → "[关键词A] vs [关键词B]，到底哪个更好？实测对比"
+
+公式4：避坑式
+  → "[关键词]千万别踩这5个坑！第3个90%的人都中招了"
+
+公式5：权威式
+  → "做了10年[行业]的老手告诉你，[关键词]的正确打开方式"
+
+公式6：清单式
+  → "关于[关键词]，这[X]个知识点你必须知道"
+
+公式7：教程式
+  → "手把手教你[关键词]，零基础也能学会（附详细步骤）"
+
+公式8：盘点式
+  → "[领域]最值得关注的[X]个[关键词]，建议收藏"
+
+【SEO标题检查清单】
+✓ 标题包含核心关键词  ✓ 长度20-30字
+✓ 有数字（点击率提升30%）  ✓ 有利益点或好奇心缺口</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>写标题前先在头条搜索框输入关键词，看下拉联想词</li><li>标题中的数字用阿拉伯数字，点击率实测高15%</li><li>避免标题党，头条对"震惊体"会限流</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('seo_title','标题SEO公式')">📋 复制标题公式</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🤖 AI提示词：SEO文章生成</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">AI提示词</div><div class="prompt-text" id="seo_prompt">你是一个SEO内容专家，精通头条号、百家号等平台的算法推荐机制。请帮我写一篇SEO优化文章。
+
+【基本信息】
+- 核心关键词：[填写1个主关键词]
+- 长尾关键词：[填写3-5个相关长尾词]
+- 目标平台：[头条号/百家号/知乎]
+- 文章字数：[1500-2500字]
+
+【SEO要求】
+1. 标题：必须含核心关键词，长度20-30字，生成5个供选择
+2. 正文关键词布局：首段前100字出现，每小标题包含关键词，密度2%-3%
+3. 结构：摘要+4-5小标题+FAQ+总结
+4. 风格：通俗易懂，多用短句和列表
+
+请直接输出完整文章。</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>先用5118或百度指数查关键词搜索量</li><li>一篇文围绕一个核心关键词，不要贪多</li><li>FAQ问题直接用百度"相关搜索"和"人们还问"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('seo_prompt','SEO文章AI提示词')">🤖 复制AI提示词</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 四、短视频脚本模板 -->
+<div class="section" id="video" data-category="template">
+  <div class="section-title"><span class="icon">🎬</span> 四、短视频脚本模板</div>
+  <p class="section-desc">短视频的核心是前3秒留住人，脚本要节奏快、信息密度高、有明确的行动引导。</p>
+  <div class="card">
+    <div class="card-header"><h3>🎤 口播类脚本模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="video_kb">【口播类短视频脚本】
+
+━━ 开头3秒Hook ━━
+Hook类型1：反常识 → "你以为[常见认知]？其实完全相反！"
+Hook类型2：数字冲击 → "用了这个方法，我一个月[具体成果]"
+Hook类型3：痛点直击 → "如果你也[痛点描述]，这条视频一定要看完"
+Hook类型4：悬念开头 → "接下来我要说的这件事，可能会得罪很多人，但我还是要说"
+
+━━ 正文（30-50秒）━━
+"今天分享[X]个[主题]的实用技巧👇
+
+第一个：[要点名称]
+[用1-2句话说清楚，配合手势或画面切换]
+
+第二个：[要点名称]
+[用1-2句话说清楚]
+
+第三个：这个最重要！
+[重点强调，语速放慢]"
+
+━━ 结尾引导（5-10秒）━━
+引导方式1： "觉得有用的话，点个关注，我每天分享[领域]干货"
+引导方式2： "你们觉得哪个最有用？评论区告诉我"
+引导方式3： "这只是[X]个技巧中的3个，想看全部的扣1，我出下一期"
+
+【拍摄提示】
+- 画面：半身出镜，背景简洁
+- 语速：比正常说话快10%
+- 字幕：关键信息加花字强调
+- BGM：轻快节奏，音量不要盖过人声</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>前3秒一定要有"钩子"，用户划走只需0.5秒</li><li>口播语速要快但清晰，太慢观众会觉得无聊</li><li>每个要点说完停顿0.5秒，给观众消化时间</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('video_kb','口播脚本模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🎭 剧情类脚本模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="video_jq">【剧情类短视频脚本】
+
+━━ 场景设定 ━━
+时间/地点/人物/道具
+
+━━ 脚本正文 ━━
+【画面1】开头冲突（0-3秒）
+[人物B]："你还在[做某事]？"
+
+【画面2】问题展开（3-10秒）
+[人物A]："对啊，怎么了？"
+[人物B]："你知道吗，[抛出一个信息]"
+
+【画面3】转折/解决方案（10-25秒）
+[人物B]："其实你只需要[具体方法]就行了"
+[展示具体操作/演示]
+
+【画面4】结果+反转（25-30秒）
+[人物A]："天哪，这也太[效果描述]了吧！"
+
+【画面5】结尾引导（最后3秒）
+"你们学会了吗？学会的扣1！"
+
+━━ 拍摄分镜 ━━
+镜头1：近景，拍表情  镜头2：中景，对话
+镜头3：特写，产品  镜头4：中景，结果  镜头5：正面看镜头</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>剧情类核心是"冲突+反转"，没有冲突没人看</li><li>台词要口语化、短句化</li><li>总时长控制在30秒以内</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('video_jq','剧情脚本模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🤖 AI提示词：短视频脚本生成</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">AI提示词</div><div class="prompt-text" id="video_prompt">你是一个短视频编导，精通抖音、快手、视频号的内容创作。请帮我写一个短视频脚本。
+
+【基本信息】
+- 视频主题：[填写主题]
+- 视频类型：[口播/剧情/Vlog/教程]
+- 目标平台：[抖音/快手/视频号]
+- 视频时长：[15秒/30秒/60秒]
+- 账号定位：[如：职场干货/生活技巧/美食探店]
+
+【脚本要求】
+1. 开头3秒：必须有强Hook
+2. 正文：信息密度高，口语化，关键信息标注[字幕强调]
+3. 结尾：明确引导动作（关注/点赞/评论）
+4. 格式：标注每个画面内容、时长、字幕和BGM建议
+
+请直接输出完整脚本。</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>生成后先自己念一遍，看是否顺口</li><li>追加："帮我写3个不同风格的开头Hook供选择"</li><li>剧情类追加："请标注每个镜头的景别和拍摄角度"</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('video_prompt','短视频AI提示词')">🤖 复制AI提示词</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 五、AI改写与润色技巧 -->
+<div class="section" id="rewrite" data-category="tips">
+  <div class="section-title"><span class="icon">✏️</span> 五、AI改写与润色技巧</div>
+  <p class="section-desc">学会用AI改写和润色内容，一份素材多平台分发，效率翻倍。</p>
+  <div class="card">
+    <div class="card-header"><h3>🔥 爆款标题改写公式（10个）</h3><span class="tag">技巧</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="rw_title">【10个爆款标题改写公式】
+
+① 数字量化法：5个方法让你的写作效率提升300%
+② 痛点+方案法：自媒体做了半年没流量？这7个技巧帮你起死回生
+③ 否定+反转法：别再用Word写文章了！这3个AI工具才是真正的效率神器
+④ 身份+场景法：零基础小白做自媒体，第一个月该做什么？（附详细计划）
+⑤ 对比冲突法：用AI写作 vs 纯手写，效率差了10倍，但质量呢？
+⑥ 悬念好奇心法：我靠自媒体月入过万，但方法可能和你想的不一样
+⑦ 热点借势法：ChatGPT之后，这5个AI工具才是真正能帮你赚钱的
+⑧ 权威背书法：写了500篇10万+文章后，我总结出这3个核心规律
+⑨ 情绪共鸣法：做自媒体第3年，我终于理解了那句话："坚持才是最大的才华"
+⑩ 清单收藏法：2024年自媒体运营全攻略（建议收藏，随时翻看）
+
+小红书适合红书适合①②⑤，公众号适合⑥⑧⑨，头条适合①④⑩</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>写完标题后，用至少3个公式各改写一版，选最好的那个</li><li>标题写完后发给朋友看，如果3秒内看不懂就改</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('rw_title','标题改写公式')">📋 复制公式</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🔄 内容扩写/缩写/改写Prompt</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">扩写提示词</div><div class="prompt-text" id="rw_expand">请帮我把以下内容扩写成一篇1500字的完整文章。要求：
+1. 保留原文核心观点和逻辑
+2. 每个观点增加具体案例或数据支撑
+3. 增加"为什么"的分析
+4. 语言通俗易懂，增加小标题
+5. 结尾增加总结和行动建议
+
+原文内容：
+[粘贴你的原文]</div></div>
+      <div class="block"><div class="block-label">缩写提示词</div><div class="prompt-text" id="rw_compress">请帮我把以下文章精简为300字以内的短文，适合发朋友圈或小红书。要求：
+1. 保留最核心的1-2个观点
+2. 语言口语化、有情绪
+3. 结尾能引发互动
+
+原文内容：
+[粘贴你的原文]</div></div>
+      <div class="block"><div class="block-label">风格改写提示词</div><div class="prompt-text" id="rw_style">请帮我把以下内容改写为[目标平台]的风格。
+- 目标平台：[小红书/公众号/头条/知乎]
+- 小红书：口语化、emoji多、短段落
+- 公众号：有深度、有逻辑、专业易懂
+- 头条：通俗、有信息量、SEO友好
+- 知乎：理性、有论据、专业分析
+
+原文内容：
+[粘贴你的原文]</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>扩写适合把灵感变成完整文章，缩写适合把长文变成社交帖子</li><li>风格改写是多平台分发的神器</li><li>改写后一定要自己通读一遍</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('rw_expand','扩写提示词')">🤖 复制扩写Prompt</button><button type="button" class="btn btn-prompt" onclick="copyText('rw_compress','缩写提示词')">🤖 复制缩写Prompt</button><button type="button" class="btn btn-prompt" onclick="copyText('rw_style','风格改写提示词')">🤖 复制改写Prompt</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🌐 多平台一键改写技巧</h3><span class="tag">技巧</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="rw_multi">【一稿多发改写工作流】
+
+核心思路：写一篇母稿 → AI改写成5个平台版本 → 分别发布
+
+━━ Step 1：写母稿 ━━
+建议先写公众号版本（内容最完整），然后改写其他平台
+
+━━ Step 2：用AI一键改写 ━━
+改写指令：
+"请将以下公众号文章改写为[平台名]版本：
+- 小红书版：缩到500字内，加emoji，口语化，加10个标签
+- 头条版：标题改SEO风格，加FAQ板块，1500-2500字
+- 知乎版：改成问答体，专业理性
+- 视频号版：提炼3-5个核心要点，改成30秒口播脚本"
+
+━━ Step 3：各平台发布时间 ━━
+小红书：中午12-13点、晚上20-22点
+公众号：早上7-9点、晚上20-22点
+头条号：不限（算法推荐制）
+视频号：中午12-13点、晚上19-21点
+
+━━ Step 4：数据追踪 ━━
+24小时后对比各平台数据，重点投入最好的1-2个平台</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>一稿多发不是简单复制粘贴，必须针对性改写</li><li>各平台发布时间错开至少2小时，避免被检测为搬运</li><li>坚持1个月后看数据，集中精力做效果最好的2个平台</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('rw_multi','多平台改写技巧')">📋 复制工作流</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 六、自媒体运营SOP -->
+<div class="section" id="sop" data-category="tips">
+  <div class="section-title"><span class="icon">📋</span> 六、自媒体运营SOP</div>
+  <p class="section-desc">把自媒体当项目来运营，用SOP标准化流程，让AI帮你提效。</p>
+  <div class="card">
+    <div class="card-header"><h3>📅 日更计划模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="sop_daily">【自媒体日更计划表】
+
+━━ 每日时间安排 ━━
+🌅 8:00-9:00【选题+素材】
+- 刷30分钟各平台热榜，找3个备选选题
+- 用AI生成选题大纲，确定今天的主题
+
+🌞 9:00-11:00【内容创作】
+- AI生成初稿（15分钟）
+- 人工修改润色，加入个人观点（45分钟）
+- 制作配图/封面（30分钟）
+
+🌇 14:00-15:00【发布+互动】
+- 按最佳时间发布
+- 回复评论和私信（30分钟）
+- 去同领域大号评论区互动引流（15分钟）
+
+🌙 21:00-21:30【复盘+准备】
+- 记录今日数据
+- 分析内容表现
+- 准备明天选题素材
+
+━━ 周计划 ━━
+周一：干货教程（长文）
+周二：好物推荐/经验分享
+周三：热点评论/观点输出
+周四：互动话题/问答
+周五：干货教程（长文）
+周六：轻松内容/日常分享
+周日：本周复盘 + 下周选题规划</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>日更压力大可以先从周3-4篇开始</li><li>周末集中批量创作3-5篇，工作日只负责发布和互动</li><li>AI生成初稿节省60%时间，但一定要加入个人观点</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('sop_daily','日更计划')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>💡 选题库管理模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="sop_topic">【选题库管理模板】
+
+用Excel或飞书多维表格建选题库，包含字段：
+选题标题 | 选题来源 | 目标平台 | 内容类型 | 关键词 | 紧急程度 | 状态 | 预计发布日 | 实际数据 | 复盘笔记
+
+━━ 选题来源渠道（每天30分钟）━━
+
+1. 平台热榜：小红书搜索联想词、头条热榜、知乎热榜
+2. 竞品分析：关注10个同领域优质账号，记录高赞内容
+3. 用户需求：评论区高频问题、私信咨询、百度知道
+4. AI辅助：Prompt → "我是[领域]博主，请列出下周7天选题计划，覆盖干货、测评、互动三种类型"</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>选题库至少保持30个以上备选选题</li><li>每周日花1小时整理，删除过时的，补充新的</li><li>AI批量生成后筛选最适合自己的</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('sop_topic','选题库模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>📊 数据复盘模板</h3><span class="tag">模板</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">模板内容</div><div class="template-text" id="sop_data">【每周数据复盘模板】
+
+━━ 本周数据总览 ━━
+| 指标 | 本周 | 上周 | 环比变化 |
+| 发布篇数 | | | |
+| 总阅读量 | | | |
+| 总点赞数 | | | |
+| 总评论数 | | | |
+| 总收藏数 | | | |
+| 新增粉丝 | | | |
+| 粉丝净增 | | | |
+
+━━ TOP3 表现最好的内容 ━━
+第1名：[标题] - 阅读[X]/点赞[X]/评论[X]/收藏[X]
+- 成功原因：[标题？选题？发布时间？]
+- 可复制经验：[下次怎么复用]
+
+━━ 表现最差的1篇 ━━
+标题：[标题] - 数据：[X]
+- 失败原因：[分析]
+- 改进方案：[怎么避免]
+
+━━ 下周优化方向 ━━
+1. 内容方向  2. 发布时间  3. 标题优化  4. 互动策略</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>复盘重点是分析"为什么好"和"为什么差"</li><li>每周复盘1次，每月做1次月度总结</li><li>让AI帮你分析数据趋势和优化方向</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-copy" onclick="copyText('sop_data','数据复盘模板')">📋 复制模板</button></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>🤖 AI辅助运营Workflow</h3><span class="tag">提示词</span></div>
+    <div class="card-body">
+      <div class="block"><div class="block-label">AI提示词</div><div class="prompt-text" id="sop_workflow">你是一个自媒体运营专家，请帮我制定一套完整的AI辅助运营工作流。
+
+【我的情况】
+- 运营平台：[小红书/公众号/头条/多平台]
+- 内容领域：[如：职场/教育/生活/科技]
+- 更新频率：[日更/周3-4篇/周更]
+- 目前粉丝量：[填写]
+- 目标：[如：3个月涨粉1万/月入过千]
+
+请帮我制定：
+1. 【选题阶段】AI选题Prompt + 筛选标准
+2. 【创作阶段】AI初稿Prompt + 人工优化清单
+3. 【发布阶段】最佳发布时间 + 标题Checklist + 标签优化
+4. 【互动阶段】评论回复模板 + AI辅助回复Prompt
+5. 【复盘阶段】数据分析Prompt + 优化建议Prompt
+
+每个环节都要有可直接使用的prompt。</div></div>
+      <div class="block"><div class="block-label">使用技巧</div><ul class="tips-list"><li>把"我的情况"填完整，AI给出的建议越具体越有用</li><li>适合每月初让AI更新一次，根据上月数据调整策略</li><li>AI负责效率，你负责创意和人情味</li><li>建议把所有prompt存到一个文档里，形成自己的AI工具箱</li></ul></div>
+      <div class="btn-row"><button type="button" class="btn btn-prompt" onclick="copyText('sop_workflow','运营Workflow提示词')">🤖 复制AI提示词</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="footer">
+  <p><strong>AI自媒体写作全攻略</strong></p>
+  <p>让AI成为你的自媒体创作搭档，效率提升10倍</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+
+<script>
+function copyText(id,label){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var text=el.innerText||el.textContent;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)});
+  }else{fallbackCopy(text,label)}
+}
+function fallbackCopy(text,label){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}
+  document.body.removeChild(ta);
+}
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.classList.remove('show')},2200);
+}
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+    this.classList.add('active');
+    var f=this.getAttribute('data-filter');
+    if(f==='prompt'){
+      document.querySelectorAll('.section').forEach(function(sec){sec.style.display=''});
+      document.querySelectorAll('.card').forEach(function(card){
+        card.style.display=card.querySelector('.prompt-text')?'':'none';
+      });
+    }else{
+      document.querySelectorAll('.card').forEach(function(card){card.style.display=''});
+      document.querySelectorAll('.section').forEach(function(sec){
+        sec.style.display=(f==='all'||sec.getAttribute('data-category')===f)?'':'none';
+      });
+    }
+  });
+});
+window.addEventListener('scroll',function(){
+  var btn=document.getElementById('backTop');
+  if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}
+});
+</script>
+</body>
+</html>

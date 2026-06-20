@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI效率站 - 免费资源包</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f0fdf4;color:#1f2937;line-height:1.8}
+.hero{background:linear-gradient(135deg,#059669,#10b981,#34d399);color:#fff;padding:50px 20px 40px;text-align:center}
+.hero h1{font-size:2em;margin-bottom:10px;font-weight:800}
+.hero p{font-size:1em;opacity:.9;max-width:600px;margin:0 auto}
+.section{max-width:800px;margin:30px auto;padding:0 16px}
+.section h2{font-size:1.3em;color:#065f46;margin-bottom:16px;padding-bottom:8px;border-bottom:3px solid #10b981}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:20px;padding:24px}
+.card h3{font-size:1.05em;color:#065f46;margin-bottom:12px}
+.tip{background:#ecfdf5;border-left:4px solid #10b981;padding:12px 16px;margin:12px 0;border-radius:0 8px 8px 0;font-size:.9em}
+.prompt{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px;margin:12px 0;font-size:.88em;white-space:pre-wrap;color:#92400e}
+.copy-btn{display:inline-block;background:#10b981;color:#fff;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;margin-top:8px}
+.copy-btn:hover{background:#059669}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.88em}
+th,td{padding:10px 12px;border:1px solid #e5e7eb;text-align:left}
+th{background:#ecfdf5;color:#065f46;font-weight:700}
+.footer{text-align:center;padding:30px 20px;margin-top:40px;background:#065f46;color:#fff;font-size:.85em}
+.footer a{color:#34d399}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#065f46;color:#fff;padding:10px 24px;border-radius:8px;font-size:.88em;opacity:0;transition:all .3s;z-index:9999;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){.hero{padding:30px 16px}.card{padding:16px}table{font-size:.8em}th,td{padding:6px 8px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🎁 AI效率站 · 免费资源包</h1>
+  <p>50+精选提示词 + AI工具对比 + 副业入门 + 标题公式 + 效率技巧</p>
+</div>
+
+<!-- ==================== 50+精选提示词 ==================== -->
+<div class="section">
+  <h2>📝 50+精选AI提示词模板</h2>
+
+  <div class="card">
+    <h3>💼 办公写作类（10条）</h3>
+    <div class="prompt" id="p1">【周报生成】
+请帮我写一份本周工作周报。本周工作内容：[填写]，下周计划：[填写]。要求：1）分"本周完成""进行中""下周计划"三个板块 2）每条用动词开头 3）量化成果 4）语言简洁专业 5）总字数300字以内</div>
+    <button type="button" class="copy-btn" onclick="copyText('p1')">📋 复制</button>
+
+    <div class="prompt" id="p2">【邮件撰写】
+请帮我写一封[目的]的商务邮件。收件人：[职位/关系]，核心信息：[填写]，语气：[正式/半正式/轻松]。要求：主题行简洁有力，正文分段清晰，结尾有明确的行动呼吁。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p2')">📋 复制</button>
+
+    <div class="prompt" id="p3">【会议纪要】
+请帮我整理以下会议记录为结构化纪要。参会人：[填写]，会议主题：[填写]，原始记录：[粘贴]。要求：分"议题""讨论要点""决议事项""待办事项（含负责人+截止日期）"四个板块。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p3')">📋 复制</button>
+
+    <div class="prompt" id="p4">【PPT大纲】
+请帮我生成一个PPT大纲。主题：[填写]，页数：[X]页，受众：[填写]。要求：1）封面页+目录页+内容页+总结页+Q&A页 2）每页标注标题+3-5个要点 3）最后一页有金句总结</div>
+    <button type="button" class="copy-btn" onclick="copyText('p4')">📋 复制</button>
+
+    <div class="prompt" id="p5">【年终总结】
+请帮我写年终工作总结。岗位：[填写]，今年主要成果：[填写1-3个]，遇到的挑战：[填写]。要求：1）开头概述全年 2）分"业绩成果""能力成长""不足与反思""明年规划"四部分 3）多用数据量化 4）1000字左右</div>
+    <button type="button" class="copy-btn" onclick="copyText('p5')">📋 复制</button>
+  </div>
+
+  <div class="card">
+    <h3>📱 自媒体类（10条）</h3>
+    <div class="prompt" id="p6">【小红书笔记】
+请帮我写一篇小红书好物推荐笔记。产品：[填写]，核心卖点：[填写]，适合人群：[填写]。要求：标题用"数字+效果"公式带emoji，正文口语化像闺蜜聊天，300-500字，附8-10个标签。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p6')">📋 复制</button>
+
+    <div class="prompt" id="p7">【公众号文章】
+请帮我写一篇公众号干货文章。主题：[填写]，目标读者：[填写]。要求：1）痛点开头引发共鸣 2）分3-5个核心观点 3）每个观点有案例支撑 4）结尾引导关注/收藏/转发 5）1500-2500字</div>
+    <button type="button" class="copy-btn" onclick="copyText('p7')">📋 复制</button>
+
+    <div class="prompt" id="p8">【短视频脚本】
+请帮我写一个短视频口播脚本。主题：[填写]，时长：[30/60/90秒]。要求：开头3秒用痛点型hook，正文分点讲解（每点1-2句），结尾引导关注。标注每段大致时长。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p8')">📋 复制</button>
+
+    <div class="prompt" id="p9">【SEO文章】
+请帮我写一篇SEO优化文章。核心关键词：[填写]，长尾词：[填写]。要求：标题含关键词，第一段直接回答问题，正文分3-5个小标题（含关键词变体），加FAQ板块，关键词密度2-4%。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p9')">📋 复制</button>
+
+    <div class="prompt" id="p10">【爆款标题】
+请为以下内容生成10个爆款标题：[填写主题]。要求：分别用"数字+结果""身份+痛点""反转+对比""疑问+答案""情绪+感叹"5种公式各写2个，每个20字以内，带emoji。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p10')">📋 复制</button>
+  </div>
+
+  <div class="card">
+    <h3>🛒 电商文案类（10条）</h3>
+    <div class="prompt" id="p11">【商品标题优化】
+请帮我优化以下商品标题。产品：[填写]，品类：[填写]，核心卖点：[填写]，目标人群：[填写]。生成5个不同版本的标题（30字以内），每个标注侧重方向。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p11')">📋 复制</button>
+
+    <div class="prompt" id="p12">【卖点提炼】
+请用FABE法则（特征→优势→利益→证据）为以下产品提炼5个核心卖点。产品：[填写]，价格：[填写]，竞品差异：[填写]。每条控制在3-4行。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p12')">📋 复制</button>
+
+    <div class="prompt" id="p13">【客服话术】
+请为[产品名]编写一套客服话术，包括：售前咨询（价格/质量/发货各1条）、催付话术2条、好评引导2条。语言亲切温暖带emoji，每条50-100字。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p13')">📋 复制</button>
+  </div>
+
+  <div class="card">
+    <h3>💰 副业/求职类（10条）</h3>
+    <div class="prompt" id="p14">【简历优化】
+请用STAR法则帮我优化以下工作经历。岗位：[填写]，原始描述：[粘贴]。用强动词开头，所有成果量化，每条经历5-8行。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p14')">📋 复制</button>
+
+    <div class="prompt" id="p15">【面试准备】
+你是资深面试官，正在面试[岗位]。请问我3个专业问题+2个行为面试题+1个压力面试题。每个问题后等我回答，给出评分和改进建议。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p15')">📋 复制</button>
+
+    <div class="prompt" id="p16">【副业规划】
+我想做AI副业，每天可投入[X]小时，启动资金[X]元，技能基础：[填写]。请推荐3个最适合的副业方向，每个给出30天启动计划和预期收入。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p16')">📋 复制</button>
+  </div>
+
+  <div class="card">
+    <h3>🤖 AI进阶类（10条）</h3>
+    <div class="prompt" id="p17">【角色扮演】
+你是一个有10年经验的[领域]专家。请用你的专业知识帮我[具体任务]。回答要专业、有深度、可操作。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p17')">📋 复制</button>
+
+    <div class="prompt" id="p18">【内容改写】
+请将以下内容改写为[目标平台]风格。原始内容：[粘贴]。保持核心信息不变，调整语言风格、内容结构和字数适配目标平台。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p18')">📋 复制</button>
+
+    <div class="prompt" id="p19">【学习助手】
+我想学习[主题]，目前是零基础/入门/中级水平。请帮我制定一个学习计划，包括：学习路线、推荐资源、每个阶段的目标和时间、实践项目建议。</div>
+    <button type="button" class="copy-btn" onclick="copyText('p19')">📋 复制</button>
+
+    <div class="prompt" id="p20">【翻译润色】
+请将以下中文翻译为英文/日文，要求：1）语言自然地道，不要机翻感 2）专业术语准确 3）保持原文的语气和风格 4）如有歧义请标注。原文：[粘贴]</div>
+    <button type="button" class="copy-btn" onclick="copyText('p20')">📋 复制</button>
+  </div>
+</div>
+
+<!-- ==================== AI工具对比表 ==================== -->
+<div class="section">
+  <h2>🤖 2025 AI工具对比速查表</h2>
+
+  <div class="card">
+    <h3>💬 AI对话工具对比</h3>
+    <table>
+      <tr><th>工具</th><th>价格</th><th>最强项</th><th>最佳场景</th><th>推荐</th></tr>
+      <tr><td>ChatGPT</td><td>免费/$20月</td><td>综合能力最强</td><td>英文/编程/图片</td><td>⭐⭐⭐⭐⭐</td></tr>
+      <tr><td>Claude</td><td>免费/$20月</td><td>中文写作最自然</td><td>长文/文档分析</td><td>⭐⭐⭐⭐⭐</td></tr>
+      <tr><td>Gemini</td><td>免费/$20月</td><td>Google生态</td><td>搜索/多语言</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td>DeepSeek</td><td>免费/超低价</td><td>性价比最高</td><td>中文/API开发</td><td>⭐⭐⭐⭐⭐</td></tr>
+      <tr><td>Kimi</td><td>免费</td><td>超长文本</td><td>文档分析/搜索</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td>通义千问</td><td>免费</td><td>中文办公</td><td>文档/电商文案</td><td>⭐⭐⭐⭐</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🎨 AI绘画工具对比</h3>
+    <table>
+      <tr><th>工具</th><th>价格</th><th>最强项</th><th>上手难度</th></tr>
+      <tr><td>Midjourney</td><td>$10-60/月</td><td>画质最高最美</td><td>中等</td></tr>
+      <tr><td>Stable Diffusion</td><td>免费开源</td><td>免费可定制</td><td>较高</td></tr>
+      <tr><td>DALL-E 3</td><td>ChatGPT含</td><td>最简单易用</td><td>最简单</td></tr>
+      <tr><td>通义万相</td><td>免费</td><td>中文友好</td><td>简单</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== 副业入门指南 ==================== -->
+<div class="section">
+  <h2>💰 AI副业入门10招</h2>
+
+  <div class="card">
+    <h3>零成本起步（适合所有人）</h3>
+    <table>
+      <tr><th>#</th><th>副业方向</th><th>月收入预期</th><th>启动成本</th><th>每天时间</th></tr>
+      <tr><td>1</td><td>AI写小红书笔记→接广告</td><td>1000-5000元</td><td>0元</td><td>1小时</td></tr>
+      <tr><td>2</td><td>AI写公众号→流量主收入</td><td>500-3000元</td><td>0元</td><td>1小时</td></tr>
+      <tr><td>3</td><td>AI写头条文章→广告分成</td><td>300-2000元</td><td>0元</td><td>30分钟</td></tr>
+      <tr><td>4</td><td>AI做短视频→橱窗带货</td><td>1000-8000元</td><td>0元</td><td>1小时</td></tr>
+      <tr><td>5</td><td>AI代写文案→闲鱼接单</td><td>2000-8000元</td><td>0元</td><td>2小时</td></tr>
+      <tr><td>6</td><td>AI做书单号→佣金</td><td>500-3000元</td><td>0元</td><td>1小时</td></tr>
+      <tr><td>7</td><td>AI生成壁纸→付费下载</td><td>1000-5000元</td><td>70元/月</td><td>1小时</td></tr>
+      <tr><td>8</td><td>AI做多平台矩阵→收益叠加</td><td>3000-20000元</td><td>0元</td><td>2小时</td></tr>
+      <tr><td>9</td><td>AI卖虚拟产品→自动发货</td><td>1000-10000元</td><td>0元</td><td>1小时</td></tr>
+      <tr><td>10</td><td>AI培训/咨询→高单价</td><td>5000-30000元</td><td>0元</td><td>3小时</td></tr>
+    </table>
+    <div class="tip">💡 建议：先选1个方向坚持30天，验证可行后再扩展。不要同时做太多！</div>
+  </div>
+</div>
+
+<!-- ==================== 小红书标题公式 ==================== -->
+<div class="section">
+  <h2>📕 小红书爆款标题20个公式</h2>
+
+  <div class="card">
+    <div class="prompt" id="titles">① 数字+结果："5个方法，让你的效率提升300%"
+② 身份+痛点："打工人必看！3招解决下班焦虑"
+③ 反转+对比："月薪3千和3万的人，差距就在这一点"
+④ 疑问+答案："为什么你的小红书没人看？因为缺了这一步"
+⑤ 时间+变化："坚持30天后，我的生活发生了这些变化"
+⑥ 权威+推荐："哈佛推荐的5个高效学习法，真的有用！"
+⑦ 警告+避坑："千万别再这样做了！正确方式是这样"
+⑧ 情绪+感叹："天呐！这个方法也太好用了吧！"
+⑨ 故事+转折："从月薪2千到年入50万，我只做对了一件事"
+⑩ 对比+选择："A和B到底选哪个？看完这篇就知道"
+⑪ 人群+场景："学生党私藏的5个APP，便宜又好用"
+⑫ 数量+合集："这10个神器，我后悔没早点发现"
+⑬ 痛点+解决："夏天出门就脱妆？这个方法亲测有效"
+⑭ 价格+价值："不到10块钱，解决了我3年的困扰"
+⑮ 挑战+结果："挑战7天不花钱，结果让我震惊"
+⑯ 清单+收藏："2025必做的100件小事，先收藏"
+⑰ 教程+保姆级："保姆级教程！手把手教你从0开始"
+⑱ 对比+评测："用了100+款，最后只留下了这3个"
+⑲ 真相+颠覆："原来我们一直被骗了！真相是……"
+⑳ 共鸣+治愈："如果你也感到迷茫，看看这段话"</div>
+    <button type="button" class="copy-btn" onclick="copyText('titles')">📋 复制全部标题公式</button>
+  </div>
+</div>
+
+<!-- ==================== 效率技巧 ==================== -->
+<div class="section">
+  <h2>⚡ AI办公效率5个技巧</h2>
+
+  <div class="card">
+    <h3>🧠 让AI输出质量翻倍的5个技巧</h3>
+    <div class="tip"><strong>技巧1：角色扮演法</strong><br>开头加上"你是一个有10年经验的XX专家"，AI回答会更专业更有深度。</div>
+    <div class="tip"><strong>技巧2：给示例法（Few-shot）</strong><br>提供1-3个你要的输出示例，AI会严格按示例格式生成，质量大幅提升。</div>
+    <div class="tip"><strong>技巧3：分步迭代法</strong><br>不要一次要太多。先让AI列大纲→逐段展开→优化润色，比一次性生成质量高很多。</div>
+    <div class="tip"><strong>技巧4：限定格式法</strong><br>明确要求"用表格形式""用JSON格式""分3点"等，输出结构化，便于直接使用。</div>
+    <div class="tip"><strong>技巧5：反向提示法</strong><br>告诉AI"不要做什么"，如"不要用夸张语气""不要堆砌形容词"，避免AI常见毛病。</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="footer">
+  <p><strong>AI效率站 · 免费资源包</strong></p>
+  <p>感谢你的关注和支持！资源持续更新中 ❤️</p>
+  <p style="margin-top:8px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p>🎵 抖音号：41131245469</p>
+  <p style="margin-top:8px;font-size:.8em;opacity:.7">© 2025 AI效率站 · 仅供个人学习使用</p>
+</div>
+<script>
+function copyText(id){var el=document.getElementById(id);if(!el)return;var text=el.innerText||el.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast('已复制到剪贴板 ✅')}).catch(function(){fb(text)})}else{fb(text)}}
+function fb(text){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast('已复制到剪贴板 ✅')}catch(e){showToast('复制失败 ❌')}document.body.removeChild(ta)}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show')},2200)}
+</script>
+</body>
+</html>

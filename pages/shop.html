@@ -1,0 +1,626 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商店 - AI效率站</title>
+  <meta property="og:title" content="商店 - AI效率站">
+  <meta property="og:description" content="精选AI模板、提示词包、教程和工具，买完即用，持续更新。">
+  <meta property="og:type" content="website">
+  <meta name="description" content="精选AI模板、提示词包、教程和工具，买完即用，持续更新。">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .shop-hero {
+      background: linear-gradient(135deg, #ede9fe 0%, #dbeafe 50%, #ecfdf5 100%);
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+    .shop-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: var(--space-sm); }
+    .shop-hero p { color: var(--text-secondary); font-size: 1rem; }
+    .filter-bar {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 6px 18px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: #fff;
+      font-size: .88rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+    .product-card { position: relative; }
+    .product-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--danger);
+    }
+    .product-price .original {
+      font-size: .85rem;
+      color: var(--text-light);
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 6px;
+    }
+    .product-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: var(--danger);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+    .product-features {
+      margin: var(--space-sm) 0;
+    }
+    .product-features li {
+      font-size: .85rem;
+      color: var(--text-secondary);
+      padding: 2px 0;
+      list-style: none;
+    }
+    .product-features li::before {
+      content: "✅ ";
+    }
+    /* 商品详情模态 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: var(--space-xl);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../articles/ai-knowledge.html">AI知识</a>
+      <a href="../pages/shop.html" class="active">商店</a>
+      <a href="../pages/recommend.html">推荐好物</a>
+      <a href="../pages/donate.html">打赏支持</a>
+      <a href="../pages/about.html">关于</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- 商店Hero -->
+<section class="shop-hero">
+  <div class="container">
+    <h1>🛒 AI产品商店</h1>
+    <p>精选虚拟产品，买完即用，持续更新。所有产品支持邮箱发货。</p>
+  </div>
+</section>
+
+<!-- 筛选栏 -->
+<section class="section">
+  <div class="container">
+    <div class="filter-bar">
+      <button type="button" class="filter-btn active"data-filter="all">全部</button>
+      <button type="button" class="filter-btn"data-filter="prompts">提示词模板</button>
+      <button type="button" class="filter-btn"data-filter="notion">Notion模板</button>
+      <button type="button" class="filter-btn"data-filter="video">视频教程</button>
+      <button type="button" class="filter-btn"data-filter="writing">AI写作</button>
+      <button type="button" class="filter-btn"data-filter="ecommerce">电商文案</button>
+      <button type="button" class="filter-btn"data-filter="career">求职</button>
+      <button type="button" class="filter-btn"data-filter="sidehustle">副业</button>
+      <button type="button" class="filter-btn"data-filter="tools">工具</button>
+      <button type="button" class="filter-btn"data-filter="vip">会员套餐</button>
+    </div>
+
+    <!-- 免费资源包 -->
+    <div id="free-resource" style="margin-bottom:var(--space-xl);background:linear-gradient(135deg,#fffbeb,#fef3c7,#fde68a);border:2px solid #f59e0b;border-radius:var(--radius-lg);padding:var(--space-xl);text-align:center;">
+      <div style="font-size:2.5rem;margin-bottom:var(--space-sm);">🎁</div>
+      <h3 style="font-size:1.3rem;margin-bottom:var(--space-sm);color:#92400e;">免费AI资源包</h3>
+      <p style="color:#78350f;margin-bottom:var(--space-md);font-size:.95rem;">50+精选提示词 · AI工具对比表 · 副业入门指南 · 爆款标题公式</p>
+      <p style="color:#92400e;margin-bottom:var(--space-lg);font-size:.88rem;">感谢你的关注和支持！这份资源是我整理的AI入门精选内容，希望对你有帮助。<br>觉得好用的话，记得分享给朋友~</p>
+      <a href="https://wwazk.lanzouq.com/imCva3sfaxmh" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer" style="display:inline-block;font-size:1.05rem;padding:14px 36px;">📦 立即下载资源包</a>
+      <p style="font-size:.75rem;color:#92400e;opacity:.8;margin-top:var(--space-sm);">蓝奏云下载 · 手机电脑均可 · 解压即用</p>
+    </div>
+
+    <!-- 商品网格 -->
+    <div class="grid-3">
+
+      <!-- 商品1 -->
+      <div class="card product-card" data-category="prompts" onclick="openModal('product1')">
+        <div class="product-badge">限时特价</div>
+        <div class="card-img" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">📦</div>
+        <div class="card-body">
+          <span class="card-tag tag-hot">🔥 爆款</span>
+          <h3 class="card-title">AI提示词模板包（100+场景）</h3>
+          <p class="card-desc">覆盖办公、写作、剪辑、电商、客服等高频场景，复制即用，持续更新。</p>
+          <ul class="product-features">
+            <li>100+精选提示词模板</li>
+            <li>覆盖10大场景分类</li>
+            <li>持续更新，终身免费</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥9.9 <span class="original">¥29.9</span></div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品2 -->
+      <div class="card product-card" data-category="notion" onclick="openModal('product2')">
+        <div class="card-img" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">📊</div>
+        <div class="card-body">
+          <span class="card-tag">💡 实用</span>
+          <h3 class="card-title">Notion个人管理系统模板</h3>
+          <p class="card-desc">目标管理+习惯追踪+财务记录+知识库，一套系统搞定个人管理。</p>
+          <ul class="product-features">
+            <li>目标与习惯追踪系统</li>
+            <li>财务记账与分析</li>
+            <li>个人知识库管理</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥19.9</div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品3 -->
+      <div class="card product-card" data-category="video" onclick="openModal('product3')">
+        <div class="product-badge">新品</div>
+        <div class="card-img" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🎬</div>
+        <div class="card-body">
+          <span class="card-tag tag-new">✨ 新品</span>
+          <h3 class="card-title">AI短视频全流程教程</h3>
+          <p class="card-desc">从选题到发布，用AI完成脚本、配音、剪辑，附完整素材包。</p>
+          <ul class="product-features">
+            <li>10节视频课程</li>
+            <li>配套素材和模板</li>
+            <li>社群答疑支持</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥29.9</div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品4 -->
+      <div class="card product-card" data-category="prompts" onclick="openModal('product4')">
+        <div class="card-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🎨</div>
+        <div class="card-body">
+          <span class="card-tag">🎨 设计</span>
+          <h3 class="card-title">AI绘画提示词宝典</h3>
+          <p class="card-desc">500+Midjourney/SD提示词，含风格、构图、调色参数参考。</p>
+          <ul class="product-features">
+            <li>500+精选绘画提示词</li>
+            <li>含参数说明和效果图</li>
+            <li>按风格/场景分类</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥14.9</div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品5 -->
+      <div class="card product-card" data-category="prompts" onclick="openModal('product5')">
+        <div class="card-img" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">📧</div>
+        <div class="card-body">
+          <span class="card-tag">💼 办公</span>
+          <h3 class="card-title">AI办公效率模板包</h3>
+          <p class="card-desc">周报、汇报、方案、邮件、会议纪要，AI一键生成模板。</p>
+          <ul class="product-features">
+            <li>20+办公场景模板</li>
+            <li>含使用教程</li>
+            <li>可直接复制使用</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥9.9</div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- P006 AI自媒体写作全攻略 -->
+      <div class="card product-card" data-category="writing" onclick="openModal('product_p006')">
+        <div class="product-badge">热门</div>
+        <div class="card-img" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">✍️</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:#8b5cf6;color:#fff;">📝 写作</span>
+          <h3 class="card-title">AI自媒体写作全攻略</h3>
+          <p class="card-desc">小红书/公众号/头条/短视频四大平台，50+爆款模板+AI提示词。</p>
+          <ul class="product-features">
+            <li>小红书爆款笔记模板</li>
+            <li>公众号+头条SEO文章</li>
+            <li>短视频脚本模板</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥19.9</div>
+            <span class="btn btn-primary btn-sm" style="cursor:pointer;">立即购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P007 AI电商文案模板 -->
+      <div class="card product-card" data-category="ecommerce" onclick="openModal('product_p007')">
+        <div class="card-img" style="background:linear-gradient(135deg,#ea580c,#fb923c);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🛒</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:#f97316;color:#fff;">🛒 电商</span>
+          <h3 class="card-title">AI电商文案模板</h3>
+          <p class="card-desc">淘宝/拼多多/抖店卖家必备，标题+卖点+详情页+客服话术全覆盖。</p>
+          <ul class="product-features">
+            <li>商品标题优化公式</li>
+            <li>FABE卖点提炼法</li>
+            <li>客服话术+直播脚本</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥14.9</div>
+            <span class="btn btn-primary btn-sm" style="cursor:pointer;">立即购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P008 AI求职简历+面试题库 -->
+      <div class="card product-card" data-category="career" onclick="openModal('product_p008')">
+        <div class="card-img" style="background:linear-gradient(135deg,#059669,#34d399);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">📄</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:#10b981;color:#fff;">📄 求职</span>
+          <h3 class="card-title">AI求职简历+面试题库</h3>
+          <p class="card-desc">AI优化简历+STAR法则+50+面试题+薪资谈判话术，拿offer必备。</p>
+          <ul class="product-features">
+            <li>简历各模块AI优化</li>
+            <li>STAR法则改写示例</li>
+            <li>薪资谈判攻略</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥9.9</div>
+            <span class="btn btn-primary btn-sm" style="cursor:pointer;">立即购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P009 AI赚钱副业100招 -->
+      <div class="card product-card" data-category="sidehustle" onclick="openModal('product_p009')">
+        <div class="product-badge" style="background:#f59e0b;">爆款</div>
+        <div class="card-img" style="background:linear-gradient(135deg,#dc2626,#f87171);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">💰</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:#ef4444;color:#fff;">💰 副业</span>
+          <h3 class="card-title">AI赚钱副业100招</h3>
+          <p class="card-desc">100个AI副业项目，覆盖自媒体/接单/电商/卖课/工具五大方向。</p>
+          <ul class="product-features">
+            <li>100个赚钱方法+操作步骤</li>
+            <li>30天启动计划</li>
+            <li>避坑指南+收入预期</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥24.9</div>
+            <span class="btn btn-primary btn-sm" style="cursor:pointer;">立即购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- P010 AI工具效率手册 -->
+      <div class="card product-card" data-category="tools" onclick="openModal('product_p010')">
+        <div class="card-img" style="background:linear-gradient(135deg,#0284c7,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">🤖</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:#0ea5e9;color:#fff;">🤖 工具</span>
+          <h3 class="card-title">AI工具效率手册</h3>
+          <p class="card-desc">20+主流AI工具对比评测+使用技巧+场景指南，选对工具效率翻倍。</p>
+          <ul class="product-features">
+            <li>ChatGPT/Claude/Gemini对比</li>
+            <li>AI绘画/视频/音频工具</li>
+            <li>进阶提示词技巧</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥12.9</div>
+            <span class="btn btn-primary btn-sm" style="cursor:pointer;">立即购买</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 会员卡 -->
+      <div class="card product-card" style="border:2px solid var(--primary);" data-category="vip" onclick="openModal('product6')">
+        <div class="product-badge" style="background:var(--primary);">超值</div>
+        <div class="card-img" style="background:linear-gradient(135deg,var(--primary),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:3.5rem;">👑</div>
+        <div class="card-body">
+          <span class="card-tag" style="background:var(--primary);color:#fff;">👑 会员</span>
+          <h3 class="card-title">年度VIP会员</h3>
+          <p class="card-desc">全部产品免费下载 + 持续更新 + 专属社群 + 1对1答疑。</p>
+          <ul class="product-features">
+            <li>全部产品免费下载</li>
+            <li>持续更新，终身有效</li>
+            <li>专属VIP社群</li>
+          </ul>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-sm);">
+            <div class="product-price">¥99 <span class="original">¥299</span></div>
+            <button type="button" class="btn btn-primary btn-sm">查看详情</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 商品详情模态框 -->
+<div class="modal-overlay" id="product1" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">📦 AI提示词模板包（100+场景）</h2>
+    <span class="card-tag tag-hot" style="margin-bottom:var(--space-md);display:inline-block;">🔥 爆款 · 已售500+</span>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥9.9 <span class="original">¥29.9</span></div>
+    <h4 style="margin-bottom:var(--space-sm);">包含内容</h4>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>100+精选提示词模板</li>
+      <li>覆盖办公、写作、剪辑、电商、客服等10大场景</li>
+      <li>每个提示词含使用说明和效果示例</li>
+      <li>持续更新，购买后终身免费获取新版</li>
+    </ul>
+    <h4 style="margin-bottom:var(--space-sm);">适合人群</h4>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-md);">自媒体作者、上班族、学生、副业党、电商卖家</p>
+    <h4 style="margin-bottom:var(--space-sm);">购买方式</h4>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-md);">点击下方按钮 → 扫码付款 → 提交邮箱和付款截图 → 10分钟内人工发货</p>
+    <a href="checkout.html?name=AI提示词模板包（100+场景）&price=9.9&original=29.9&id=P001" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥9.9</a>
+    <p style="font-size:.75rem;color:var(--text-light);text-align:center;margin-top:var(--space-sm);">🔒 安全支付 · 即时发货 · 有问题联系 1683303069@qq.com</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product2" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">📊 Notion个人管理系统模板</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥19.9</div>
+    <h4 style="margin-bottom:var(--space-sm);">包含内容</h4>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>目标管理与习惯追踪</li>
+      <li>财务记账与月度分析</li>
+      <li>个人知识库与读书笔记</li>
+      <li>周/月复盘模板</li>
+      <li>视频教程 + 使用指南</li>
+    </ul>
+    <h4 style="margin-bottom:var(--space-sm);">使用方式</h4>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-md);">付款并提交信息后发送Notion模板链接，一键复制到你的Notion即可使用。</p>
+    <a href="checkout.html?name=Notion个人管理系统模板&price=19.9&id=P002" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥19.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product3" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">🎬 AI短视频全流程教程</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥29.9</div>
+    <h4 style="margin-bottom:var(--space-sm);">课程大纲</h4>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>第1课：AI选题与脚本生成</li>
+      <li>第2课：AI配音与字幕制作</li>
+      <li>第3课：AI画面生成与剪辑</li>
+      <li>第4课：发布策略与涨粉技巧</li>
+      <li>附赠：素材包 + 提示词库</li>
+    </ul>
+    <a href="checkout.html?name=AI短视频全流程教程&price=29.9&id=P003" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥29.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product4" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">🎨 AI绘画提示词宝典</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥14.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>500+精选Midjourney/SD提示词</li>
+      <li>含参数说明、风格参考、效果图</li>
+      <li>按人像/风景/插画/图标等分类</li>
+    </ul>
+    <a href="checkout.html?name=AI绘画提示词宝典&price=14.9&id=P004" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥14.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product5" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">📧 AI办公效率模板包</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥9.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>周报/月报/年终总结模板</li>
+      <li>工作汇报与方案模板</li>
+      <li>商务邮件模板</li>
+      <li>会议纪要模板</li>
+    </ul>
+    <a href="checkout.html?name=AI办公效率模板包&price=9.9&id=P005" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥9.9</a>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="product_p006" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">✍️ AI自媒体写作全攻略</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥19.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>小红书爆款笔记模板+标题公式</li>
+      <li>公众号干货/故事型文章模板</li>
+      <li>头条/百家号SEO文章模板</li>
+      <li>短视频口播脚本模板</li>
+      <li>AI改写润色+多平台分发技巧</li>
+      <li>自媒体运营SOP+数据复盘模板</li>
+    </ul>
+    <a href="checkout.html?name=AI自媒体写作全攻略&price=19.9&id=P006" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥19.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product_p007" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">🛒 AI电商文案模板</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥14.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>淘宝/拼多多/抖店标题优化公式</li>
+      <li>FABE法则卖点提炼模板</li>
+      <li>详情页黄金结构文案模板</li>
+      <li>售前/催付/好评/差评客服话术</li>
+      <li>直播带货脚本模板</li>
+      <li>AI选品/竞品/评价分析提示词</li>
+    </ul>
+    <a href="checkout.html?name=AI电商文案模板&price=14.9&id=P007" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥14.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product_p008" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">📄 AI求职简历+面试题库</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥9.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>简历各模块AI优化模板</li>
+      <li>STAR法则工作经历改写示例</li>
+      <li>TOP10面试必问题+回答框架</li>
+      <li>AI模拟面试提示词</li>
+      <li>薪资谈判话术攻略</li>
+      <li>求职全流程SOP清单</li>
+    </ul>
+    <a href="checkout.html?name=AI求职简历+面试题库&price=9.9&id=P008" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥9.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product_p009" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">💰 AI赚钱副业100招</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥24.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>100个AI副业项目完整清单</li>
+      <li>自媒体/接单/电商/卖课/工具五大方向</li>
+      <li>每个项目附操作步骤+工具+收入预期</li>
+      <li>30天副业启动计划</li>
+      <li>8大常见踩坑点+避坑指南</li>
+      <li>零成本项目优先，风险可控</li>
+    </ul>
+    <a href="checkout.html?name=AI赚钱副业100招&price=24.9&id=P009" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥24.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product_p010" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">🤖 AI工具效率手册</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥12.9</div>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>ChatGPT/Claude/Gemini/国产大模型对比</li>
+      <li>Midjourney/SD/DALL-E绘画工具对比</li>
+      <li>AI视频/音频/配音工具对比</li>
+      <li>AI办公/编程工具推荐</li>
+      <li>7个进阶提示词技巧</li>
+      <li>场景→工具速查表</li>
+    </ul>
+    <a href="checkout.html?name=AI工具效率手册&price=12.9&id=P010" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">立即购买 · ¥12.9</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="product6" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button type="button" class="modal-close" onclick="this.closest('.modal-overlay').classList.remove('open')">&times;</button>
+    <h2 style="margin-bottom:var(--space-md);">👑 年度VIP会员</h2>
+    <div class="product-price" style="margin-bottom:var(--space-md);">¥99 <span class="original">¥299</span></div>
+    <h4 style="margin-bottom:var(--space-sm);">会员权益</h4>
+    <ul class="product-features" style="margin-bottom:var(--space-md);">
+      <li>全部现有产品免费下载</li>
+      <li>后续新品持续更新</li>
+      <li>专属VIP群（QQ群：<a href="https://qm.qq.com/q/2158060312" target="_blank" rel="noopener noreferrer" style="color:var(--primary);">2158060312</a>）</li>
+      <li>1对1答疑（每月2次）</li>
+      <li>优先体验新功能</li>
+    </ul>
+    <a href="checkout.html?name=年度VIP会员&price=99&original=299&id=VIP001" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">加入VIP · ¥99/年</a>
+    <a href="vip-download.html" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:var(--space-sm);">👑 VIP会员下载入口</a>
+    <p style="font-size:.75rem;color:var(--text-light);text-align:center;margin-top:var(--space-sm);">付款后请提交邮箱和备注，加QQ群 <a href="https://qm.qq.com/q/2158060312" target="_blank" rel="noopener noreferrer" style="color:var(--primary);">2158060312</a> 领取资料</p>
+  </div>
+</div>
+
+<!-- 退款政策 -->
+<section class="section" style="background:var(--bg-secondary);">
+  <div class="container" style="max-width:700px;">
+    <div class="disclosure">
+      <strong>📢 退款政策：</strong>虚拟产品一经发送，不支持退款。如有问题请联系 1683303069@qq.com，我们会尽力解决。
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../articles/ai-knowledge.html">AI知识</a>
+        <a href="../pages/shop.html">商店</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="disclaimer.html">免责声明</a>
+        <a href="privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>
+
+
+
+
+

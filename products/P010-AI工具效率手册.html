@@ -1,0 +1,502 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI工具效率手册</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f0f9ff;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#0284c7,#0ea5e9,#38bdf8);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800}
+.hero p{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#0284c7}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#f0f9ff;border-radius:8px;text-decoration:none;color:#075985;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#e0f2fe;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#0ea5e9;color:#fff;border-color:#0ea5e9}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#075985;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #0ea5e9;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#075985}
+.tag{display:inline-block;background:#0ea5e9;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#0284c7;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#0ea5e9;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#0ea5e9;color:#fff}
+.btn-copy:hover{background:#0284c7;transform:translateY(-1px)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#075985;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#075985;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#38bdf8;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#0ea5e9;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999}
+.back-top.show{opacity:1}
+.back-top:hover{background:#0284c7;transform:translateY(-2px)}
+@media(max-width:600px){.hero{padding:40px 16px 36px}.hero h1{font-size:1.5em}.card-body{padding:16px}.toc{padding:20px 16px;margin:20px 10px}.toc-grid{grid-template-columns:1fr}.filter-bar{padding:0 10px}.filter-btn{padding:6px 12px;font-size:.8em}.section{margin:24px auto;padding:0 10px}.section-title{font-size:1.2em}.template-text,.prompt-text{font-size:.84em;padding:12px 14px}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="badge">🤖 AI工具大全 · 效率提升神器</span>
+  <h1>AI工具效率手册</h1>
+  <p>覆盖ChatGPT/Claude/Gemini/Copilot等20+主流AI工具，从入门到精通，包含对比评测、使用技巧、最佳场景和进阶玩法。</p>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>先看工具对比评测，选最适合你的工具</li>
+      <li>学习各工具的进阶技巧，效率翻倍</li>
+      <li>用场景指南找到你的最佳使用方式</li>
+      <li>收藏备用，遇到问题随时查阅</li>
+    </ol>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>📑 目录导航</h2>
+  <div class="toc-grid">
+    <a href="#s1">📊 板块一：AI对话工具对比评测</a>
+    <a href="#s2">🎨 板块二：AI绘画工具对比</a>
+    <a href="#s3">🎬 板块三：AI视频/音频工具</a>
+    <a href="#s4">💼 板块四：AI办公/编程工具</a>
+    <a href="#s5">🧠 板块五：进阶使用技巧</a>
+    <a href="#s6">📋 板块六：AI使用场景指南</a>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部</button>
+  <button type="button" class="filter-btn" data-filter="template">📝 对比评测</button>
+  <button type="button" class="filter-btn" data-filter="prompt">🤖 提示词</button>
+  <button type="button" class="filter-btn" data-filter="tips">💡 技巧</button>
+</div>
+
+<div class="section" id="s1" data-category="template">
+  <div class="section-title"><span class="icon">📊</span> AI对话工具对比评测</div>
+  <div class="section-desc">ChatGPT vs Claude vs Gemini vs 国产大模型，哪个最适合你？</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📊 主流AI对话工具对比</h3><span class="tag">2025最新</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">工具对比表</div>
+        <div class="template-text" id="t1t">📊 2025年主流AI对话工具对比：
+
+【国际工具】
+
+1. ChatGPT（OpenAI）
+   价格：免费版 / Plus $20/月
+   强项：综合能力最强，插件生态丰富，联网+图片生成
+   弱项：中文有时不自然，免费版有次数限制
+   最佳场景：英文写作、编程、通用问答、图片生成
+   推荐指数：⭐⭐⭐⭐⭐
+
+2. Claude（Anthropic）
+   价格：免费版 / Pro $20/月
+   强项：长文本处理最强（200K tokens），中文写作最自然
+   弱项：不能联网，不能生成图片
+   最佳场景：长文写作、文档分析、中文内容创作、代码review
+   推荐指数：⭐⭐⭐⭐⭐
+
+3. Gemini（Google）
+   价格：免费版 / Advanced $20/月
+   强项：与Google生态深度整合，多模态能力强
+   弱项：中文能力一般，创意写作不如前两者
+   最佳场景：搜索增强、多语言、Google文档协作
+   推荐指数：⭐⭐⭐⭐
+
+4. Copilot（Microsoft）
+   价格：免费版 / Pro $20/月
+   强项：Office深度整合，Windows系统内置
+   弱项：独立对话能力一般
+   最佳场景：Office文档处理、Windows用户日常助手
+   推荐指数：⭐⭐⭐⭐
+
+【国产工具】
+
+5. DeepSeek
+   价格：免费 / API极低价
+   强项：中文能力强，开源可部署，性价比极高
+   弱项：多模态能力弱
+   最佳场景：中文对话、编程、API开发
+   推荐指数：⭐⭐⭐⭐⭐
+
+6. Kimi（月之暗面）
+   价格：免费
+   强项：超长文本处理，联网搜索，中文优秀
+   弱项：创意写作一般
+   最佳场景：长文档分析、联网搜索、中文写作
+   推荐指数：⭐⭐⭐⭐
+
+7. 通义千问（阿里）
+   价格：免费
+   强项：中文理解好，多模态，可处理长文档
+   弱项：英文能力一般
+   最佳场景：中文办公、文档处理、电商文案
+   推荐指数：⭐⭐⭐⭐
+
+8. 文心一言（百度）
+   价格：免费
+   强项：中文理解深厚，百度生态整合
+   弱项：创意能力一般
+   最佳场景：中文搜索增强、百度生态用户
+   推荐指数：⭐⭐⭐
+
+【选择建议】
+• 日常中文写作 → Claude 或 DeepSeek
+• 英文/编程/综合 → ChatGPT
+• 预算有限 → DeepSeek（免费+超低价API）
+• Office用户 → Copilot
+• 长文档处理 → Claude 或 Kimi
+• 多模态（图文） → ChatGPT 或 Gemini</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t1t','工具对比')">📋 复制对比表</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s2" data-category="template">
+  <div class="section-title"><span class="icon">🎨</span> AI绘画工具对比</div>
+  <div class="section-desc">Midjourney vs Stable Diffusion vs DALL-E vs 国产绘画工具</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎨 AI绘画工具对比</h3><span class="tag">创作者必备</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">工具对比</div>
+        <div class="template-text" id="t2t">🎨 2025年AI绘画工具对比：
+
+1. Midjourney
+   价格：$10-60/月
+   强项：画质最高，风格最美，出图稳定
+   弱项：需要Discord操作，中文提示词效果差
+   最佳场景：商业设计、概念艺术、精美插画
+   上手难度：⭐⭐⭐（中等）
+
+2. Stable Diffusion（开源免费）
+   价格：免费（本地部署）/ 在线版几元/月
+   强项：免费开源，可本地运行，模型丰富
+   弱项：需要一定技术基础，显卡要求高
+   最佳场景：批量出图、个性化定制、二次元/动漫
+   上手难度：⭐⭐⭐⭐（较高）
+
+3. DALL-E 3（OpenAI）
+   价格：ChatGPT Plus内含
+   强项：文字理解最准，操作最简单，ChatGPT直接对话生成
+   弱项：画质不如MJ，风格有限
+   最佳场景：快速出图、文字海报、简单插画
+   上手难度：⭐（最简单）
+
+4. 通义万相（阿里·免费）
+   价格：免费
+   强项：免费，中文提示词友好，出图速度快
+   弱项：画质和创意不如国际工具
+   最佳场景：日常使用、中文用户、预算有限
+   上手难度：⭐⭐（简单）
+
+5. 即梦AI（字节·免费）
+   价格：免费
+   强项：免费，视频生成能力强
+   弱项：图片质量一般
+   最佳场景：AI视频、抖音生态用户
+   上手难度：⭐⭐（简单）
+
+【选择建议】
+• 追求画质 → Midjourney
+• 零预算 → Stable Diffusion 或 通义万相
+• 最简单 → DALL-E 3（ChatGPT直接用）
+• 批量出图 → Stable Diffusion
+• 中文提示词 → 通义万相 或 即梦AI</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t2t','绘画对比')">📋 复制对比表</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s3" data-category="template">
+  <div class="section-title"><span class="icon">🎬</span> AI视频/音频工具</div>
+  <div class="section-desc">AI视频生成、AI配音、AI音乐，内容创作全链路工具</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎬 AI视频工具对比</h3><span class="tag">视频创作者</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">视频/音频工具</div>
+        <div class="template-text" id="t3t">🎬 AI视频工具：
+
+1. 剪映（字节·免费）
+   功能：AI字幕、AI配音、AI剪辑、模板套用
+   适合：短视频创作者、新手
+   价格：免费（高级功能会员30元/月）
+
+2. 可灵AI（快手）
+   功能：文生视频、图生视频
+   适合：AI创意视频
+   价格：免费额度 + 付费
+
+3. Runway
+   功能：专业级AI视频生成和编辑
+   适合：专业创作者
+   价格：$12-76/月
+
+4. Sora（OpenAI）
+   功能：高质量文生视频
+   适合：高质量AI视频
+   价格：ChatGPT Pro内含
+
+🎵 AI音乐工具：
+
+1. Suno
+   功能：文字描述生成完整歌曲
+   价格：免费（每天5首）/ Pro $10/月
+   适合：BGM制作、创意音乐
+
+2. Udio
+   功能：高质量AI音乐生成
+   价格：免费额度 / Pro $10/月
+   适合：专业级BGM
+
+🎤 AI配音工具：
+
+1. 剪映AI配音（免费）
+2. 微软Azure语音（免费额度）
+3. ElevenLabs（英文最佳，$5/月起）
+4. 通义听悟（中文最佳，免费）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t3t','视频音频工具')">📋 复制工具表</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s4" data-category="template">
+  <div class="section-title"><span class="icon">💼</span> AI办公/编程工具</div>
+  <div class="section-desc">让AI成为你的办公助手和编程搭档</div>
+
+  <div class="card">
+    <div class="card-header"><h3>💼 AI办公/编程工具</h3><span class="tag">效率神器</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">办公/编程工具</div>
+        <div class="template-text" id="t4t">💼 AI办公工具：
+
+1. Microsoft Copilot
+   功能：Word/Excel/PPT/Outlook全面AI辅助
+   价格：$20/月（个人）/ $30/月（商业）
+   适合：Office重度用户
+
+2. WPS AI
+   功能：文档/表格/PPT AI辅助
+   价格：免费（基础功能）
+   适合：国内办公用户
+
+3. Notion AI
+   功能：笔记/文档/知识库AI辅助
+   价格：$10/月（AI附加）
+   适合：知识管理用户
+
+4. 飞书智能伙伴
+   功能：会议纪要/文档/协作AI辅助
+   价格：免费（基础功能）
+   适合：团队协作用户
+
+💻 AI编程工具：
+
+1. GitHub Copilot
+   功能：代码自动补全、代码生成
+   价格：$10/月 / 学生免费
+   适合：所有开发者
+
+2. Cursor
+   功能：AI原生IDE，对话式编程
+   价格：免费版 / Pro $20/月
+   适合：想要AI深度辅助的开发者
+
+3. Claude Code / ChatGPT Code Interpreter
+   功能：对话式编程、代码解释、调试
+   价格：订阅内含
+   适合：非专业程序员也能用AI写代码
+
+4. v0.dev（Vercel）
+   功能：AI生成前端代码（React/Next.js）
+   价格：免费额度
+   适合：快速搭建网页原型</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t4t','办公编程工具')">📋 复制工具表</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s5" data-category="tips">
+  <div class="section-title"><span class="icon">🧠</span> 进阶使用技巧</div>
+  <div class="section-desc">从入门到精通，掌握这些技巧让AI输出质量翻倍</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🧠 AI对话进阶技巧</h3><span class="tag">高手必学</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">7个进阶技巧</div>
+        <div class="template-text" id="t5t">🧠 AI对话进阶技巧（让输出质量翻倍）：
+
+1. 角色扮演法
+   开头加上角色设定，AI会以该身份回答
+   示例："你是一个有10年经验的电商运营专家，请帮我..."
+   效果：回答更专业、更有针对性
+
+2. 链式思考（Chain of Thought）
+   要求AI分步骤思考
+   示例："请一步步分析这个问题，先...然后...最后..."
+   效果：复杂问题回答更准确
+
+3. Few-shot提示（给示例）
+   提供1-3个示例，让AI学习你要的格式
+   示例："我需要这样的格式：[示例1] [示例2] 请按这个格式写..."
+   效果：输出格式完全符合预期
+
+4. 限定输出格式
+   明确要求输出格式（表格/列表/JSON/Markdown）
+   示例："请用表格形式对比，包含：工具名/价格/优缺点"
+   效果：输出结构化，便于使用
+
+5. 分步迭代法
+   不要一次要太多，分步骤迭代优化
+   第一步：先让AI列大纲
+   第二步：逐段展开
+   第三步：优化润色
+   效果：比一次性生成质量高很多
+
+6. 反向提示法
+   告诉AI"不要做什么"
+   示例："请写一篇产品文案，不要用夸张的语气，不要堆砌形容词"
+   效果：避免AI常见的"过度修饰"问题
+
+7. 温度参数调节（API用户）
+   temperature=0 → 最确定性的回答（适合代码/数据）
+   temperature=0.7 → 平衡（适合大多数场景）
+   temperature=1.0 → 最有创意（适合写作/头脑风暴）</div>
+      </div>
+      <div class="block">
+        <div class="block-label">万能优化提示词</div>
+        <div class="prompt-text" id="t1p">你是一个AI提示词优化专家。以下是我常用的提示词，请帮我优化，让AI输出更高质量的结果。
+
+我当前的提示词：
+[粘贴你常用的提示词]
+
+请优化：
+1. 添加角色设定（让AI更专业）
+2. 添加输出格式要求（让输出更结构化）
+3. 添加质量标准（让输出更精准）
+4. 添加限制条件（避免常见问题）
+5. 给出优化后的完整提示词
+6. 解释每个优化点的作用</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t5t','进阶技巧')">📋 复制技巧</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('t1p','优化提示词')">🤖 复制优化提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s6" data-category="tips">
+  <div class="section-title"><span class="icon">📋</span> AI使用场景指南</div>
+  <div class="section-desc">不同场景用不同工具，对号入座效率最高</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📋 场景→工具速查表</h3><span class="tag">实用</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">场景速查</div>
+        <div class="template-text" id="t6t">📋 AI使用场景速查表：
+
+【写作场景】
+• 写小红书笔记 → Claude / ChatGPT
+• 写公众号长文 → Claude（中文最自然）
+• 写英文邮件 → ChatGPT
+• 写论文/报告 → Claude（长文本强）+ Kimi（联网查资料）
+• 写小说/故事 → ChatGPT（创意好）
+
+【职场场景】
+• 做PPT → Copilot / WPS AI
+• 处理Excel → Copilot / ChatGPT Code Interpreter
+• 写周报月报 → Claude / ChatGPT
+• 会议纪要 → 通义听悟（免费转录）+ Claude（整理）
+• 翻译文档 → ChatGPT / DeepL
+
+【创作场景】
+• 画插画 → Midjourney（最美）/ DALL-E 3（最简单）
+• 做Logo → Midjourney
+• 做海报 → Canva AI + DALL-E 3
+• 做视频 → 剪映AI（简单）/ Runway（专业）
+• 做音乐 → Suno
+
+【学习场景】
+• 学编程 → ChatGPT / Claude（代码解释最清晰）
+• 学英语 → ChatGPT（对话练习）
+• 读书笔记 → Claude（长文档分析）
+• 考试复习 → ChatGPT / Kimi
+
+【开发场景】
+• 写代码 → GitHub Copilot / Cursor
+• 调试代码 → ChatGPT / Claude
+• 搭建网页 → v0.dev / Claude
+• API开发 → DeepSeek API（最便宜）
+
+【电商场景】
+• 写商品文案 → Claude / ChatGPT
+• 做产品图 → Midjourney / DALL-E 3
+• 做详情页 → ChatGPT + Canva
+• 客服话术 → ChatGPT / DeepSeek</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('t6t','场景速查')">📋 复制速查表</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="footer">
+  <p><strong>AI工具效率手册</strong></p>
+  <p>选对工具，效率翻倍</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+<script>
+function copyText(id,label){var el=document.getElementById(id);if(!el)return;var text=el.innerText||el.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)})}else{fallbackCopy(text,label)}}
+function fallbackCopy(text,label){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}document.body.removeChild(ta)}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show')},2200)}
+document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var f=this.getAttribute('data-filter');document.querySelectorAll('.section').forEach(function(sec){if(f==='all'||sec.getAttribute('data-category')===f){sec.style.display=''}else{sec.style.display='none'}})})});
+window.addEventListener('scroll',function(){var btn=document.getElementById('backTop');if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}});
+</script>
+</body>
+</html>

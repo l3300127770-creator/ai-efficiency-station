@@ -1,0 +1,547 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI电商文案模板</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#fff7ed;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#ea580c,#f97316,#fb923c);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800}
+.hero p{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#ea580c}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#fff7ed;border-radius:8px;text-decoration:none;color:#9a3412;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#ffedd5;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#f97316;color:#fff;border-color:#f97316}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#9a3412;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #f97316;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#fff7ed,#ffedd5);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#9a3412}
+.tag{display:inline-block;background:#f97316;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#ea580c;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#f97316;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#f97316;color:#fff}
+.btn-copy:hover{background:#ea580c;transform:translateY(-1px)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#9a3412;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#9a3412;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#fb923c;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#f97316;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999}
+.back-top.show{opacity:1}
+.back-top:hover{background:#ea580c;transform:translateY(-2px)}
+@media(max-width:600px){
+  .hero{padding:40px 16px 36px}.hero h1{font-size:1.5em}.card-body{padding:16px}
+  .toc{padding:20px 16px;margin:20px 10px}.toc-grid{grid-template-columns:1fr}
+  .filter-bar{padding:0 10px}.filter-btn{padding:6px 12px;font-size:.8em}
+  .section{margin:24px auto;padding:0 10px}.section-title{font-size:1.2em}
+  .template-text,.prompt-text{font-size:.84em;padding:12px 14px}
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="badge">🛒 电商卖家必备 · 转化率翻倍</span>
+  <h1>AI电商文案模板</h1>
+  <p>覆盖淘宝、拼多多、抖店三大平台，从标题到详情页到客服话术，AI帮你写出高转化商品文案，让销量翻倍。</p>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>找到你需要的场景（标题/卖点/详情页/客服/直播）</li>
+      <li>复制模板，填入你的产品信息</li>
+      <li>复制AI提示词到ChatGPT，生成专属文案</li>
+      <li>参考技巧持续优化，测试不同版本找到最优解</li>
+    </ol>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>📑 目录导航</h2>
+  <div class="toc-grid">
+    <a href="#s1">🏷️ 板块一：商品标题优化模板</a>
+    <a href="#s2">⭐ 板块二：五点描述/卖点提炼</a>
+    <a href="#s3">📄 板块三：详情页文案模板</a>
+    <a href="#s4">💬 板块四：客服话术模板</a>
+    <a href="#s5">🎙️ 板块五：直播带货脚本</a>
+    <a href="#s6">🤖 板块六：AI电商运营提效</a>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部</button>
+  <button type="button" class="filter-btn" data-filter="template">📝 模板</button>
+  <button type="button" class="filter-btn" data-filter="prompt">🤖 提示词</button>
+  <button type="button" class="filter-btn" data-filter="tips">💡 技巧</button>
+</div>
+
+<!-- 板块一：商品标题 -->
+<div class="section" id="s1" data-category="template">
+  <div class="section-title"><span class="icon">🏷️</span> 商品标题优化模板</div>
+  <div class="section-desc">好标题=高点击率=更多流量=更多销量。掌握标题公式，让AI帮你批量生成</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🏷️ 淘宝/天猫标题公式</h3><span class="tag">核心技能</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">标题万能公式</div>
+        <div class="template-text" id="e1t">📌 淘宝标题万能公式（30字以内）：
+
+品牌词 + 核心关键词 + 属性词 + 场景词 + 修饰词
+
+示例拆解：
+产品：女士防晒霜
+✅ "XX品牌 防晒霜女 面部隔离 SPF50+ 清爽不油腻 夏季户外军训专用"
+
+各词库说明：
+• 品牌词：你的品牌名（有品牌必加）
+• 核心关键词：用户搜索最多的词（用淘宝搜索下拉词找）
+• 属性词：规格/材质/颜色/功效（如"SPF50+""清爽""持久"）
+• 场景词：使用场景（如"夏季""户外""军训""通勤"）
+• 修饰词：促销/情感词（如"2025新款""网红同款""买一送一"）
+
+🔍 找关键词方法：
+1. 打开淘宝搜索框，输入品类词，看下拉推荐
+2. 看竞品标题用了什么词
+3. 生意参谋-搜索分析（付费）
+4. 免费工具：阿里指数、淘宝直通车关键词工具</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="e1p">你是一个淘宝SEO优化专家。请帮我优化以下商品的标题。
+
+商品信息：
+- 产品名称：[填写]
+- 品类：[填写]
+- 核心卖点：[填写2-3个]
+- 目标人群：[填写]
+- 价格区间：[填写]
+- 使用场景：[填写]
+
+要求：
+1. 生成5个不同版本的标题（每个30字以内）
+2. 标题必须包含：品牌词+核心关键词+属性词+场景词
+3. 关键词要符合用户搜索习惯（用淘宝下拉词风格）
+4. 不要堆砌无关关键词
+5. 每个标题标注侧重方向（如：侧重搜索/侧重点击/侧重转化）
+6. 最后推荐一个最佳标题并说明理由</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e1t','标题公式')">📋 复制公式</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e1p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h3>📱 拼多多/抖店标题技巧</h3><span class="tag">多平台</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">平台差异化写法</div>
+        <div class="template-text" id="e2t">📌 拼多多标题特点：
+- 标题可以更长（最多60字）
+- 用户更看重性价比，标题要突出"便宜""实惠"
+- 可以加促销信息："买一送一""第二件半价"
+- 示例："【买一送一】防晒霜女面部SPF50+清爽不油腻学生党平价好用夏季防紫外线"
+
+📌 抖音小店标题特点：
+- 标题要短、直击痛点
+- 用户是被视频种草后来搜索的，标题要承接视频内容
+- 突出"网红""同款""爆款"等社交证明词
+- 示例："网红同款防晒霜 SPF50+清爽不假白 夏天必备"</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e2t','平台技巧')">📋 复制技巧</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块二：卖点提炼 -->
+<div class="section" id="s2" data-category="template">
+  <div class="section-title"><span class="icon">⭐</span> 五点描述/卖点提炼模板</div>
+  <div class="section-desc">用FABE法则提炼卖点，让顾客看了就想买</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎯 FABE卖点提炼法</h3><span class="tag">转化神器</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">FABE法则模板</div>
+        <div class="template-text" id="e3t">📌 FABE法则 = Feature(特征) + Advantage(优势) + Benefit(利益) + Evidence(证据)
+
+万能卖点模板：
+
+卖点1：
+F（特征）：[产品有什么特点/成分/技术]
+A（优势）：[相比竞品有什么优势]
+B（利益）：[能给用户带来什么好处]
+E（证据）：[有什么证据支撑（数据/认证/评价）]
+
+示例 - 防晒霜卖点：
+
+卖点1 - 防晒力：
+F：SPF50+ PA++++高倍防晒
+A：比普通防晒霜防护力高3倍
+B：户外暴晒一天也不会晒黑晒伤
+E：通过国家防晒特证认证，10万+好评
+
+卖点2 - 肤感：
+F：水润质地，添加玻尿酸保湿成分
+A：上脸不油腻不假白，成膜速度快
+B：化妆不搓泥，油皮也能放心用
+E：小红书5000+博主实测推荐
+
+卖点3 - 性价比：
+F：60ml大容量，可用2-3个月
+A：日均成本不到0.5元
+B：学生党也能无压力入手
+E：天猫防晒霜销量TOP3</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="e3p">你是一个电商文案专家，擅长用FABE法则提炼产品卖点。请帮我为以下产品提炼5个核心卖点。
+
+产品信息：
+- 产品名称：[填写]
+- 产品类型：[填写]
+- 主要成分/材质/技术：[填写]
+- 价格：[填写]
+- 目标人群：[填写]
+- 竞品差异点：[填写]
+
+要求：
+1. 每个卖点用FABE法则：特征→优势→利益→证据
+2. 卖点按重要性排序（最重要的排第一）
+3. 用户利益要具体可感知（不要笼统说"好用"）
+4. 证据要可信（数据/认证/销量/评价）
+5. 语言简洁有力，每条控制在3-4行
+6. 最后给出一个适合放在标题里的核心卖点（10字以内）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e3t','FABE模板')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e3p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块三：详情页文案 -->
+<div class="section" id="s3" data-category="template">
+  <div class="section-title"><span class="icon">📄</span> 详情页文案模板</div>
+  <div class="section-desc">黄金结构：痛点→方案→证据→保障→行动，让顾客从犹豫到下单</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📄 详情页黄金结构</h3><span class="tag">高转化</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">万能详情页结构</div>
+        <div class="template-text" id="e4t">📌 详情页黄金5步结构：
+
+第一步：痛点场景（让顾客觉得"说的就是我"）
+"夏天出门5分钟，脸上就开始泛油光？"
+"涂了防晒还是晒黑了？可能是你选错了产品"
+→ 用1-2个具体场景描述用户的痛点
+
+第二步：解决方案（引出你的产品）
+"你需要的是一款[核心卖点]的[产品名]"
+→ 简洁引出产品，给出解决方案
+
+第三步：卖点证明（用事实说话）
+卖点1：[核心卖点] + [数据/对比/认证]
+卖点2：[第二卖点] + [使用场景/效果]
+卖点3：[第三卖点] + [用户评价/销量]
+→ 每个卖点配一张效果图或对比图
+
+第四步：信任保障（消除顾虑）
+✅ [资质认证/品牌背书]
+✅ [售后保障/退换政策]
+✅ [销量数据/好评率]
+✅ [真人使用对比/买家秀]
+
+第五步：行动号召（推动下单）
+"限时[X]折，到手仅¥[价格]"
+"前100名下单送[赠品]"
+"点击立即购买，今天下单今天发货"
+→ 制造紧迫感，推动立即行动</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="e4p">你是一个电商详情页文案专家。请帮我写一个商品详情页文案。
+
+商品信息：
+- 产品名称：[填写]
+- 价格：[填写]
+- 核心卖点：[填写3个]
+- 目标人群：[填写]
+- 主要竞品及差异：[填写]
+- 可用的信任背书：[填写认证/销量/评价等]
+
+要求：
+1. 用"痛点→方案→证据→保障→行动"黄金5步结构
+2. 痛点部分要具体（描述2个使用场景）
+3. 卖点部分每个都要有数据或证据支撑
+4. 信任保障部分列出4个以上信任元素
+5. 行动号召要制造紧迫感（限时/限量/赠品）
+6. 语言简洁有力，每段不超过3行
+7. 标注每个板块建议配什么类型的图片</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e4t','详情页模板')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e4p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块四：客服话术 -->
+<div class="section" id="s4" data-category="template">
+  <div class="section-title"><span class="icon">💬</span> 客服话术模板</div>
+  <div class="section-desc">售前咨询+催付+好评引导+差评挽回，全流程AI话术</div>
+
+  <div class="card">
+    <div class="card-header"><h3>💬 售前咨询话术</h3><span class="tag">成交关键</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">高频场景话术</div>
+        <div class="template-text" id="e5t">📌 售前高频问题话术：
+
+【问价格/能不能便宜】
+"亲，这个价格已经是活动价了哦～现在下单还送[赠品]，算下来超划算的！而且我们支持7天无理由退换，您可以放心购买 ❤️"
+
+【问质量/好不好用】
+"亲，这款我们已经卖了[X]万件了，好评率[X]%呢！您可以看看买家秀和评价，很多老顾客都回购了。有任何问题随时找我，我们支持7天无理由退换哦～"
+
+【问发货/多久到】
+"亲，下单后24小时内发货，默认[快递名称]。[省内/全国]一般2-3天就到啦！如果有特殊需求可以备注，我帮您加急处理 💨"
+
+【问售后/能退吗】
+"亲，我们支持7天无理由退换，运费险也有的，退换无忧！如果有任何质量问题，直接找我，第一时间帮您解决 ❤️"
+
+【催付款】
+"亲，看到您下单了还没付款呢～这个价格是限时活动的，库存也不多了，建议尽快付款锁定哦！有问题随时问我 😊"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">好评引导话术</div>
+        <div class="template-text" id="e5t2">📌 好评引导话术（发货后3-5天发送）：
+
+【短信/旺旺消息】
+"亲，您的[产品名]应该收到了吧～使用感觉怎么样呢？如果满意的话，麻烦给我们一个5星好评+晒图，截图发我领取[X]元优惠券哦！有任何问题也可以先联系我，一定帮您解决 ❤️"
+
+【好评返现卡话术】
+"晒图好评领红包！
+1. 确认收货后给5星好评
+2. 附上3张以上实拍图
+3. 截图发给客服领取[X]元红包
+感谢您的支持！"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="e5p">你是一个电商客服话术专家。请帮我为以下产品编写一套完整的客服话术。
+
+产品信息：
+- 产品名称：[填写]
+- 价格：[填写]
+- 核心卖点：[填写]
+- 发货信息：[快递/时效]
+- 售后政策：[填写]
+
+请编写以下场景的话术：
+1. 售前咨询（价格/质量/发货/售后各1条）
+2. 催付话术（下单未付款，2条不同时间点的）
+3. 好评引导话术（收货后，2条）
+4. 差评挽回话术（收到差评后主动联系，2条）
+
+要求：
+- 语言亲切温暖，带emoji但不过度
+- 每条话术控制在50-100字
+- 售前话术要能打消顾虑、推动下单
+- 催付要制造紧迫感但不让人反感
+- 好评引导要有利益驱动（优惠券/红包）
+- 差评挽回要先道歉再解决再补偿</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e5t','售前话术')">📋 复制售前话术</button>
+        <button type="button" class="btn btn-copy" onclick="copyText('e5t2','好评话术')">📋 复制好评话术</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e5p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块五：直播脚本 -->
+<div class="section" id="s5" data-category="template">
+  <div class="section-title"><span class="icon">🎙️</span> 直播带货脚本模板</div>
+  <div class="section-desc">开场→产品介绍→互动逼单→促单成交，AI帮你写出高GMV直播脚本</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎙️ 直播带货万能脚本</h3><span class="tag">GMV翻倍</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">单品直播脚本结构</div>
+        <div class="template-text" id="e6t">📌 单品直播脚本（每个产品5-8分钟）：
+
+【预热（30秒）】
+"家人们，接下来这个东西，我跟品牌方磨了很久才拿到这个价格！
+先不说是什么，你们猜猜多少钱？评论区扣1让我看看有多少人想要！"
+
+【产品介绍（2分钟）】
+"来，看这里——[产品名]！
+第一，[卖点1]，你们看[展示动作]
+第二，[卖点2]，这个真的太厉害了
+第三，[卖点3]，我自己用了[X]个月了"
+
+【价格锚点（1分钟）】
+"这个东西在外面专柜卖[原价]，
+天猫旗舰店现在卖[店铺价]，
+今天在我直播间，只要[直播价]！
+而且！前[数量]名下单再送[赠品]！"
+
+【逼单话术（1分钟）】
+"来，3、2、1，上链接！
+拍1号链接！手慢无！
+已经有人在拍了，库存只剩[X]件了！
+没拍到的扣'没抢到'，我再跟品牌方申请一波！"
+
+【互动话术（穿插使用）】
+"觉得值的扣'值'！"
+"想要的扣'要'！"
+"第一次来的扣'新'，我给你们发新人福利！"
+"转发直播间给朋友，一起薅羊毛！"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="e6p">你是一个直播带货脚本写手。请帮我写一个直播带货脚本。
+
+产品信息：
+- 产品名称：[填写]
+- 原价：[填写]
+- 直播价格：[填写]
+- 核心卖点：[填写3个]
+- 赠品：[填写]
+- 库存数量：[填写]
+
+要求：
+1. 按"预热→产品介绍→价格锚点→逼单→互动"结构写
+2. 每个部分标注大致时长
+3. 语言口语化、有感染力、节奏快
+4. 穿插互动话术（扣字/点赞/转发）
+5. 价格锚点要对比3个价格（专柜/店铺/直播）
+6. 逼单要制造紧迫感（限量/限时/倒计时）
+7. 总时长控制在5-8分钟</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('e6t','直播脚本')">📋 复制脚本</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e6p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 板块六：AI运营提效 -->
+<div class="section" id="s6" data-category="prompt">
+  <div class="section-title"><span class="icon">🤖</span> AI电商运营提效</div>
+  <div class="section-desc">用AI做选品分析、竞品分析、评价分析，数据驱动运营决策</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🔍 AI选品/竞品/评价分析</h3><span class="tag">运营必备</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">AI选品分析提示词</div>
+        <div class="prompt-text" id="e7p">你是一个电商选品专家。请帮我分析以下品类是否值得做。
+
+品类：[填写你想做的品类]
+平台：[淘宝/拼多多/抖店]
+预算：[填写启动资金]
+
+请分析：
+1. 市场规模和竞争程度（高/中/低）
+2. 目标人群画像（年龄/性别/消费力/需求场景）
+3. 定价建议（成本区间/建议售价/利润率）
+4. 竞品分析（TOP3竞品的优缺点）
+5. 差异化切入点（我能怎么做出不同）
+6. 风险提示（这个品类有什么坑）
+7. 综合建议（做/不做/有条件地做）</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI竞品分析提示词</div>
+        <div class="prompt-text" id="e8p">你是一个电商竞品分析专家。请帮我分析以下竞品。
+
+我的产品：[填写]
+竞品链接/名称：[填写1-3个竞品]
+平台：[填写]
+
+请分析：
+1. 竞品的标题策略（用了什么关键词）
+2. 竞品的主图风格和卖点呈现方式
+3. 竞品的详情页结构和文案策略
+4. 竞品的定价策略和促销方式
+5. 竞品的评价（好评关键词/差评痛点）
+6. 竞品的不足之处（我的机会在哪里）
+7. 具体的优化建议（我应该怎么做得更好）</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI评价分析提示词</div>
+        <div class="prompt-text" id="e9p">你是一个电商数据分析专家。请帮我分析以下商品的用户评价数据。
+
+商品：[填写]
+好评关键词：[粘贴好评中常见的关键词]
+差评关键词：[粘贴差评中常见的关键词]
+好评率：[填写]
+
+请分析：
+1. 用户最满意的3个点是什么？（按提及频率排序）
+2. 用户最不满意的3个点是什么？
+3. 用户的真实需求是什么？（从评价中挖掘）
+4. 产品描述中哪些卖点用户认可？哪些不认可？
+5. 基于评价分析，我的产品/文案应该做哪些优化？
+6. 有没有发现新的产品改进方向或新品机会？</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-prompt" onclick="copyText('e7p','选品分析')">🤖 复制选品提示词</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e8p','竞品分析')">🤖 复制竞品提示词</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('e9p','评价分析')">🤖 复制评价提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="footer">
+  <p><strong>AI电商文案模板</strong></p>
+  <p>让AI帮你写出高转化商品文案</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+<script>
+function copyText(id,label){var el=document.getElementById(id);if(!el)return;var text=el.innerText||el.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)})}else{fallbackCopy(text,label)}}
+function fallbackCopy(text,label){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}document.body.removeChild(ta)}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show')},2200)}
+document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var f=this.getAttribute('data-filter');document.querySelectorAll('.section').forEach(function(sec){if(f==='all'||sec.getAttribute('data-category')===f){sec.style.display=''}else{sec.style.display='none'}})})});
+window.addEventListener('scroll',function(){var btn=document.getElementById('backTop');if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}});
+</script>
+</body>
+</html>

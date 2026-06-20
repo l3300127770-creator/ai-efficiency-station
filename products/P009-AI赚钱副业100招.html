@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI赚钱副业100招</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#fef2f2;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#dc2626,#ef4444,#f87171);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800}
+.hero p{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#dc2626}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#fef2f2;border-radius:8px;text-decoration:none;color:#991b1b;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#fee2e2;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#ef4444;color:#fff;border-color:#ef4444}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#991b1b;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #ef4444;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#fef2f2,#fee2e2);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#991b1b}
+.tag{display:inline-block;background:#ef4444;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#dc2626;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#ef4444;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#ef4444;color:#fff}
+.btn-copy:hover{background:#dc2626;transform:translateY(-1px)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#991b1b;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#991b1b;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#f87171;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#ef4444;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999}
+.back-top.show{opacity:1}
+.back-top:hover{background:#dc2626;transform:translateY(-2px)}
+@media(max-width:600px){.hero{padding:40px 16px 36px}.hero h1{font-size:1.5em}.card-body{padding:16px}.toc{padding:20px 16px;margin:20px 10px}.toc-grid{grid-template-columns:1fr}.filter-bar{padding:0 10px}.filter-btn{padding:6px 12px;font-size:.8em}.section{margin:24px auto;padding:0 10px}.section-title{font-size:1.2em}.template-text,.prompt-text{font-size:.84em;padding:12px 14px}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="badge">💰 变现指南 · 100个赚钱方法</span>
+  <h1>AI赚钱副业100招</h1>
+  <p>从0到1用AI开启副业，覆盖自媒体、接单、电商、卖课、工具五大方向，每个项目附完整操作步骤、所需工具和收入预期。</p>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>浏览100个副业项目，找到适合你的方向</li>
+      <li>每个项目有完整步骤，按步骤执行即可</li>
+      <li>先从"零成本"项目开始，验证后再投入</li>
+      <li>用AI提示词加速执行，效率提升10倍</li>
+    </ol>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>📑 目录导航</h2>
+  <div class="toc-grid">
+    <a href="#s1">📱 板块一：AI自媒体变现（20招）</a>
+    <a href="#s2">🎨 板块二：AI接单赚钱（20招）</a>
+    <a href="#s3">🛒 板块三：AI电商变现（20招）</a>
+    <a href="#s4">📚 板块四：AI卖课/卖资料（20招）</a>
+    <a href="#s5">🤖 板块五：AI工具/服务变现（20招）</a>
+    <a href="#s6">📋 板块六：副业启动SOP</a>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部</button>
+  <button type="button" class="filter-btn" data-filter="template">📝 项目</button>
+  <button type="button" class="filter-btn" data-filter="prompt">🤖 提示词</button>
+  <button type="button" class="filter-btn" data-filter="tips">💡 技巧</button>
+</div>
+
+<div class="section" id="s1" data-category="template">
+  <div class="section-title"><span class="icon">📱</span> AI自媒体变现（20招）</div>
+  <div class="section-desc">零成本起步，用AI生产内容，通过流量变现。适合所有人</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📱 20个AI自媒体赚钱方法</h3><span class="tag">零成本</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">项目清单</div>
+        <div class="template-text" id="m1t">📌 AI自媒体变现20招：
+
+【图文类 - 8个】
+1. AI写小红书笔记 → 接广告/带货佣金
+   收入预期：1000-5000元/月（粉丝5000+即可接单）
+   工具：ChatGPT + Canva + 醒图
+   启动成本：0元
+
+2. AI写公众号文章 → 流量主广告收入
+   收入预期：500-3000元/月（粉丝5000+开通流量主）
+   工具：ChatGPT + 秀米排版
+   启动成本：0元
+
+3. AI写头条/百家号文章 → 平台广告分成
+   收入预期：300-2000元/月（持续更新即可）
+   工具：ChatGPT + 头条号后台
+   启动成本：0元
+
+4. AI写知乎回答 → 知乎好物推荐佣金
+   收入预期：500-5000元/月（带货类回答）
+   工具：ChatGPT + 知乎好物推荐
+   启动成本：0元
+
+5. AI写SEO文章 → 被动广告收入
+   收入预期：1000-8000元/月（需要网站或百家号）
+   工具：ChatGPT + WordPress/百家号
+   启动成本：0-200元/年（域名+主机）
+
+6. AI写电子书 → 付费阅读/连载
+   收入预期：500-3000元/本（连载更赚）
+   工具：ChatGPT + 微信读书/豆瓣阅读
+   启动成本：0元
+
+7. AI做新闻资讯号 → 阅读量变现
+   收入预期：200-1500元/月
+   工具：ChatGPT + 今日头条
+   启动成本：0元
+
+8. AI做垂直领域内容号 → 广告+咨询
+   收入预期：2000-10000元/月（需要专业积累）
+   工具：ChatGPT + 小红书/公众号
+   启动成本：0元
+
+【视频类 - 7个】
+9. AI做短视频口播 → 广告+橱窗带货
+   收入预期：1000-8000元/月
+   工具：ChatGPT+剪映+AI配音
+   启动成本：0元
+
+10. AI做影视解说号 → 播放量收益
+    收入预期：500-3000元/月
+    工具：ChatGPT+剪映+AI配音
+    启动成本：0元
+
+11. AI做知识科普号 → 广告+课程引流
+    收入预期：1000-5000元/月
+    工具：ChatGPT+剪映+Canva
+    启动成本：0元
+
+12. AI做书单号 → 橱窗带货佣金
+    收入预期：500-3000元/月
+    工具：ChatGPT+剪映
+    启动成本：0元
+
+13. AI做壁纸/头像号 → 私域引流+付费
+    收入预期：1000-5000元/月
+    工具：Midjourney+小红书
+    启动成本：70元/月（MJ订阅）
+
+14. AI做治愈系视频号 → 播放量+音乐推广
+    收入预期：300-2000元/月
+    工具：AI绘画+剪映+AI音乐
+    启动成本：0-70元/月
+
+15. AI做表情包号 → 付费表情包+引流
+    收入预期：500-2000元/月
+    工具：Midjourney+微信表情开放平台
+    启动成本：70元/月
+
+【音频类 - 3个】
+16. AI做播客/电台 → 平台分成+广告
+    收入预期：300-2000元/月
+    工具：ChatGPT+AI语音合成+喜马拉雅
+    启动成本：0元
+
+17. AI有声书录制 → 平台分成
+    收入预期：500-3000元/月
+    工具：ChatGPT+AI语音+喜马拉雅
+    启动成本：0元
+
+18. AI做白噪音/冥想音频 → 付费内容
+    收入预期：200-1000元/月
+    工具：AI音乐生成+小宇宙
+    启动成本：0元
+
+【综合类 - 2个】
+19. AI做多平台矩阵号 → 多平台收益叠加
+    收入预期：3000-20000元/月
+    工具：ChatGPT+多平台分发工具
+    启动成本：0-100元/月
+
+20. AI做本地生活号 → 商家广告+探店
+    收入预期：2000-10000元/月
+    工具：ChatGPT+抖音+大众点评
+    启动成本：0元</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI批量内容生成提示词</div>
+        <div class="prompt-text" id="m1p">你是一个AI副业教练。我想做[填写你想做的副业方向]。
+
+我的情况：
+- 每天可投入时间：[填写]
+- 启动资金：[填写]
+- 技能基础：[填写]
+- 目标月收入：[填写]
+
+请帮我：
+1. 制定一个30天启动计划（每天具体做什么）
+2. 推荐最适合的工具组合（尽量免费）
+3. 给出第一批10个内容的选题
+4. 预估各阶段收入（第1月/第3月/第6月）
+5. 列出常见踩坑点和避坑方法
+6. 如果只做一个平台，推荐最适合的平台及理由</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m1t','副业清单')">📋 复制项目清单</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('m1p','启动提示词')">🤖 复制启动提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s2" data-category="template">
+  <div class="section-title"><span class="icon">🎨</span> AI接单赚钱（20招）</div>
+  <div class="section-desc">用AI技能接单，按项目收费，时间自由。适合有一技之长的人</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎨 20个AI接单赚钱方法</h3><span class="tag">高单价</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">项目清单</div>
+        <div class="template-text" id="m2t">📌 AI接单赚钱20招：
+
+【文案类 - 6个】
+1. AI代写小红书笔记 → 50-200元/篇
+2. AI代写公众号文章 → 200-1000元/篇
+3. AI代写产品详情页 → 100-500元/个
+4. AI代写SEO文章 → 80-300元/篇
+5. AI代写演讲稿/汇报 → 200-800元/篇
+6. AI代写商业计划书 → 500-3000元/份
+
+【设计类 - 5个】
+7. AI生成Logo设计 → 200-1000元/个
+8. AI生成海报/Banner → 100-500元/张
+9. AI生成电商主图 → 50-200元/套
+10. AI生成插画/头像 → 100-500元/套
+11. AI生成PPT → 200-1000元/份
+
+【视频类 - 4个】
+12. AI剪辑短视频 → 100-500元/条
+13. AI制作企业宣传片 → 1000-5000元/条
+14. AI配音+字幕制作 → 50-200元/条
+15. AI制作产品演示视频 → 500-2000元/条
+
+【技术类 - 3个】
+16. AI辅助编程/建站 → 1000-5000元/个
+17. AI数据处理/分析 → 500-3000元/次
+18. AI自动化脚本 → 300-2000元/个
+
+【咨询类 - 2个】
+19. AI使用培训/教学 → 200-500元/小时
+20. AI落地方案咨询 → 1000-5000元/次
+
+【接单渠道】
+• 闲鱼（最简单，发布服务即可）
+• 淘宝/拼多多（开店卖服务）
+• 小红书/抖音（发作品引流私域）
+• 猪八戒/一品威客（专业外包平台）
+• Boss直聘/拉勾（远程兼职）
+• 微信群/QQ群（行业社群接单）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m2t','接单清单')">📋 复制项目清单</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s3" data-category="template">
+  <div class="section-title"><span class="icon">🛒</span> AI电商变现（20招）</div>
+  <div class="section-desc">用AI做电商选品、文案、客服，降低运营成本提高利润</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🛒 20个AI电商赚钱方法</h3><span class="tag">可规模化</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">项目清单</div>
+        <div class="template-text" id="m3t">📌 AI电商变现20招：
+
+【虚拟产品类 - 8个】
+1. 卖AI提示词合集 → 9.9-99元/份
+2. 卖Notion/飞书模板 → 9.9-49.9元/套
+3. 卖PPT模板 → 9.9-29.9元/套
+4. 卖简历模板 → 5.9-19.9元/套
+5. 卖AI绘画壁纸/头像 → 1.9-9.9元/套
+6. 卖电子书/教程 → 19.9-99元/本
+7. 卖Excel/WPS模板 → 9.9-29.9元/套
+8. 卖AI生成的素材包 → 9.9-49.9元/包
+
+【实体产品类 - 6个】
+9. AI生成手机壳图案 → 按需印刷，利润50%+
+10. AI生成T恤图案 → 按需印刷，利润40%+
+11. AI生成装饰画/海报 → 淘宝/闲鱼，利润60%+
+12. AI生成定制礼品 → 个性化定制，利润50%+
+13. AI生成贴纸/手账素材 → 拼多多，利润70%+
+14. AI生成表情包周边 → 微信商店，利润60%+
+
+【代运营类 - 4个】
+15. AI代运营小红书账号 → 2000-8000元/月
+16. AI代运营公众号 → 1500-5000元/月
+17. AI代运营抖音号 → 3000-10000元/月
+18. AI代写电商详情页 → 500-2000元/店
+
+【跨境类 - 2个】
+19. AI做跨境电商（Etsy/Amazon）→ 利润率高
+20. AI做海外社媒（TikTok/YouTube）→ 美金收入</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m3t','电商清单')">📋 复制项目清单</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s4" data-category="template">
+  <div class="section-title"><span class="icon">📚</span> AI卖课/卖资料（20招）</div>
+  <div class="section-desc">知识付费是最高利润的副业，AI帮你快速生产内容</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📚 20个AI知识付费方法</h3><span class="tag">高利润</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">项目清单</div>
+        <div class="template-text" id="m4t">📌 AI卖课/卖资料20招：
+
+【课程类 - 8个】
+1. AI使用入门课程 → 99-299元
+2. AI写作变现课程 → 199-499元
+3. AI绘画入门课程 → 99-399元
+4. AI短视频制作课程 → 199-599元
+5. AI办公效率课程 → 99-299元
+6. AI电商运营课程 → 299-999元
+7. AI编程入门课程 → 199-599元
+8. AI求职面试课程 → 99-299元
+
+【资料包类 - 8个】
+9. AI提示词大全 → 9.9-49.9元
+10. AI工具对比手册 → 9.9-19.9元
+11. 行业AI应用案例集 → 19.9-99元
+12. AI副业实操手册 → 29.9-99元
+13. AI简历模板包 → 9.9-29.9元
+14. AI营销文案模板包 → 19.9-49.9元
+15. AI学习路线图 → 9.9-19.9元
+16. AI效率工具包 → 19.9-49.9元
+
+【社群/服务类 - 4个】
+17. AI学习付费社群 → 99-399元/年
+18. AI一对一咨询 → 200-500元/小时
+19. AI陪跑训练营 → 499-1999元/期
+20. AI代做服务套餐 → 500-5000元/套
+
+【卖课平台推荐】
+• 小鹅通（最专业，功能全）
+• 知识星球（社群+内容，适合长期）
+• 微信小商店（零门槛，适合虚拟产品）
+• 荔枝微课（音频课首选）
+• 千聊（直播课首选）
+• 淘宝/闲鱼（资料包首选）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m4t','卖课清单')">📋 复制项目清单</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s5" data-category="template">
+  <div class="section-title"><span class="icon">🤖</span> AI工具/服务变现（20招）</div>
+  <div class="section-desc">搭建AI工具或提供AI服务，赚取服务费或订阅收入</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🤖 20个AI工具服务变现方法</h3><span class="tag">技术向</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">项目清单</div>
+        <div class="template-text" id="m5t">📌 AI工具/服务变现20招：
+
+【工具搭建类 - 8个】
+1. 搭建AI写作助手（基于API）→ 订阅制 19-99元/月
+2. 搭建AI客服机器人 → 按店铺收费 500-2000元/月
+3. 搭建AI翻译工具 → 按字数收费
+4. 搭建AI图片处理工具 → 按次收费 1-5元/次
+5. 搭建AI简历生成器 → 按份收费 9.9-29.9元
+6. 搭建AI论文降重工具 → 按字数收费
+7. 搭建微信AI聊天机器人 → 按群收费
+8. 搭建AI SEO批量工具 → 订阅制 99-499元/月
+
+【代理/分销类 - 6个】
+9. 代理AI工具（如ChatGPT Plus）→ 赚差价
+10. 分销AI课程 → 佣金30-50%
+11. 分销AI绘画工具 → 佣金20-40%
+12. 分销AI写作工具 → 佣金20-40%
+13. 分销AI视频工具 → 佣金20-40%
+14. 做AI工具评测号 → 广告+佣金
+
+【服务类 - 6个】
+15. AI企业培训 → 3000-20000元/场
+16. AI落地方案咨询 → 5000-50000元/项目
+17. AI自动化流程搭建 → 1000-10000元/个
+18. AI数据标注外包 → 按量计费
+19. AI内容审核服务 → 按月计费
+20. AI私域运营服务 → 3000-10000元/月</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m5t','工具清单')">📋 复制项目清单</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s6" data-category="tips">
+  <div class="section-title"><span class="icon">📋</span> 副业启动SOP</div>
+  <div class="section-desc">从选项目到赚到第一桶金，每一步都给你规划好</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📋 副业启动30天计划</h3><span class="tag">行动指南</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">30天启动计划</div>
+        <div class="template-text" id="m6t">📋 AI副业30天启动计划：
+
+【第1-3天：选项目】
+□ 浏览100个项目，选出3个感兴趣的
+□ 评估：零成本？每天1小时能做？有市场需求？
+□ 最终选定1个主攻方向（不要贪多）
+
+【第4-7天：学工具】
+□ 注册所需工具账号（ChatGPT/剪映/Canva等）
+□ 学习基础操作（看官方教程+B站教程）
+□ 用AI生成第一批测试内容（不发布，先练手）
+
+【第8-14天：建账号】
+□ 注册目标平台账号（小红书/抖音/公众号等）
+□ 完善账号资料（头像/简介/背景图）
+□ 发布第一批5-10个内容（测试不同风格）
+□ 观察数据反馈（哪个类型互动最好）
+
+【第15-21天：找方向】
+□ 根据数据反馈确定内容方向
+□ 建立内容SOP（选题→AI生成→优化→发布）
+□ 每天发布1-2个内容，保持日更
+□ 开始互动：评论区回复、关注同行
+
+【第22-30天：变现测试】
+□ 粉丝达到500+后开始测试变现
+□ 挂商品链接/接广告/引流私域
+□ 复盘数据，优化内容策略
+□ 制定下个月的收入目标
+
+【关键原则】
+• 先完成再完美：不要追求完美，先发出去
+• 坚持30天：前2周可能没数据，坚持住
+• 只做一个方向：不要同时做5个平台
+• 模仿再超越：找3个对标账号，学习他们的爆款</div>
+      </div>
+      <div class="block">
+        <div class="block-label">避坑指南</div>
+        <div class="template-text" id="m7t">📌 AI副业常见踩坑点：
+
+❌ 坑1：同时做太多方向
+✅ 正确做法：先做好一个方向，稳定后再扩展
+
+❌ 坑2：内容完全依赖AI不加工
+✅ 正确做法：AI生成60%+人工优化40%，保持个人风格
+
+❌ 坑3：追求完美迟迟不发
+✅ 正确做法：先发100条再谈优化，数据会告诉你方向
+
+❌ 坑4：看到没流量就放弃
+✅ 正确做法：至少坚持30天，前2周是冷启动期
+
+❌ 坑5：花钱买课买工具太多
+✅ 正确做法：先用免费工具跑通流程，赚到钱再升级
+
+❌ 坑6：忽略平台规则
+✅ 正确做法：先学习平台规则，避免违规被封号
+
+❌ 坑7：不做数据分析
+✅ 正确做法：每周复盘数据，找到爆款规律
+
+❌ 坑8：收入预期太高太快
+✅ 正确做法：第1月目标赚100元，第3月目标1000元</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('m6t','启动计划')">📋 复制启动计划</button>
+        <button type="button" class="btn btn-copy" onclick="copyText('m7t','避坑指南')">📋 复制避坑指南</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="footer">
+  <p><strong>AI赚钱副业100招</strong></p>
+  <p>从0到1用AI开启你的副业之路</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+<script>
+function copyText(id,label){var el=document.getElementById(id);if(!el)return;var text=el.innerText||el.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)})}else{fallbackCopy(text,label)}}
+function fallbackCopy(text,label){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}document.body.removeChild(ta)}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show')},2200)}
+document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var f=this.getAttribute('data-filter');document.querySelectorAll('.section').forEach(function(sec){if(f==='all'||sec.getAttribute('data-category')===f){sec.style.display=''}else{sec.style.display='none'}})})});
+window.addEventListener('scroll',function(){var btn=document.getElementById('backTop');if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}});
+</script>
+</body>
+</html>

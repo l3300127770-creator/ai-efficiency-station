@@ -1,0 +1,836 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI短视频全流程教程 - 从零基础到出片变现</title>
+<style>
+:root{--primary:#f59e0b;--primary-dark:#d97706;--primary-light:#fbbf24;--primary-bg:#fffbeb;--primary-bg2:#fef3c7;--text:#1f2937;--text-light:#6b7280;--bg:#ffffff;--bg-gray:#f9fafb;--border:#e5e7eb;--success:#10b981;--info:#3b82f6;--danger:#ef4444;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);--shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg-gray);line-height:1.8;font-size:16px}
+a{color:var(--primary-dark);text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#f59e0b 0%,#ea580c 100%);color:#fff;padding:60px 20px 50px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,.08) 1px,transparent 1px);background-size:30px 30px;animation:float 20s linear infinite}
+@keyframes float{0%{transform:translate(0,0)}100%{transform:translate(30px,30px)}}
+.hero-content{position:relative;z-index:1;max-width:800px;margin:0 auto}
+.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;margin-bottom:12px;text-shadow:0 2px 10px rgba(0,0,0,.15)}
+.hero .subtitle{font-size:clamp(1rem,2.5vw,1.2rem);opacity:.92;margin-bottom:24px;line-height:1.6}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:28px}
+.hero-badge{background:rgba(255,255,255,.2);backdrop-filter:blur(10px);padding:6px 16px;border-radius:20px;font-size:.9rem;border:1px solid rgba(255,255,255,.25)}
+.hero-stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:1.8rem;font-weight:800}
+.hero-stat .label{font-size:.85rem;opacity:.85}
+.roadmap{max-width:900px;margin:-30px auto 0;padding:0 20px;position:relative;z-index:2}
+.roadmap-inner{background:#fff;border-radius:var(--radius);padding:28px 24px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.roadmap-step{display:flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0}
+.roadmap-dot{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.roadmap-dot.bonus{background:#8b5cf6}
+.roadmap-label{font-size:.88rem;color:var(--text);font-weight:500}
+.roadmap-arrow{color:var(--primary-light);font-size:1.2rem;margin:0 4px;flex-shrink:0}
+.progress-bar-wrap{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.progress-bar-wrap .label{font-size:.8rem;color:var(--text-light);white-space:nowrap}
+.progress-track{flex:1;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#ea580c);border-radius:4px;transition:width .5s ease;width:0%}
+.progress-pct{font-size:.8rem;font-weight:700;color:var(--primary-dark);min-width:36px;text-align:right}
+.container{max-width:900px;margin:0 auto;padding:30px 20px 60px}
+.toc{background:#fff;border-radius:var(--radius);padding:28px;margin-bottom:30px;box-shadow:var(--shadow)}
+.toc h2{font-size:1.2rem;margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:8px}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1px solid var(--border);transition:all .2s;cursor:pointer;font-size:.92rem}
+.toc-item:hover{border-color:var(--primary);background:var(--primary-bg);transform:translateX(4px)}
+.toc-item .num{width:28px;height:28px;border-radius:50%;background:var(--primary-bg2);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+.toc-item .num.bonus{background:#ede9fe;color:#7c3aed}
+.lesson{background:#fff;border-radius:var(--radius);margin-bottom:28px;box-shadow:var(--shadow);overflow:hidden}
+.lesson-header{padding:24px 28px;border-left:4px solid var(--primary);background:linear-gradient(135deg,var(--primary-bg),#fff)}
+.lesson-header h2{font-size:1.35rem;color:var(--text)}
+.lesson-header .lesson-desc{color:var(--text-light);font-size:.92rem;margin-top:4px}
+.lesson-header .lesson-tag{display:inline-block;background:var(--primary);color:#fff;font-size:.75rem;padding:2px 10px;border-radius:10px;margin-top:8px;font-weight:600}
+.lesson-body{padding:24px 28px}
+.lesson-body h3{font-size:1.1rem;color:var(--text);margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--primary-bg2)}
+.lesson-body h3:first-child{margin-top:0}
+.lesson-body p{margin-bottom:14px;color:#374151;text-align:justify}
+.lesson-body ul,.lesson-body ol{margin:0 0 16px 20px}
+.lesson-body li{margin-bottom:8px;color:#374151}
+.lesson-body li strong{color:var(--primary-dark)}
+.goal-box{background:var(--primary-bg);border:1px solid var(--primary-light);border-radius:10px;padding:16px 20px;margin-bottom:20px}
+.goal-box h4{color:var(--primary-dark);font-size:.95rem;margin-bottom:8px}
+.goal-box ul{margin:0 0 0 18px}
+.goal-box li{margin-bottom:4px;font-size:.92rem;color:#92400e}
+.tip-box{border-radius:10px;padding:14px 18px;margin:16px 0;font-size:.92rem;display:flex;gap:10px;align-items:flex-start}
+.tip-box.warning{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+.tip-box.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
+.tip-box.success{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}
+.tip-box .icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:16px 0}
+.tool-card{border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .2s}
+.tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px)}
+.tool-card .tool-name{font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.tool-card .free-tag{background:#10b981;color:#fff;font-size:.7rem;padding:1px 6px;border-radius:8px;font-weight:600}
+.tool-card .paid-tag{background:#f59e0b;color:#fff;font-size:.7rem;padding:1px 6px;border-radius:8px;font-weight:600}
+.tool-card .tool-desc{font-size:.85rem;color:var(--text-light);margin-bottom:6px}
+.tool-card .tool-link{font-size:.82rem;color:var(--primary-dark)}
+.step-list{counter-reset:step;list-style:none;margin:16px 0;padding:0}
+.step-list li{counter-increment:step;position:relative;padding:12px 16px 12px 52px;margin-bottom:10px;background:#f9fafb;border-radius:8px;border:1px solid #f3f4f6}
+.step-list li::before{content:counter(step);position:absolute;left:12px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+.step-list li strong{color:var(--primary-dark)}
+.template-box{background:#1f2937;color:#e5e7eb;border-radius:10px;padding:18px 20px;margin:14px 0;font-family:"Cascadia Code","Fira Code",Consolas,monospace;font-size:.88rem;line-height:1.7;position:relative;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.template-box .copy-btn{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.15);color:#fff;border:none;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .2s}
+.template-box .copy-btn:hover{background:rgba(255,255,255,.3)}
+.data-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+.data-table th{background:var(--primary);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+.data-table td{padding:10px 14px;border-bottom:1px solid var(--border)}
+.data-table tr:hover td{background:var(--primary-bg)}
+.data-table tr:nth-child(even) td{background:#f9fafb}
+.prompt-section{margin:20px 0}
+.prompt-card{background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:10px;position:relative}
+.prompt-card .prompt-num{position:absolute;top:10px;left:-6px;background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.prompt-card .prompt-text{padding-left:24px;font-size:.9rem;color:#374151;line-height:1.7}
+.prompt-card .copy-prompt{position:absolute;top:10px;right:10px;background:none;border:1px solid var(--border);color:var(--text-light);padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.78rem;transition:all .2s}
+.prompt-card .copy-prompt:hover{border-color:var(--primary);color:var(--primary-dark)}
+.sidebar-progress{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:6px}
+.sidebar-dot{width:12px;height:12px;border-radius:50%;background:#d1d5db;transition:all .3s;cursor:pointer;position:relative}
+.sidebar-dot.active{background:var(--primary);transform:scale(1.3)}
+.sidebar-dot.completed{background:var(--success)}
+.sidebar-dot:hover::after{content:attr(data-label);position:absolute;right:20px;top:50%;transform:translateY(-50%);background:#1f2937;color:#fff;padding:4px 10px;border-radius:6px;font-size:.78rem;white-space:nowrap}
+.footer{background:#1f2937;color:#9ca3af;padding:40px 20px;text-align:center;margin-top:40px}
+.footer h3{color:#fff;margin-bottom:12px;font-size:1.1rem}
+.footer p{font-size:.88rem;line-height:1.8;max-width:600px;margin:0 auto 8px}
+.footer .copy-info{margin-top:20px;padding-top:16px;border-top:1px solid #374151;font-size:.82rem;color:#6b7280}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#1f2937;color:#fff;padding:10px 24px;border-radius:8px;font-size:.9rem;z-index:9999;transition:transform .3s ease;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:var(--shadow-lg);opacity:0;transition:all .3s;z-index:90}
+.back-top.show{opacity:1}
+.back-top:hover{background:var(--primary-dark);transform:translateY(-2px)}
+@media(max-width:768px){
+.hero{padding:40px 16px 40px}.hero h1{font-size:1.6rem}
+.hero-badges{gap:6px}.hero-badge{font-size:.8rem;padding:4px 10px}
+.hero-stats{gap:20px}.roadmap-inner{padding:20px 16px}
+.lesson-header{padding:18px 16px}.lesson-body{padding:18px 16px}
+.tool-grid{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}
+.data-table{font-size:.82rem}.data-table th,.data-table td{padding:8px 10px}
+.sidebar-progress{display:none}.step-list li{padding-left:46px}
+.template-box{font-size:.82rem}.prompt-card .prompt-text{font-size:.85rem}
+}
+@media(max-width:480px){.container{padding:20px 12px 40px}.hero-stats .num{font-size:1.4rem}}
+@media print{.progress-bar-wrap,.sidebar-progress,.back-top,.copy-btn,.copy-prompt{display:none!important}.lesson{break-inside:avoid;box-shadow:none;border:1px solid #ddd}}
+</style>
+</head>
+<body>
+<div class="progress-bar-wrap"><span class="label">📚 阅读进度</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span class="progress-pct" id="progressPct">0%</span></div>
+<div class="hero"><div class="hero-content">
+<h1>🎬 AI短视频全流程教程</h1>
+<p class="subtitle">从零基础小白到日更创作者，用AI工具10分钟出一条高质量短视频</p>
+<div class="hero-badges">
+<span class="hero-badge">📖 4课完整教程</span><span class="hero-badge">🎁 2份附赠资源</span>
+<span class="hero-badge">⏱️ 预计学习 3 小时</span><span class="hero-badge">💡 零基础友好</span>
+</div>
+<div class="hero-stats">
+<div class="hero-stat"><div class="num">4</div><div class="label">核心课程</div></div>
+<div class="hero-stat"><div class="num">40+</div><div class="label">提示词模板</div></div>
+<div class="hero-stat"><div class="num">20+</div><div class="label">工具推荐</div></div>
+<div class="hero-stat"><div class="num">0</div><div class="label">基础要求</div></div>
+</div></div></div>
+<div class="roadmap"><div class="roadmap-inner">
+<div class="roadmap-step"><div class="roadmap-dot">1</div><span class="roadmap-label">选题脚本</span></div><span class="roadmap-arrow">→</span>
+<div class="roadmap-step"><div class="roadmap-dot">2</div><span class="roadmap-label">配音字幕</span></div><span class="roadmap-arrow">→</span>
+<div class="roadmap-step"><div class="roadmap-dot">3</div><span class="roadmap-label">画面剪辑</span></div><span class="roadmap-arrow">→</span>
+<div class="roadmap-step"><div class="roadmap-dot">4</div><span class="roadmap-label">发布涨粉</span></div><span class="roadmap-arrow">→</span>
+<div class="roadmap-step"><div class="roadmap-dot bonus">+</div><span class="roadmap-label">附赠资源</span></div>
+</div></div>
+<div class="container">
+<nav class="toc" id="toc"><h2>📑 课程目录</h2><div class="toc-grid">
+<a class="toc-item" href="#lesson1"><span class="num">1</span>AI选题与脚本生成</a>
+<a class="toc-item" href="#lesson2"><span class="num">2</span>AI配音与字幕制作</a>
+<a class="toc-item" href="#lesson3"><span class="num">3</span>AI画面生成与剪辑</a>
+<a class="toc-item" href="#lesson4"><span class="num">4</span>发布策略与涨粉技巧</a>
+<a class="toc-item" href="#bonus1"><span class="num bonus">+</span>附赠1：常用工具清单</a>
+<a class="toc-item" href="#bonus2"><span class="num bonus">+</span>附赠2：提示词库</a>
+</div></nav>
+
+<article class="lesson" id="lesson1">
+  <div class="lesson-header">
+    <h2>📝 第1课：AI选题与脚本生成</h2>
+    <p class="lesson-desc">选对题目 = 成功一半。用AI帮你找到爆款选题，3分钟生成专业脚本</p>
+    <span class="lesson-tag">⏱ 阅读约15分钟</span>
+  </div>
+  <div class="lesson-body">
+    <div class="goal-box">
+      <h4>🎯 学习目标</h4>
+      <ul>
+        <li>学会用AI工具快速找到热门且适合自己的选题</li>
+        <li>掌握评估选题质量的3个维度</li>
+        <li>能独立用AI生成一条完整的短视频脚本</li>
+        <li>了解5种常用脚本模板，拿到就能用</li>
+      </ul>
+    </div>
+
+    <h3>🔍 一、如何用AI找热门选题</h3>
+    <p>很多人做短视频的第一步就卡住了——不知道拍什么。其实，AI可以帮你解决这个问题。以下是具体操作步骤：</p>
+    <ol class="step-list">
+      <li><strong>打开ChatGPT或Kimi</strong>（推荐Kimi，免费且支持中文联网搜索）。在对话框中输入以下提示词：
+        <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>你是一个短视频选题专家。请帮我找出当前抖音/小红书上最近一周的10个热门选题，要求：
+1. 适合个人创作者（不需要团队配合）
+2. 制作门槛低（不需要专业设备）
+3. 变现潜力高（能带货或接广告）
+4. 按热度从高到低排列，每个选题附上推荐理由</div>
+      </li>
+      <li><strong>筛选AI给出的选题</strong>。AI会给你一个列表，但不要直接用，需要做第二轮筛选。继续输入：
+        <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>针对上面第 [1] 个选题，请帮我分析：
+1. 这个选题的目标人群是谁？
+2. 目前抖音上做这个选题的头部账号有哪几个？他们的平均播放量是多少？
+3. 这个选题适合做口播、vlog还是图文混剪？
+4. 给我3个切入角度，要和现有账号有差异化</div>
+      </li>
+      <li><strong>交叉验证选题热度</strong>。打开抖音/小红书，搜索你选中的关键词，看前10条视频的点赞量。如果大部分视频点赞过千，说明选题热度OK。如果最高点赞才几百，说明这个选题可能已经过气或受众太窄。</li>
+    </ol>
+
+    <h3>📊 二、选题评估方法：三个维度打分</h3>
+    <p>不是所有热门选题都适合你。用这个"三维评估法"给选题打分，每个维度1-5分，总分超过10分的选题才值得做：</p>
+    <table class="data-table">
+      <thead><tr><th>评估维度</th><th>评分标准</th><th>加分项</th></tr></thead>
+      <tbody>
+        <tr><td><strong>热度</strong></td><td>搜索量、相关视频播放量</td><td>近期有上升趋势 +2分</td></tr>
+        <tr><td><strong>竞争度</strong></td><td>头部账号数量、内容同质化程度</td><td>有差异化空间 +2分</td></tr>
+        <tr><td><strong>变现潜力</strong></td><td>能否带货、接广告、引流私域</td><td>客单价>50元 +2分</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info">
+      <span class="icon">💡</span>
+      <div><strong>小白建议：</strong>前期不要追求完美选题，先做起来。选一个你感兴趣、能持续产出内容的方向，比纠结哪个选题最火更重要。</div>
+    </div>
+
+    <h3>✍️ 三、AI生成脚本的完整流程</h3>
+    <p>选好题之后，接下来就是写脚本。一个好的短视频脚本需要包含：开头钩子、正文内容、结尾引导。用AI生成脚本的标准流程如下：</p>
+    <ol class="step-list">
+      <li><strong>确定视频类型和时长</strong>。先告诉AI你要做什么类型的视频。口播类建议60-90秒，混剪类建议30-60秒，vlog类建议2-3分钟。</li>
+      <li><strong>输入脚本生成提示词</strong>：
+        <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>你是一个短视频脚本创作专家。请帮我写一条 [选题内容] 的短视频脚本，要求：
+
+1. 视频类型：[口播/混剪/vlog]
+2. 视频时长：[60秒]
+3. 目标平台：[抖音/小红书]
+4. 目标人群：[描述你的目标观众]
+
+脚本格式要求：
+- 开头3秒要有强力钩子（提问/冲突/反常识）
+- 正文分3个要点，每个要点配一个具体案例
+- 结尾要有行动号召（关注/点赞/评论引导）
+- 标注每段的预估时长
+- 标注需要配什么画面/素材</div>
+      </li>
+      <li><strong>优化和调整脚本</strong>。AI生成的第一版通常偏长或语气偏书面。继续输入：
+        <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>请对上面的脚本做以下优化：
+1. 把所有书面语改成口语化表达，像朋友聊天一样
+2. 缩短到 [60秒] 以内（按每秒4个字计算）
+3. 开头钩子再强化，要让人停下来看
+4. 每个要点加一句金句/总结，方便截图传播</div>
+      </li>
+      <li><strong>审读并微调</strong>。拿到最终脚本后，自己读一遍，确保语句通顺、逻辑清晰。把拗口的地方改成自己的说话习惯。</li>
+    </ol>
+
+    <h3>📋 四、5个实用脚本模板</h3>
+    <p>以下5种脚本模板覆盖了90%的短视频类型，直接套用即可：</p>
+
+    <p><strong>模板1：知识科普型（60秒口播）</strong></p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>【开头钩子 3秒】你知道 [反常识/惊讶事实] 吗？
+【问题展开 10秒】很多人以为 [常见误区]，但其实 [真相]。
+【要点1 15秒】第一，[知识点]。举个例子，[具体案例]。
+【要点2 15秒】第二，[知识点]。比如 [具体案例]。
+【要点3 10秒】第三，[知识点]。[简短案例]。
+【总结 5秒】记住这三点：[复述要点]。
+【引导 2秒】觉得有用就点赞收藏，关注我学更多！</div>
+
+    <p><strong>模板2：产品种草型（45秒）</strong></p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>【开头 3秒】被种草了！[产品] 也太好用了吧！
+【痛点 8秒】之前我一直被 [问题] 困扰，试过 [其他方案] 都不行。
+【使用体验 20秒】用了 [产品] 之后，[具体效果1]，[具体效果2]，最让我惊喜的是 [亮点]。
+【使用方法 8秒】用法很简单，[简述步骤]。
+【引导 6秒】链接放购物车了，想试试的姐妹扣1！</div>
+
+    <p><strong>模板3：故事/经历型（90秒）</strong></p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>【开头钩子 5秒】[时间]前，我还 [糟糕的状况]，现在 [好的结果]。
+【困境 20秒】那时候 [详细描述困难]，每天都很 [情绪]。
+【转折 15秒】直到有一天，[发生了什么/发现了什么]。
+【行动 25秒】我开始 [具体做了什么]，第一步 [行动1]，然后 [行动2]。
+【结果 15秒】[时间]后，[具体成果]，最重要的是 [感悟]。
+【鼓励 10秒】所以如果你现在也 [类似处境]，别放弃。[鼓励的话]。关注我，分享更多 [领域] 干货。</div>
+
+    <p><strong>模板4：对比测评型（60秒）</strong></p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>【开头 3秒】[A] 和 [B] 到底哪个好？今天实测给你看！
+【外观对比 10秒】先看外观，[描述A]，[描述B]，我个人更喜欢 [选择]。
+【功能对比 20秒】功能上，[A的优势]、[B的优势]，但在 [关键场景] 上 [哪个更好]。
+【价格对比 10秒】价格方面，A卖 [价格]，B卖 [价格]，性价比 [结论]。
+【总结 12秒】总的来说，如果你 [场景1] 选A，如果你 [场景2] 选B。
+【互动 5秒】你会选哪个？评论区告诉我！</div>
+
+    <p><strong>模板5：干货清单型（60秒）</strong></p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>【开头 3秒】[领域] 必备的 [数字] 个 [工具/技巧/网站]，建议收藏！
+【第1个 10秒】第一个，[名称]。它能 [功能]，我用了 [时长]，[效果]。
+【第2个 10秒】第二个，[名称]。特别适合 [场景]，[亮点]。
+【第3个 10秒】第三个，[名称]。最大的优势是 [优势]。
+【第4个 10秒】第四个，[名称]。[功能+亮点]。
+【第5个 10秒】第五个，[名称]。[功能+亮点]。
+【总结 5秒】以上5个全部免费，链接都放在评论区了！
+【引导 2秒】关注我，每天分享实用干货！</div>
+
+    <h3>⚠️ 五、常见坑和避坑指南</h3>
+    <div class="tip-box warning">
+      <span class="icon">🚨</span>
+      <div><strong>坑1：直接用AI生成的内容不做修改。</strong>AI生成的内容有明显的"AI味"，观众能感觉到。一定要用自己的话重新说一遍，加入个人经历和观点。</div>
+    </div>
+    <div class="tip-box warning">
+      <span class="icon">🚨</span>
+      <div><strong>坑2：选题太宽泛。</strong>"教你学英语"这种题目太大，没人看。改成"每天5分钟，一个月记住3000个单词"就具体多了。AI也可以帮你把大选题缩小：输入"请帮我把这个选题缩小到一个具体的痛点"。</div>
+    </div>
+    <div class="tip-box warning">
+      <span class="icon">🚨</span>
+      <div><strong>坑3：脚本太长。</strong>60秒视频的脚本大约240字（每秒4个字），90秒大约360字。写多了念不完，写少了太空洞。让AI按字数精确控制。</div>
+    </div>
+    <div class="tip-box warning">
+      <span class="icon">🚨</span>
+      <div><strong>坑4：忽略开头前3秒。</strong>短视频的生死就在前3秒。如果前3秒没有抓住注意力，用户直接划走。每个脚本的开头至少让AI给你3个版本，选最抓人的那个。</div>
+    </div>
+    <div class="tip-box success">
+      <span class="icon">✅</span>
+      <div><strong>避坑总结：</strong>AI是你的助手，不是替代者。用AI提高效率，但最终内容要有你自己的风格和温度。前期可以大量用AI辅助，逐步形成自己的创作模式后，AI的比重可以降低到50%左右。</div>
+    </div>
+  </div>
+</article>
+
+<article class="lesson" id="lesson2">
+  <div class="lesson-header">
+    <h2>🎙️ 第2课：AI配音与字幕制作</h2>
+    <p class="lesson-desc">不用自己录音，AI配音效果比大多数人说得还好听</p>
+    <span class="lesson-tag">⏱ 阅读约12分钟</span>
+  </div>
+  <div class="lesson-body">
+    <div class="goal-box">
+      <h4>🎯 学习目标</h4>
+      <ul>
+        <li>学会使用免费AI配音工具生成自然语音</li>
+        <li>掌握根据内容选择配音风格的技巧</li>
+        <li>能独立完成字幕生成和校对</li>
+        <li>了解音画同步和音频后期处理基础</li>
+      </ul>
+    </div>
+
+    <h3>🔊 一、免费AI配音工具推荐</h3>
+    <p>AI配音已经发展到非常成熟的阶段，很多工具完全免费且效果出色。以下是目前最推荐的几款：</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-name">剪映 <span class="free-tag">免费</span></div>
+        <div class="tool-desc">内置几十种AI音色，支持语速、语调调节。最推荐新手使用，因为配音和剪辑在同一个软件里完成，省去来回导出的麻烦。</div>
+        <div class="tool-link">📱 手机版/电脑版均可下载</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">微软TTS <span class="free-tag">免费</span></div>
+        <div class="tool-desc">微软Azure语音合成，音色最自然。通过 edge-tts 或微软官网体验页面免费使用。推荐音色：晓晓（zh-CN-XiaoxiaoNeural）、云扬（zh-CN-YunyangNeural）。</div>
+        <div class="tool-link">🔗 azure.microsoft.com/cognitive-services/text-to-speech</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">通义实验室语音 <span class="free-tag">免费</span></div>
+        <div class="tool-desc">阿里出品，支持多种中文方言和情感风格。适合需要地方口音的特色视频。通过通义听悟平台使用。</div>
+        <div class="tool-link">🔗 tingwu.aliyun.com</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">TTSMaker <span class="free-tag">免费</span></div>
+        <div class="tool-desc">在线AI配音网站，支持200+音色，无需注册直接用。每周有免费额度，适合偶尔使用的创作者。</div>
+        <div class="tool-link">🔗 ttsmaker.com</div>
+      </div>
+    </div>
+
+    <h3>🎭 二、配音风格选择技巧</h3>
+    <p>选对配音风格能让视频效果翻倍。不同类型的内容适合不同的配音风格：</p>
+    <table class="data-table">
+      <thead><tr><th>内容类型</th><th>推荐风格</th><th>推荐音色/语速</th></tr></thead>
+      <tbody>
+        <tr><td>知识科普</td><td>沉稳、清晰、有权威感</td><td>男声偏多，语速中等（1.0x）</td></tr>
+        <tr><td>情感故事</td><td>温柔、有感染力</td><td>女声偏多，语速稍慢（0.9x）</td></tr>
+        <tr><td>搞笑段子</td><td>活泼、夸张、有节奏感</td><td>语速偏快（1.2x），可加变声效果</td></tr>
+        <tr><td>产品种草</td><td>亲切、真实、像朋友推荐</td><td>女声为主，语速中等（1.0x）</td></tr>
+        <tr><td>新闻资讯</td><td>正式、客观、吐字清晰</td><td>男声为主，语速中偏快（1.1x）</td></tr>
+        <tr><td>教程演示</td><td>耐心、详细、步骤感强</td><td>不限，语速偏慢（0.9x）</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info">
+      <span class="icon">💡</span>
+      <div><strong>小技巧：</strong>在剪映中选好音色后，先生成一小段试听。重点听"儿化音"和"多音字"是否读对。如果读错了，可以在文字中用同音字替换或加拼音标注。</div>
+    </div>
+
+    <h3>📝 三、字幕自动生成方法</h3>
+    <p>字幕是短视频的标配，用户很多时候是静音观看的。以下是生成字幕的两种最简单方法：</p>
+    <ol class="step-list">
+      <li><strong>方法一：剪映自动识别（推荐）</strong>。导入音频/视频后，点击"文字" → "智能字幕" → "识别字幕"。剪映会自动识别语音内容并生成字幕，准确率在95%以上。生成后逐句检查，重点校对专有名词、数字、多音字。</li>
+      <li><strong>方法二：先生成SRT字幕文件再导入</strong>。如果用的是外部配音（如微软TTS生成的音频），可以先用"通义听悟"或"飞书妙记"上传音频，自动转写成SRT字幕文件，再导入剪映。这种方式的好处是字幕文件可复用。</li>
+      <li><strong>字幕样式设置</strong>。推荐设置：字体选"思源黑体"或系统默认黑体，字号适中（不要太大也不要太小），白色字体+黑色描边（2-3px），居中对齐。避免用花哨字体，影响阅读。</li>
+    </ol>
+
+    <h3>🎬 四、音画同步技巧</h3>
+    <p>音画不同步是新手最常犯的错误之一，观众会立刻觉得"不专业"。以下是确保同步的关键技巧：</p>
+    <ol class="step-list">
+      <li><strong>先配音，后配画面</strong>。正确顺序是：脚本 → 配音 → 字幕 → 画面。以音频为时间轴基准，画面去配合音频。</li>
+      <li><strong>在剪映中利用波形对齐</strong>。音频轨道会显示声波波形，根据波形的高低起伏来判断每句话的开始和结束位置，把对应画面的出入点对齐到这些位置。</li>
+      <li><strong>留出呼吸间隙</strong>。两句话之间留0.3-0.5秒的空隙，不要剪得太紧凑。这样观感更自然，也给观众消化信息的时间。</li>
+      <li><strong>关键信息和画面同步</strong>。当配音说到"第一点""第二点"时，画面上要同时出现对应的文字或图标。这种音画同步会让视频看起来非常专业。</li>
+    </ol>
+
+    <h3>🎛️ 五、音频后期处理基础</h3>
+    <p>AI生成的配音通常已经很干净了，但你可能还需要做一些简单的后期处理：</p>
+    <ol class="step-list">
+      <li><strong>音量标准化</strong>。确保配音音量在-6dB到-3dB之间，不要太大（会爆音）也不要太小（听不清）。在剪映中选中音频轨道，通过音量滑块调节。</li>
+      <li><strong>降噪处理</strong>。如果配音中有轻微底噪，在剪映中选中音频 → 点击"降噪" → 拉到50%-70%即可。不要拉满，否则声音会变得很闷。</li>
+      <li><strong>添加背景音乐</strong>。纯配音会显得干巴巴的。在剪映"音频" → "音乐"中选一首轻快的背景音乐，音量调到配音的15%-25%即可。推荐使用剪映自带的"商用音乐"，避免版权问题。</li>
+      <li><strong>音效点缀</strong>。在关键转折点可以加一些音效，比如"叮"的提示音、转场音效等。剪映的"音效"库里有很多免费音效可以直接用。</li>
+    </ol>
+    <div class="tip-box success">
+      <span class="icon">✅</span>
+      <div><strong>实操建议：</strong>先花10分钟用AI生成配音，再花5分钟校对字幕，最后花5分钟调整音画同步。整个音频环节控制在20分钟以内。熟练之后10分钟就能搞定。</div>
+    </div>
+  </div>
+</article>
+
+<article class="lesson" id="lesson3">
+  <div class="lesson-header">
+    <h2>🎨 第3课：AI画面生成与剪辑</h2>
+    <p class="lesson-desc">不会拍摄也没关系，AI帮你生成专业级视频画面</p>
+    <span class="lesson-tag">⏱ 阅读约15分钟</span>
+  </div>
+  <div class="lesson-body">
+    <div class="goal-box">
+      <h4>🎯 学习目标</h4>
+      <ul>
+        <li>了解主流AI视频生成工具并能上手操作</li>
+        <li>学会用AI生成视频配图素材</li>
+        <li>掌握剪映AI剪辑的核心功能</li>
+        <li>能独立完成一条完整短视频的剪辑</li>
+      </ul>
+    </div>
+
+    <h3>🎥 一、AI生成视频画面的工具</h3>
+    <p>AI视频生成是近两年发展最快的领域。以下是目前最实用的几款工具：</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-name">可灵AI <span class="free-tag">有免费额度</span></div>
+        <div class="tool-desc">快手出品的AI视频生成工具，中文支持最好。支持文生视频和图生视频，生成质量在国内工具中领先。每天有免费生成次数。</div>
+        <div class="tool-link">🔗 klingai.kuaishou.com</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">Pika <span class="free-tag">有免费额度</span></div>
+        <div class="tool-desc">国外热门AI视频工具，生成速度快，风格偏电影感。适合生成氛围感画面，如风景、城市、自然等。新用户有免费额度。</div>
+        <div class="tool-link">🔗 pika.art</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">Runway Gen-3 <span class="paid-tag">付费</span></div>
+        <div class="tool-desc">目前效果最好的AI视频生成工具之一，画面质量高、运动自然。适合对画面质量要求高的创作者。按使用量收费。</div>
+        <div class="tool-link">🔗 runwayml.com</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">即梦AI <span class="free-tag">免费</span></div>
+        <div class="tool-desc">字节跳动出品，和抖音深度整合。支持文生视频、图生视频、视频风格转换。抖音创作者可以优先试用。</div>
+        <div class="tool-link">🔗 jimeng.jianying.com</div>
+      </div>
+    </div>
+    <div class="tip-box info">
+      <span class="icon">💡</span>
+      <div><strong>使用建议：</strong>AI生成的视频片段通常只有3-5秒，需要多段拼接。建议每个镜头单独生成，然后在剪映中组合。生成时选择"16:9"横屏或"9:16"竖屏，和目标平台保持一致。</div>
+    </div>
+
+    <h3>🖼️ 二、AI图片素材生成</h3>
+    <p>很多短视频（如知识科普、干货分享）不需要真出镜，用AI生成的图片做画面就足够了：</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-name">Midjourney <span class="paid-tag">付费</span></div>
+        <div class="tool-desc">图片质量最高的AI绘图工具，适合生成精美场景图、产品展示图。通过Discord使用，入门稍有门槛但效果出色。</div>
+        <div class="tool-link">🔗 midjourney.com</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">DALL-E 3 <span class="free-tag">ChatGPT Plus含</span></div>
+        <div class="tool-desc">OpenAI的图片生成工具，集成在ChatGPT中。最大优势是理解中文描述能力极强，直接用中文描述你想要的画面即可。</div>
+        <div class="tool-link">🔗 chat.openai.com</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">通义万相 <span class="free-tag">免费</span></div>
+        <div class="tool-desc">阿里出品的AI绘图工具，免费使用。中文理解好，生成速度快。适合日常素材需求，质量中上。</div>
+        <div class="tool-link">🔗 tongyi.aliyun.com/wanxiang</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">即梦AI图片 <span class="free-tag">免费</span></div>
+        <div class="tool-desc">字节跳动出品，和即梦视频同平台。支持多种风格，特别擅长中国风、二次元等风格的图片生成。</div>
+        <div class="tool-link">🔗 jimeng.jianying.com</div>
+      </div>
+    </div>
+    <p>AI生成图片的提示词模板（以知识科普视频为例）：</p>
+    <div class="template-box"><button type="button" class="copy-btn" onclick="copyText(this)">📋 复制</button>请帮我生成5张适合知识科普短视频的画面描述词，主题是"[你的选题]"，要求：
+1. 风格统一：扁平插画风格 / 3D卡通风格 / 写实摄影风格（选一种）
+2. 每张图片的描述词控制在50字以内
+3. 配色方案和主题相关
+4. 适合9:16竖屏构图
+5. 不要出现文字（文字后期加）</div>
+
+    <h3>✂️ 三、剪映AI剪辑功能详解</h3>
+    <p>剪映（CapCut）是目前国内最强大的免费视频剪辑工具，它内置了大量AI功能，能极大提高剪辑效率：</p>
+    <ol class="step-list">
+      <li><strong>图文成片</strong>。把脚本文案粘贴进去，剪映会自动匹配素材、配音、字幕、背景音乐，一键生成视频。适合快速出片，但画面可能不够个性化。路径：打开剪映 → 图文成片 → 粘贴文字 → 选择风格 → 生成。</li>
+      <li><strong>智能匹配素材</strong>。剪映的素材库非常丰富，在时间线上输入关键词，AI会自动推荐相关的视频片段和图片素材，直接拖到时间线就能用。比自己找素材快10倍。</li>
+      <li><strong>AI去水印/抠像</strong>。如果你使用了网上找的素材，可以用"智能抠像"功能去掉背景，或者用"消除笔"去掉水印。操作：选中素材 → 画面 → 智能抠像。</li>
+      <li><strong>一键三连：调节+滤镜+美颜</strong>。如果有人出镜，剪映可以一键美颜、瘦脸、大眼。路径：选中视频 → 美颜美体 → 按需调节。不要调太夸张，自然最好。</li>
+      <li><strong>智能字幕样式</strong>。剪映支持一键给字幕加花字效果（高亮、弹出、渐显等），让视频更有表现力。路径：选中字幕 → 花字 → 选择模板。</li>
+    </ol>
+
+    <h3>🌈 四、转场、特效、滤镜使用</h3>
+    <p>好的转场和特效能提升视频质感，但切记：少即是多。</p>
+    <ol class="step-list">
+      <li><strong>转场推荐</strong>。最常用的转场有3种：硬切（直接切换，最干净自然）、叠化（两段画面渐变过渡，适合情绪转换）、缩放（放大或缩小进入下一个画面，适合强调重点）。避免使用花里胡哨的转场（如翻转、旋转），会让视频显得廉价。</li>
+      <li><strong>特效使用</strong>。特效主要用来强调重点。比如讲到关键数据时，可以加一个"放大镜"特效把数字放大；讲到重要观点时，加"闪烁"或"光效"吸引注意力。特效使用频率建议：60秒视频最多用2-3个特效。</li>
+      <li><strong>滤镜选择</strong>。整体色调要统一，全片只用一个滤镜。推荐使用剪映的"清新""暖色""电影"系列滤镜，透明度调到50%-70%，不要100%满上。</li>
+    </ol>
+
+    <h3>🎬 五、完整剪辑流程演示</h3>
+    <p>以下是用剪映制作一条60秒知识科普短视频的完整流程：</p>
+    <ol class="step-list">
+      <li><strong>新建项目</strong>。打开剪映，点击"开始创作"，选择画布比例为9:16（竖屏），这是抖音/快手/小红书的标准比例。</li>
+      <li><strong>导入素材</strong>。把你用AI生成的图片、视频片段全部导入到素材库。同时导入AI配音的音频文件。</li>
+      <li><strong>放置音频</strong>。先把配音音频拖到音频轨道上，这是整条视频的时间基准。播放一遍确认音频完整无误。</li>
+      <li><strong>添加字幕</strong>。使用"智能字幕" → "识别字幕"，自动为配音生成字幕。逐句检查校对，特别是专有名词和数字。然后给字幕选择一个统一样式（推荐白字黑描边）。</li>
+      <li><strong>配画面</strong>。根据脚本标注的画面要求，把对应的图片/视频素材拖到视频轨道上，调整时长使其和音频对齐。每段画面之间可以加一个"叠化"转场。关键信息处用"文字"功能添加标题和要点。</li>
+      <li><strong>添加背景音乐</strong>。在"音频" → "音乐"中选择一首轻快的背景音乐。音量调到15%-20%，确保不抢配音的风头。</li>
+      <li><strong>加封面</strong>。在视频开头单独做一帧封面画面，放上标题文字。这帧封面会自动成为平台展示的缩略图。也可以单独上传一张精心设计的封面图。</li>
+      <li><strong>导出视频</strong>。点击右上角"导出"，分辨率选1080P，帧率选30fps，格式选MP4。等待导出完成即可。</li>
+    </ol>
+    <div class="tip-box success">
+      <span class="icon">✅</span>
+      <div><strong>时间参考：</strong>以上流程，新手第一次大约需要1-2小时。熟练之后可以控制在20-30分钟。使用"图文成片"功能可以把时间压缩到10分钟以内，但画面个性化程度会降低。</div>
+    </div>
+    <div class="tip-box warning">
+      <span class="icon">🚨</span>
+      <div><strong>常见错误：</strong>不要在一段视频里混用太多风格（比如一半AI画面一半实拍），会让观众觉得割裂。选定一种风格后从头到尾保持一致。</div>
+    </div>
+  </div>
+</article>
+
+<article class="lesson" id="lesson4">
+  <div class="lesson-header">
+    <h2>📈 第4课：发布策略与涨粉技巧</h2>
+    <p class="lesson-desc">内容做好只是第一步，发布策略决定了你的视频能被多少人看到</p>
+    <span class="lesson-tag">⏱ 阅读约12分钟</span>
+  </div>
+  <div class="lesson-body">
+    <div class="goal-box">
+      <h4>🎯 学习目标</h4>
+      <ul>
+        <li>了解各主流平台的推荐算法逻辑</li>
+        <li>掌握最佳发布时间和标题封面优化技巧</li>
+        <li>学会评论区运营提高互动率</li>
+        <li>了解短视频的主流变现路径</li>
+      </ul>
+    </div>
+
+    <h3>📱 一、各平台算法解读</h3>
+    <p>不同平台的推荐算法有差异，了解算法逻辑能帮你获得更多的免费流量：</p>
+    <table class="data-table">
+      <thead><tr><th>平台</th><th>核心指标</th><th>算法特点</th><th>适合内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>抖音</strong></td><td>完播率 &gt; 点赞率 &gt; 评论率</td><td>流量池递进机制，初始推200-500人，数据好就继续推。前3秒最关键。</td><td>强节奏、强钩子、娱乐向</td></tr>
+        <tr><td><strong>快手</strong></td><td>互动率 &gt; 完播率 &gt; 关注率</td><td>"普惠"分发，给中小创作者更多机会。私域流量强，粉丝粘性高。</td><td>真实、接地气、生活化</td></tr>
+        <tr><td><strong>小红书</strong></td><td>收藏率 &gt; 点赞率 &gt; 评论率</td><td>搜索流量占比大，SEO很重要。图文和视频并重，标题含关键词很关键。</td><td>教程、攻略、好物分享</td></tr>
+        <tr><td><strong>B站</strong></td><td>完播率 &gt; 弹幕率 &gt; 一键三连</td><td>长视频有优势，用户更愿意看有深度的内容。社区氛围强。</td><td>知识、教程、深度分析</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info">
+      <span class="icon">💡</span>
+      <div><strong>新手建议：</strong>前期专注一个平台深耕，不要贪多。建议从抖音或小红书起步——抖音流量大、起号快，小红书搜索流量持久、变现能力强。等一个平台做起来了再拓展其他平台。</div>
+    </div>
+
+    <h3>⏰ 二、最佳发布时间</h3>
+    <p>发布时间会影响初始流量，选择目标用户活跃的时间段发布，能获得更好的初始数据：</p>
+    <table class="data-table">
+      <thead><tr><th>时间段</th><th>时段说明</th><th>适合人群</th></tr></thead>
+      <tbody>
+        <tr><td><strong>7:00-8:30</strong></td><td>早起通勤时段</td><td>职场类、早间资讯、正能量</td></tr>
+        <tr><td><strong>12:00-13:30</strong></td><td>午休时段</td><td>娱乐、美食、轻知识</td></tr>
+        <tr><td><strong>18:00-19:30</strong></td><td>下班通勤时段</td><td>生活、情感、好物推荐</td></tr>
+        <tr><td><strong>20:00-22:00</strong></td><td>晚间黄金时段 ⭐</td><td>几乎所有类型内容</td></tr>
+        <tr><td><strong>22:00-23:30</strong></td><td>睡前时段</td><td>情感、故事、助眠类</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info">
+      <span class="icon">💡</span>
+      <div><strong>最佳实践：</strong>晚上20:00-21:00是大多数平台的流量高峰，是最佳发布时间。建议每天固定时间发布，培养粉丝的观看习惯。如果一天发多条，间隔至少2小时。</div>
+    </div>
+
+    <h3>📝 三、标题和封面优化</h3>
+    <p>标题和封面决定了用户是否点击。花在标题和封面上的时间，应该和做内容一样多。</p>
+    <p><strong>标题优化5个公式：</strong></p>
+    <ol class="step-list">
+      <li><strong>数字+结果型</strong>："3个方法，让你的英语口语提升200%" — 数字具体，结果明确，用户一看就知道能得到什么。</li>
+      <li><strong>提问型</strong>："为什么你存不下钱？99%的人都犯了这3个错" — 引发好奇，用户想知道自己是不是那99%。</li>
+      <li><strong>对比型</strong>："月薪3千和月薪3万的人，每天下班后做的一件事不同" — 制造反差，激发点击欲。</li>
+      <li><strong>指令型</strong>："别再用XX了！这个方法好用10倍" — 直接告诉用户该怎么做，适合干货类内容。</li>
+      <li><strong>故事型</strong>："从负债10万到年入百万，我只做了这一件事" — 故事天然有吸引力，让人想看结局。</li>
+    </ol>
+    <p><strong>封面设计3个原则：</strong></p>
+    <ol class="step-list">
+      <li><strong>文字要大</strong>。封面在手机上显示很小，文字至少要占封面面积的1/4。用粗体、高对比色（白字红底、黄字黑底等），确保在小图状态下也能看清。</li>
+      <li><strong>信息要少</strong>。封面最多放10个字以内的标题，不要堆砌信息。一句话戳中痛点就够了。</li>
+      <li><strong>风格要统一</strong>。所有视频的封面保持统一的模板风格（字体、配色、排版），这样用户点进你的主页会觉得很整齐，更容易关注。</li>
+    </ol>
+
+    <h3>💬 四、评论区运营</h3>
+    <p>评论区是最容易被忽视但价值极高的运营阵地。高互动率会让算法给你推更多流量：</p>
+    <ol class="step-list">
+      <li><strong>发布后立刻自评</strong>。视频发布后的前30分钟是关键期。自己先评论一条引导性内容，比如"你们觉得哪个方法最有用？评论区告诉我"或者"需要完整教程的扣1"。这能带动其他用户参与评论。</li>
+      <li><strong>及时回复每条评论</strong>。前1小时内尽量回复每一条评论。回复要真诚、有温度，不要只回复表情包。回复越长、越有内容，算法越认为这是高质量互动。</li>
+      <li><strong>设置互动钩子</strong>。在视频结尾或文案中抛出一个问题，引导用户去评论区回答。比如"你是什么时候开始做短视频的？"这种低门槛问题，人人都能回答。</li>
+      <li><strong>善用置顶评论</strong>。把最有价值或最能引发讨论的评论置顶。可以是自己的补充说明，也可以是粉丝的精彩评论。</li>
+    </ol>
+
+    <h3>💰 五、变现路径</h3>
+    <p>做短视频的终极目标是变现。以下是4种最主流的变现方式：</p>
+    <table class="data-table">
+      <thead><tr><th>变现方式</th><th>门槛</th><th>收入参考</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>创作者基金</strong></td><td>低（1000粉丝即可）</td><td>万次播放 1-5元</td><td>平台根据播放量发放补贴，适合初期。收入不高但聊胜于无。</td></tr>
+        <tr><td><strong>橱窗带货</strong></td><td>中（1000粉丝+10条视频）</td><td>佣金比例5%-50%</td><td>在视频中挂商品链接，用户购买你赚佣金。选品很关键，选和内容相关的商品。</td></tr>
+        <tr><td><strong>广告合作</strong></td><td>高（1万粉+稳定数据）</td><td>单条500-50000元</td><td>品牌方找你做推广。粉丝量和互动数据越好，广告报价越高。</td></tr>
+        <tr><td><strong>私域引流</strong></td><td>中</td><td>上不封顶</td><td>通过短视频引流到微信/社群，销售课程、咨询、服务等。利润最高但需要后端产品。</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box success">
+      <span class="icon">✅</span>
+      <div><strong>变现建议：</strong>新手从创作者基金和橱窗带货起步，积累粉丝和经验后逐步拓展到广告合作和私域引流。不要过早接广告，粉丝量不够时接广告性价比很低，还容易掉粉。先把内容做好，粉丝涨起来，钱自然就来了。</div>
+    </div>
+  </div>
+</article>
+
+<article class="lesson" id="bonus1">
+  <div class="lesson-header" style="border-left-color:#8b5cf6">
+    <h2>🎁 附赠1：常用工具清单</h2>
+    <p class="lesson-desc">做短视频必备的AI工具、素材网站和效率工具，一站式收藏</p>
+  </div>
+  <div class="lesson-body">
+    <h3>🤖 AI工具列表</h3>
+    <table class="data-table">
+      <thead><tr><th>工具名称</th><th>用途</th><th>价格</th><th>推荐指数</th></tr></thead>
+      <tbody>
+        <tr><td>ChatGPT</td><td>选题/脚本/文案生成</td><td>免费版可用，Plus $20/月</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>Kimi（月之暗面）</td><td>选题/脚本生成，中文能力强</td><td>免费</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>豆包</td><td>选题/脚本/对话，字节跳动出品</td><td>免费</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>可灵AI</td><td>AI视频生成</td><td>有免费额度</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>即梦AI</td><td>AI视频/图片生成</td><td>免费</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>Pika</td><td>AI视频生成</td><td>有免费额度</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>Runway Gen-3</td><td>AI视频生成（质量最高）</td><td>按量付费</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>Midjourney</td><td>AI图片生成（质量最高）</td><td>$10/月起</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>DALL-E 3</td><td>AI图片生成，集成在ChatGPT中</td><td>含在ChatGPT Plus中</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>通义万相</td><td>AI图片生成</td><td>免费</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>剪映</td><td>视频剪辑+AI配音</td><td>免费</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>微软TTS</td><td>AI配音</td><td>免费</td><td>⭐⭐⭐⭐⭐</td></tr>
+        <tr><td>TTSMaker</td><td>AI配音（在线）</td><td>免费</td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td>通义听悟</td><td>语音转文字/字幕生成</td><td>免费</td><td>⭐⭐⭐⭐</td></tr>
+      </tbody>
+    </table>
+
+    <h3>📁 素材网站列表</h3>
+    <table class="data-table">
+      <thead><tr><th>网站</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>Pexels</td><td>免费视频/图片</td><td>无需注册，直接下载，可商用</td></tr>
+        <tr><td>Pixabay</td><td>免费视频/图片</td><td>素材丰富，支持中文搜索</td></tr>
+        <tr><td>Unsplash</td><td>免费高清图片</td><td>图片质量极高，适合做封面</td></tr>
+        <tr><td>Mixkit</td><td>免费视频/音乐/音效</td><td>素材质量高，可商用</td></tr>
+        <tr><td>Freesound</td><td>免费音效</td><td>海量音效素材，各种场景都有</td></tr>
+        <tr><td>Iconfont</td><td>免费图标</td><td>阿里巴巴矢量图标库，中文友好</td></tr>
+        <tr><td>Flaticon</td><td>免费图标</td><td>全球最大图标库之一</td></tr>
+        <tr><td>剪映素材库</td><td>视频/图片/音乐/音效</td><td>内置在剪映中，最方便</td></tr>
+      </tbody>
+    </table>
+
+    <h3>🔧 效率工具列表</h3>
+    <table class="data-table">
+      <thead><tr><th>工具</th><th>用途</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>Canva可画</td><td>封面设计</td><td>海量模板，拖拽式操作，零设计基础也能做出好看封面</td></tr>
+        <tr><td>稿定设计</td><td>封面/海报设计</td><td>中文模板多，有专门的短视频封面模板</td></tr>
+        <tr><td>Remove.bg</td><td>AI抠图</td><td>一键去除背景，免费使用</td></tr>
+        <tr><td>TinyPNG</td><td>图片压缩</td><td>压缩图片体积但不损失画质</td></tr>
+        <tr><td>飞书妙记</td><td>语音转文字</td><td>免费，支持上传音频文件转写</td></tr>
+        <tr><td>石墨文档</td><td>脚本协作</td><td>在线文档，方便整理脚本和素材</td></tr>
+        <tr><td>新榜/蝉妈妈</td><td>数据分析</td><td>查看热门视频、对标账号数据</td></tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+
+<article class="lesson" id="bonus2">
+  <div class="lesson-header" style="border-left-color:#8b5cf6">
+    <h2>🎁 附赠2：提示词库</h2>
+    <p class="lesson-desc">40个即用提示词模板，覆盖选题、脚本、文案、标题四大场景</p>
+  </div>
+  <div class="lesson-body">
+    <h3>🔍 选题提示词（10个）</h3>
+    <div class="prompt-section">
+      <div class="prompt-card"><span class="prompt-num">1</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">你是一个短视频选题专家。请根据"[你的领域]"，帮我找出最近一周的10个热门选题，要求适合个人创作者、制作门槛低、有变现潜力，按热度排序。</div></div>
+      <div class="prompt-card"><span class="prompt-num">2</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请分析"[某个关键词]"这个选题：目标人群画像、竞品账号分析、差异化切入点、变现路径，给出1-10分的综合评分和推荐理由。</div></div>
+      <div class="prompt-card"><span class="prompt-num">3</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">我是一个[身份]博主，粉丝画像主要是[人群描述]。请帮我规划一周7天的短视频选题，每天1个，要涵盖不同类型（知识、故事、互动、热点），附上每条视频的核心卖点。</div></div>
+      <div class="prompt-card"><span class="prompt-num">4</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请结合当前季节/节日（[具体日期]），帮我找出5个应景的短视频选题，要和[你的领域]相关，有节日氛围感，容易引发共鸣和互动。</div></div>
+      <div class="prompt-card"><span class="prompt-num">5</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">我想做一系列"[主题]"的短视频，请帮我规划10个系列选题，从入门到进阶，每集之间有逻辑递进关系，让观众有追剧的欲望。</div></div>
+      <div class="prompt-card"><span class="prompt-num">6</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请根据以下爆款视频标题：[粘贴3-5个爆款标题]，分析它们的共同特点，并帮我生成10个同类型的选题，要有爆款潜力。</div></div>
+      <div class="prompt-card"><span class="prompt-num">7</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">我刚进入[领域]赛道，请帮我分析这个赛道的：头部账号TOP5、最火的内容类型、新手容易犯的错误、以及3个蓝海细分方向。</div></div>
+      <div class="prompt-card"><span class="prompt-num">8</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我把"[宽泛选题]"拆解成10个具体的小选题，每个小选题要足够具体，能在60秒内讲清楚，并且有独立的搜索价值。</div></div>
+      <div class="prompt-card"><span class="prompt-num">9</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">我在做[领域]短视频，最近播放量下滑了。请帮我分析可能的原因，并给出5个选题方向来突破瓶颈期，要有新意且能激活老粉。</div></div>
+      <div class="prompt-card"><span class="prompt-num">10</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我做一次"[竞品账号名]"的内容分析：最近30天最火的5条视频是什么选题、什么形式、什么钩子开头？我如何做出差异化？</div></div>
+    </div>
+
+    <h3>✍️ 脚本提示词（10个）</h3>
+    <div class="prompt-section">
+      <div class="prompt-card"><span class="prompt-num">1</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条60秒的口播脚本，主题是"[选题]"，目标人群是[人群]。要求：开头3秒有强力钩子，正文3个要点，结尾有关注引导，语气口语化，每段标注预估时长。</div></div>
+      <div class="prompt-card"><span class="prompt-num">2</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条产品种草脚本，产品是[产品名]，卖点是[卖点]，目标用户是[用户画像]。要求有痛点切入、使用体验、效果对比，时长控制在45秒内。</div></div>
+      <div class="prompt-card"><span class="prompt-num">3</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条知识科普脚本，解释"[概念/知识点]"。要求：用类比的方式让小白秒懂，举一个贴近生活的例子，结尾总结成一句金句。时长60秒。</div></div>
+      <div class="prompt-card"><span class="prompt-num">4</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我把这段文字改成适合短视频口播的脚本：[粘贴原文]。要求：口语化、短句为主、加入钩子开头和互动引导，控制在[时长]秒内。</div></div>
+      <div class="prompt-card"><span class="prompt-num">5</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条对比测评脚本，对比[A]和[B]。从外观、功能、价格三个维度对比，给出明确推荐结论，时长60秒。语气要客观公正但有个人倾向。</div></div>
+      <div class="prompt-card"><span class="prompt-num">6</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条故事型脚本，主题是"[主题]"。要有起承转合的叙事结构，开头设置悬念，中间有反转，结尾有金句感悟。时长90秒，标注每段情绪。</div></div>
+      <div class="prompt-card"><span class="prompt-num">7</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我优化这条脚本，让它更有吸引力：[粘贴脚本]。重点优化：开头钩子要更强、中间节奏要紧凑、结尾要有明确的行动号召。</div></div>
+      <div class="prompt-card"><span class="prompt-num">8</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条干货清单脚本，主题是"[领域]必备的N个[工具/技巧/网站]"。每个要点一句话说明+一个核心亮点，节奏要快、信息密度要高。时长60秒。</div></div>
+      <div class="prompt-card"><span class="prompt-num">9</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条互动型脚本，主题是"[话题]"。要求：开头抛出一个有争议的观点，中间给出论据，结尾让观众站队（同意还是不同意）。时长45秒。</div></div>
+      <div class="prompt-card"><span class="prompt-num">10</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条vlog风格的脚本，记录[事件/体验]。要有第一人称叙事感，加入心理活动描写，有自然的口语过渡。标注需要什么画面，时长2分钟。</div></div>
+    </div>
+
+    <h3>📝 文案提示词（10个）</h3>
+    <div class="prompt-section">
+      <div class="prompt-card"><span class="prompt-num">1</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条短视频发布文案（即视频描述区的文字），视频主题是"[主题]"。要求：包含2-3个关键话题标签，有一句引导互动的话，整体简洁有力，不超过200字。</div></div>
+      <div class="prompt-card"><span class="prompt-num">2</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写5条不同的短视频开头文案（前3秒文字），主题是"[选题]"。要求：每条都能制造好奇/悬念/冲突，让人忍不住继续看下去。</div></div>
+      <div class="prompt-card"><span class="prompt-num">3</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条朋友圈转发文案，用来推广我的短视频。视频内容是"[概述]"。要求：不像广告，像朋友分享，有好奇心钩子，附带引导看视频。</div></div>
+      <div class="prompt-card"><span class="prompt-num">4</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写5种不同风格的结尾文案：①引导关注 ②引导评论 ③引导收藏 ④引导转发 ⑤预告下期。主题是"[领域]"，语气亲切自然不油腻。</div></div>
+      <div class="prompt-card"><span class="prompt-num">5</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我改写这条文案，让它更有吸引力：[粘贴原文]。要求保留核心信息，但加入情绪共鸣点和行动号召，适合[平台]的调性。</div></div>
+      <div class="prompt-card"><span class="prompt-num">6</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写10条适合在评论区发的自评文案，用来引导粉丝互动。我的账号是做[领域]的，语气要像朋友聊天，每条不超过30字。</div></div>
+      <div class="prompt-card"><span class="prompt-num">7</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条置顶评论文案，内容是：引导新粉丝看我最火的3条视频，附上简短描述。语气轻松有趣，要让人想点进去看。</div></div>
+      <div class="prompt-card"><span class="prompt-num">8</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条商品橱窗的推荐文案，商品是[商品名]，卖点是[卖点]。要求：不像硬广，像真实使用后的推荐，有具体使用场景和感受，50字以内。</div></div>
+      <div class="prompt-card"><span class="prompt-num">9</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条个人简介文案，用于[平台]主页。要求：一句话说清楚我是谁、我做什么、关注我能得到什么。不超过50字，有记忆点。</div></div>
+      <div class="prompt-card"><span class="prompt-num">10</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我写一条涨粉文案，用于[平台]主页的"关于"或"置顶"位置。要突出我的差异化价值，用数据或成果背书，有明确的关注理由。不超过100字。</div></div>
+    </div>
+
+    <h3>🏷️ 标题提示词（10个）</h3>
+    <div class="prompt-section">
+      <div class="prompt-card"><span class="prompt-num">1</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我生成10个短视频标题，主题是"[选题]"。要求：使用数字+结果公式，每个标题不超过20字，要有吸引力让人想点击，适合[平台]风格。</div></div>
+      <div class="prompt-card"><span class="prompt-num">2</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我用"提问式"改写这个标题：[原标题]。要求：问题要有共鸣感，能引发好奇，让人想在视频里找答案。给出5个版本。</div></div>
+      <div class="prompt-card"><span class="prompt-num">3</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我用"对比反差"公式生成5个标题，主题是"[选题]"。要求：制造前后对比、高低对比或认知反差，让人产生"怎么做到的"的好奇心。</div></div>
+      <div class="prompt-card"><span class="prompt-num">4</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我用"指令型"公式生成5个标题，主题是"[选题]"。要求：用"别再…了""停止…"等指令句式，给出更好的替代方案，制造紧迫感。</div></div>
+      <div class="prompt-card"><span class="prompt-num">5</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我优化这个标题，让它更适合[平台]：[原标题]。分析原标题的问题，给出5个优化版本，每个版本附上优化理由。</div></div>
+      <div class="prompt-card"><span class="prompt-num">6</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我生成5个适合小红书的标题，主题是"[选题]"。要求：标题要包含核心关键词（利于搜索），带emoji表情，使用小红书常见的夸张但不做作的语气。</div></div>
+      <div class="prompt-card"><span class="prompt-num">7</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我生成5个适合抖音的标题，主题是"[选题]"。要求：简短有力（15字以内），前5个字就能抓住注意力，适合竖屏封面展示。</div></div>
+      <div class="prompt-card"><span class="prompt-num">8</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我生成5个适合B站的标题，主题是"[选题]"。要求：B站用户喜欢有深度但有趣的标题，可以长一点（20-30字），有信息量，不要太标题党。</div></div>
+      <div class="prompt-card"><span class="prompt-num">9</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">我做了一条关于"[内容概述]"的视频，请帮我生成适合4个平台（抖音、快手、小红书、B站）的标题各2个，要符合各平台的调性和用户习惯。</div></div>
+      <div class="prompt-card"><span class="prompt-num">10</span><button type="button" class="copy-prompt" onclick="copyPrompt(this)">复制</button><div class="prompt-text">请帮我分析这5个爆款标题的成功因素：[粘贴5个标题]。总结它们的共同公式，然后用这个公式帮我生成10个新标题，主题是"[你的领域]"。</div></div>
+    </div>
+  </div>
+</article>
+
+</div><!-- container end -->
+
+<!-- Sidebar Progress -->
+<div class="sidebar-progress" id="sidebarProgress">
+  <div class="sidebar-dot" data-label="第1课：选题脚本" data-target="lesson1" onclick="scrollToLesson(this)"></div>
+  <div class="sidebar-dot" data-label="第2课：配音字幕" data-target="lesson2" onclick="scrollToLesson(this)"></div>
+  <div class="sidebar-dot" data-label="第3课：画面剪辑" data-target="lesson3" onclick="scrollToLesson(this)"></div>
+  <div class="sidebar-dot" data-label="第4课：发布涨粉" data-target="lesson4" onclick="scrollToLesson(this)"></div>
+  <div class="sidebar-dot" data-label="附赠：工具清单" data-target="bonus1" onclick="scrollToLesson(this)"></div>
+  <div class="sidebar-dot" data-label="附赠：提示词库" data-target="bonus2" onclick="scrollToLesson(this)"></div>
+</div>
+
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="toast" id="toast"></div>
+
+<footer class="footer">
+  <h3>🎬 AI短视频全流程教程</h3>
+  <p>本教程内容基于当前主流AI工具编写，工具功能和价格可能随时更新，请以官方最新信息为准。</p>
+  <p>教程中的提示词模板均可自由使用和修改，建议根据自己的实际情况调整后再使用。</p>
+  <p>祝你创作顺利，早日成为短视频达人！ 🚀</p>
+  <div class="copy-info">© 2025 AI短视频全流程教程 · 仅供个人学习使用<br>最后更新：2025年6月</div>
+</footer>
+
+<script>
+function showToast(msg,duration){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.classList.remove("show")},duration||2000);
+}
+
+function copyText(btn){
+  var box=btn.parentElement;
+  var text=box.textContent.replace(/📋 复制/g,"").trim();
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){showToast("✅ 已复制到剪贴板")});
+  }else{
+    var ta=document.createElement("textarea");ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand("copy");
+    document.body.removeChild(ta);showToast("✅ 已复制到剪贴板");
+  }
+}
+
+function copyPrompt(btn){
+  var card=btn.parentElement;
+  var text=card.querySelector(".prompt-text").textContent.trim();
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){showToast("✅ 提示词已复制")});
+  }else{
+    var ta=document.createElement("textarea");ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand("copy");
+    document.body.removeChild(ta);showToast("✅ 提示词已复制");
+  }
+}
+
+var lessons=["lesson1","lesson2","lesson3","lesson4","bonus1","bonus2"];
+var readState=JSON.parse(localStorage.getItem("ai_video_course_progress")||"{}");
+
+function saveProgress(){
+  localStorage.setItem("ai_video_course_progress",JSON.stringify(readState));
+}
+
+function updateProgressBar(){
+  var total=lessons.length,done=0;
+  lessons.forEach(function(id){if(readState[id])done++});
+  var pct=Math.round(done/total*100);
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("progressPct").textContent=pct+"%";
+  lessons.forEach(function(id,i){
+    var dot=document.querySelectorAll(".sidebar-dot")[i];
+    if(!dot)return;
+    if(readState[id]){dot.classList.add("completed")}else{dot.classList.remove("completed")}
+  });
+}
+
+var observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      var id=entry.target.id;
+      if(lessons.indexOf(id)!==-1){
+        readState[id]=true;saveProgress();updateProgressBar();
+        document.querySelectorAll(".sidebar-dot").forEach(function(d){
+          if(d.dataset.target===id){d.classList.add("active")}else{d.classList.remove("active")}
+        });
+      }
+    }
+  });
+},{threshold:0.3});
+
+lessons.forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)observer.observe(el);
+});
+
+function scrollToLesson(dot){
+  var target=document.getElementById(dot.dataset.target);
+  if(target)target.scrollIntoView({behavior:"smooth"});
+}
+
+window.addEventListener("scroll",function(){
+  var btn=document.getElementById("backTop");
+  if(window.scrollY>400){btn.classList.add("show")}else{btn.classList.remove("show")}
+});
+
+updateProgressBar();
+</script>
+</body>
+</html>

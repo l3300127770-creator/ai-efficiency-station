@@ -1,0 +1,745 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>推荐好物 - AI效率站</title>
+  <meta property="og:title" content="推荐好物 - AI效率站">
+  <meta property="og:description" content="亲测好用的流量卡、云服务、AI工具和生产力设备推荐。">
+  <meta property="og:type" content="website">
+  <meta name="description" content="亲测好用的流量卡、云服务、AI工具和生产力设备推荐，附真实体验和对比。">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .recommend-hero {
+      background: linear-gradient(135deg, #fef3c7 0%, #ecfdf5 50%, #dbeafe 100%);
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+    .recommend-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: var(--space-sm); }
+    .category-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .recommend-card {
+      display: flex;
+      gap: var(--space-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .recommend-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    .recommend-icon {
+      width: 80px; height: 80px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+    .recommend-info { flex: 1; }
+    .recommend-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: var(--space-xs); }
+    .recommend-info .desc { font-size: .9rem; color: var(--text-secondary); margin-bottom: var(--space-sm); }
+    .recommend-tags { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-sm); }
+    .recommend-pros { font-size: .85rem; color: var(--text-secondary); }
+    .recommend-pros strong { color: var(--success); }
+    .recommend-cons strong { color: var(--danger); }
+    .recommend-action { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: var(--space-sm); }
+    .recommend-price { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    @media (max-width: 640px) {
+      .recommend-card { flex-direction: column; }
+      .recommend-action { flex-direction: row; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../articles/ai-knowledge.html">AI知识</a>
+      <a href="../pages/shop.html">商店</a>
+      <a href="../pages/recommend.html" class="active">推荐好物</a>
+      <a href="../pages/donate.html">打赏支持</a>
+      <a href="../pages/about.html">关于</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="recommend-hero">
+  <div class="container">
+    <h1>🌟 推荐好物</h1>
+    <p>亲测好用的产品推荐，帮助你省钱省时间。部分链接含推广佣金，感谢支持。</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- 免责披露 -->
+    <div class="disclosure" style="margin-bottom:var(--space-xl);">
+      <strong>📢 佣金披露：</strong>本页部分链接为推广链接，如果你通过这些链接购买，本站会获得少量佣金，但这<strong>不会增加你的费用</strong>。所有推荐均基于真实使用体验，绝不推荐没用过的产品。
+    </div>
+
+    <!-- ===== 店铺置顶 ===== -->
+    <div style="background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:var(--radius-lg);padding:var(--space-xl);margin-bottom:var(--space-2xl);text-align:center;color:#fff;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,.08);border-radius:50%;"></div>
+      <div style="position:absolute;bottom:-60px;left:-30px;width:160px;height:160px;background:rgba(255,255,255,.06);border-radius:50%;"></div>
+      <div style="position:relative;z-index:1;">
+        <div style="font-size:2.5rem;margin-bottom:var(--space-sm);">🏪</div>
+        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:var(--space-sm);color:#fff;">我的流量卡 & 宽带店铺</h2>
+        <p style="font-size:1rem;opacity:.9;margin-bottom:var(--space-lg);max-width:500px;margin-left:auto;margin-right:auto;">全部在售套餐一站查看，流量卡、宽带、融合套餐应有尽有</p>
+        <a href="https://ym.ksjhaoka.com/?s=zC1s3YFx57367" class="btn" target="_blank" rel="noopener noreferrer" style="background:#fff;color:#2563eb;font-weight:700;padding:14px 40px;font-size:1.05rem;border-radius:50px;box-shadow:0 4px 20px rgba(0,0,0,.2);">
+          🚀 进入店铺，查看全部套餐
+        </a>
+        <div style="margin-top:var(--space-md);font-size:.82rem;opacity:.7;">电信 · 移动 · 广电 · 多省可办 · 官方正品</div>
+      </div>
+    </div>
+
+    <!-- ===== 流量卡 ===== -->
+    <h2 class="category-title">📶 精品流量卡推荐</h2>
+    <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:var(--space-lg);text-align:center;">全部真实在售，点击即可跳转办理页面</p>
+
+    <!-- 精品推荐卡 -->
+    <div class="recommend-card" style="border:2px solid var(--primary);">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">⭐</div>
+      <div class="recommend-info">
+        <h3>电信粤晴卡 · 29元235G+100分钟</h3>
+        <p class="desc">235G超大流量+100分钟通话，广东省专属。性价比极高，适合重度用户。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">广东专属</span>
+          <span class="card-tag">235G</span>
+          <span class="card-tag">100分钟</span>
+          <span class="card-tag tag-hot">🔥 精品</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>流量超大、含通话、月租仅29元</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限广东省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥29/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342590" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);">📶</div>
+      <div class="recommend-info">
+        <h3>电信青漓卡 · 29元250G+300分钟</h3>
+        <p class="desc">250G全国流量+300分钟通话，广西专属。通话流量双高配。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">广西专属</span>
+          <span class="card-tag">250G</span>
+          <span class="card-tag">300分钟</span>
+          <span class="card-tag tag-hot">🔥 超值</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>流量最大、通话最多、月租最低</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限广西省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥29/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342582" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">📶</div>
+      <div class="recommend-info">
+        <h3>电信粤旺卡 · 39元205G+100分钟</h3>
+        <p class="desc">205G全国流量+100分钟通话，广东专属。大流量稳定之选。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">广东专属</span>
+          <span class="card-tag">205G</span>
+          <span class="card-tag">100分钟</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>全国流量、含通话、电信网络稳定</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限广东省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥39/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342584" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);">📶</div>
+      <div class="recommend-info">
+        <h3>电信云梦卡 · 39元185G长期套餐</h3>
+        <p class="desc">185G全国流量，长期套餐不涨价，湖北省专属。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">湖北专属</span>
+          <span class="card-tag">185G</span>
+          <span class="card-tag">长期套餐</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>长期套餐、价格稳定、不用换卡</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限湖北省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥39/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342583" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);">📶</div>
+      <div class="recommend-info">
+        <h3>电信东沂卡 · 39元205G长期套餐</h3>
+        <p class="desc">205G全国流量，长期套餐，山东省专属。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">山东专属</span>
+          <span class="card-tag">205G</span>
+          <span class="card-tag">长期套餐</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>大流量、长期稳定、电信信号好</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限山东省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥39/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342580" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);">📶</div>
+      <div class="recommend-info">
+        <h3>广电极光卡 · 41元220G全国通用</h3>
+        <p class="desc">220G通用流量，可办副卡，全国可发，不限省份。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">全国可办</span>
+          <span class="card-tag">220G</span>
+          <span class="card-tag">可办副卡</span>
+          <span class="card-tag tag-hot">🔥 全国</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>全国可办、可办副卡、不限地区</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>广电网络覆盖在部分偏远地区可能较弱</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥41/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342574" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fef2f2,#fecaca);">📶</div>
+      <div class="recommend-info">
+        <h3>电信梵净卡 · 39元185G+200分钟</h3>
+        <p class="desc">185G全国流量+200分钟通话，贵州专属。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">贵州专属</span>
+          <span class="card-tag">185G</span>
+          <span class="card-tag">200分钟</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>流量+通话组合、电信信号稳定</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限贵州省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥39/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342565" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#dbeafe,#93c5fd);">📶</div>
+      <div class="recommend-info">
+        <h3>电信百川卡 · 29元205G+300分钟</h3>
+        <p class="desc">205G全国流量+300分钟通话，浙江省专属。高通话流量组合。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">浙江专属</span>
+          <span class="card-tag">205G</span>
+          <span class="card-tag">300分钟</span>
+          <span class="card-tag tag-new">✨ 新增</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>通话多、流量大、月租仅29元</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限浙江省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥29/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342614" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ede9fe,#a78bfa);">📶</div>
+      <div class="recommend-info">
+        <h3>电信良渚卡 · 39元205G+300分钟</h3>
+        <p class="desc">205G全国流量+300分钟通话，浙江省专属。电信品质网络。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">浙江专属</span>
+          <span class="card-tag">205G</span>
+          <span class="card-tag">300分钟</span>
+          <span class="card-tag tag-new">✨ 新增</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>通话+流量均衡、电信网络稳定</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限浙江省用户办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥39/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342686" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <!-- 流量卡对比表 -->
+    <div style="margin:var(--space-xl) 0;overflow-x:auto;">
+      <h3 style="margin-bottom:var(--space-md);font-size:1.1rem;">📊 流量卡对比表</h3>
+      <table class="compare-table">
+        <tr>
+          <th>套餐</th>
+          <th>月租</th>
+          <th>流量</th>
+          <th>通话</th>
+          <th>区域</th>
+          <th>推荐</th>
+        </tr>
+        <tr>
+          <td>电信粤晴卡</td>
+          <td>¥29</td>
+          <td>235G</td>
+          <td>100分钟</td>
+          <td>广东</td>
+          <td><span class="badge-best">精品</span></td>
+        </tr>
+        <tr>
+          <td>电信青漓卡</td>
+          <td>¥29</td>
+          <td>250G</td>
+          <td>300分钟</td>
+          <td>广西</td>
+          <td><span class="badge-best">精品</span></td>
+        </tr>
+        <tr>
+          <td>电信粤旺卡</td>
+          <td>¥39</td>
+          <td>205G</td>
+          <td>100分钟</td>
+          <td>广东</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>电信云梦卡</td>
+          <td>¥39</td>
+          <td>185G</td>
+          <td>—</td>
+          <td>湖北</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>电信东沂卡</td>
+          <td>¥39</td>
+          <td>205G</td>
+          <td>—</td>
+          <td>山东</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>广电极光卡</td>
+          <td>¥41</td>
+          <td>220G</td>
+          <td>—</td>
+          <td>全国</td>
+          <td><span class="badge-best">全国</span></td>
+        </tr>
+        <tr>
+          <td>电信梵净卡</td>
+          <td>¥39</td>
+          <td>185G</td>
+          <td>200分钟</td>
+          <td>贵州</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>电信百川卡</td>
+          <td>¥29</td>
+          <td>205G</td>
+          <td>300分钟</td>
+          <td>浙江</td>
+          <td><span class="badge-best">新增</span></td>
+        </tr>
+        <tr>
+          <td>电信良渚卡</td>
+          <td>¥39</td>
+          <td>205G</td>
+          <td>300分钟</td>
+          <td>浙江</td>
+          <td><span class="badge-best">新增</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ===== 宽带专区 ===== -->
+    <h2 class="category-title" style="margin-top:var(--space-2xl);">🏠 宽带专区</h2>
+    <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:var(--space-lg);text-align:center;">家庭宽带/融合套餐，价格实惠，点击即可跳转办理</p>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">🏠</div>
+      <div class="recommend-info">
+        <h3>郑州移动融合宽带 · 100元/月</h3>
+        <p class="desc">1000Mbps极速宽带+150G流量+2000分钟通话，郑州专属融合套餐。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">郑州专属</span>
+          <span class="card-tag">1000Mbps</span>
+          <span class="card-tag">含流量+通话</span>
+          <span class="card-tag tag-hot">🔥 超值</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>宽带+手机+通话三合一，性价比极高</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限郑州地区办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥100/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342663" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);">🏠</div>
+      <div class="recommend-info">
+        <h3>东莞移动宽带 · 99元/月</h3>
+        <p class="desc">1000Mbps宽带+180G流量+600分钟通话，东莞专属融合套餐。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">东莞专属</span>
+          <span class="card-tag">1000Mbps</span>
+          <span class="card-tag">含流量+通话</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>千兆宽带+大流量+通话，全家够用</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限东莞地区办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥99/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342658" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);">🏠</div>
+      <div class="recommend-info">
+        <h3>陕西移动宽带 · 89元/月</h3>
+        <p class="desc">1000Mbps宽带+100G流量+500分钟通话，陕西专属融合套餐。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">陕西专属</span>
+          <span class="card-tag">1000Mbps</span>
+          <span class="card-tag">含流量+通话</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>月租最低的千兆融合套餐</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限陕西地区办理</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥89/月</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342653" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">🏠</div>
+      <div class="recommend-info">
+        <h3>湖南移动宽带 · 580元/年</h3>
+        <p class="desc">500Mbps宽带，湖南专属包年套餐，算下来约48元/月。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">湖南专属</span>
+          <span class="card-tag">500Mbps</span>
+          <span class="card-tag">包年优惠</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>包年便宜、月均不到50元</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限湖南地区、需一次性付清</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥580/年</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342670" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);">🏠</div>
+      <div class="recommend-info">
+        <h3>上海移动宽带 · 310元/年</h3>
+        <p class="desc">300Mbps宽带，上海专属包年套餐，算下来约26元/月。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">上海专属</span>
+          <span class="card-tag">300Mbps</span>
+          <span class="card-tag">包年优惠</span>
+          <span class="card-tag tag-hot">🔥 最便宜</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>月均仅26元，上海最划算宽带</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限上海地区、需一次性付清</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥310/年</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342671" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);">🏠</div>
+      <div class="recommend-info">
+        <h3>浙江宽带 · 500元/2年</h3>
+        <p class="desc">浙江专属宽带套餐，500元包2年，算下来约21元/月。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">浙江专属</span>
+          <span class="card-tag">2年套餐</span>
+          <span class="card-tag tag-hot">🔥 最划算</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>月均仅21元，长期最省钱</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅限浙江地区、需一次性付清</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">¥500/2年</div>
+        <a href="https://ym.ksjhaoka.com/show?s=zC1s3YFx57367&id=82342277" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">立即办理 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <!-- 宽带对比表 -->
+    <div style="margin:var(--space-xl) 0;overflow-x:auto;">
+      <h3 style="margin-bottom:var(--space-md);font-size:1.1rem;">📊 宽带对比表</h3>
+      <table class="compare-table">
+        <tr>
+          <th>套餐</th>
+          <th>价格</th>
+          <th>速率</th>
+          <th>含流量</th>
+          <th>含通话</th>
+          <th>区域</th>
+        </tr>
+        <tr>
+          <td>郑州融合宽带</td>
+          <td>¥100/月</td>
+          <td>1000Mbps</td>
+          <td>150G</td>
+          <td>2000分钟</td>
+          <td>郑州</td>
+        </tr>
+        <tr>
+          <td>东莞移动宽带</td>
+          <td>¥99/月</td>
+          <td>1000Mbps</td>
+          <td>180G</td>
+          <td>600分钟</td>
+          <td>东莞</td>
+        </tr>
+        <tr>
+          <td>陕西移动宽带</td>
+          <td>¥89/月</td>
+          <td>1000Mbps</td>
+          <td>100G</td>
+          <td>500分钟</td>
+          <td>陕西</td>
+        </tr>
+        <tr>
+          <td>湖南移动宽带</td>
+          <td>¥580/年</td>
+          <td>500Mbps</td>
+          <td>—</td>
+          <td>—</td>
+          <td>湖南</td>
+        </tr>
+        <tr>
+          <td>上海移动宽带</td>
+          <td>¥310/年</td>
+          <td>300Mbps</td>
+          <td>—</td>
+          <td>—</td>
+          <td>上海</td>
+        </tr>
+        <tr>
+          <td>浙江宽带</td>
+          <td>¥500/2年</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>浙江</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ===== 云服务 ===== -->
+    <h2 class="category-title" style="margin-top:var(--space-2xl);">☁️ 云服务与主机</h2>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">☁️</div>
+      <div class="recommend-info">
+        <h3>Cloudflare Pages</h3>
+        <p class="desc">免费静态网站托管，全球CDN，自动SSL，适合个人博客和作品集。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">免费</span>
+          <span class="card-tag">全球CDN</span>
+          <span class="card-tag tag-new">✨ 首选</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>完全免费、速度快、SSL自动、构建自动</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>仅支持静态站，需自有域名</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">免费</div>
+        <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="showToast('推广链接暂未开放，敬请期待')">前往注册 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);">🚀</div>
+      <div class="recommend-info">
+        <h3>Vercel</h3>
+        <p class="desc">前端部署平台，支持Next.js等框架，免费额度够个人使用。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">免费</span>
+          <span class="card-tag">前端友好</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>部署简单、预览分支、分析面板</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>国内访问偶有波动</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">免费</div>
+        <a href="javascript:void(0)" class="btn btn-outline btn-sm" onclick="showToast('推广链接暂未开放，敬请期待')">前往注册 →</a>
+      </div>
+    </div>
+
+    <!-- ===== AI工具 ===== -->
+    <h2 class="category-title" style="margin-top:var(--space-2xl);">🤖 AI工具推荐</h2>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);">💬</div>
+      <div class="recommend-info">
+        <h3>ChatGPT Plus</h3>
+        <p class="desc">最强AI对话工具，写作、编程、分析、画图全能。Plus版使用GPT-4o。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">付费</span>
+          <span class="card-tag">全能</span>
+          <span class="card-tag tag-hot">🔥 推荐</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>能力最强、生态最好、插件丰富</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>$20/月，需海外支付</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">$20/月</div>
+        <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="showToast('推广链接暂未开放，敬请期待')">前往使用 →</a>
+        <span style="font-size:.75rem;color:var(--text-light);">推广链接</span>
+      </div>
+    </div>
+
+    <div class="recommend-card">
+      <div class="recommend-icon" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);">📝</div>
+      <div class="recommend-info">
+        <h3>Notion</h3>
+        <p class="desc">全能笔记和项目管理工具，支持AI辅助写作和整理。</p>
+        <div class="recommend-tags">
+          <span class="card-tag">免费+付费</span>
+          <span class="card-tag">个人管理</span>
+        </div>
+        <div class="recommend-pros">
+          <p><strong>✅ 优点：</strong>免费够用、模板丰富、AI集成</p>
+          <p class="recommend-cons"><strong>⚠️ 注意：</strong>国内访问需稳定网络</p>
+        </div>
+      </div>
+      <div class="recommend-action">
+        <div class="recommend-price">免费起</div>
+        <a href="javascript:void(0)" class="btn btn-outline btn-sm" onclick="showToast('推广链接暂未开放，敬请期待')">前往使用 →</a>
+      </div>
+    </div>
+
+    <!-- 再次披露 -->
+    <div class="disclosure" style="margin-top:var(--space-xl);">
+      <strong>📢 再次说明：</strong>以上推荐均基于个人真实使用体验。推广链接不会增加你的任何费用，感谢你的支持！如有疑问请联系 1683303069@qq.com。
+    </div>
+
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../articles/ai-knowledge.html">AI知识</a>
+        <a href="../pages/shop.html">商店</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="disclaimer.html">免责声明</a>
+        <a href="privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利 · 部分链接含推广佣金</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>
+
+

@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026年AI工具完整指南：小白入门必看 - AI效率站</title>
+  <meta property="og:title" content="2026年AI工具完整指南：小白入门必看">
+  <meta property="og:description" content="从零开始了解AI，手把手教你选对工具、用对场景，省下90%摸索时间。">
+  <meta property="og:type" content="article">
+  <meta name="description" content="从零开始了解AI，手把手教你选对工具、用对场景，省下90%摸索时间。">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .article-layout {
+      display: flex;
+      gap: var(--space-xl);
+      align-items: flex-start;
+    }
+    .article-main { flex: 1; min-width: 0; }
+    .article-sidebar { width: 240px; flex-shrink: 0; }
+    .article-header {
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--border);
+    }
+    .article-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: var(--space-md);
+    }
+    .article-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: .88rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+    .article-info .author {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-info .avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+    }
+    .article-tags { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); }
+    .reading-bar {
+      position: fixed;
+      top: 64px; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), #7c3aed);
+      z-index: 99;
+      transition: width .1s;
+    }
+    /* 文末互动区 */
+    .article-footer {
+      margin-top: var(--space-2xl);
+      padding-top: var(--space-xl);
+      border-top: 2px solid var(--border);
+    }
+    .share-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .share-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: .85rem;
+      color: var(--text-secondary);
+      background: #fff;
+      transition: all .2s;
+    }
+    .share-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+    @media (max-width: 768px) {
+      .article-sidebar { display: none; }
+      .related-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 阅读进度条 -->
+<div class="reading-bar" id="readingBar"></div>
+
+<!-- ==================== 导航栏 ==================== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../articles/ai-knowledge.html" class="active">AI知识</a>
+      <a href="../pages/shop.html">商店</a>
+      <a href="../pages/recommend.html">推荐好物</a>
+      <a href="../pages/donate.html">打赏支持</a>
+      <a href="../pages/about.html">关于</a>
+      <a href="../pages/shop.html" class="btn btn-primary btn-sm nav-cta">免费资源</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- ==================== 文章主体 ==================== -->
+<div class="container" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+  <!-- 面包屑 -->
+  <div class="breadcrumb">
+    <a href="../index.html">首页</a> / <a href="../articles/ai-knowledge.html">AI知识</a> / <span>2026年AI工具完整指南</span>
+  </div>
+
+  <div class="article-layout">
+    <!-- 左侧正文 -->
+    <div class="article-main">
+      <!-- 文章头部 -->
+      <div class="article-header">
+        <h1>2026年AI工具完整指南：小白入门必看</h1>
+        <div class="article-info">
+          <div class="author">
+            <div class="avatar">🤖</div>
+            <span>AI效率站</span>
+          </div>
+          <span>📅 2026-06-19</span>
+          <span>⏱ 阅读约8分钟</span>
+          
+        </div>
+        <div class="article-tags">
+          <span class="card-tag">AI入门</span>
+          <span class="card-tag">工具推荐</span>
+          <span class="card-tag">新手指南</span>
+        </div>
+      </div>
+
+      <!-- 文章正文 -->
+      <div class="article-content">
+        <p>如果你是AI小白，不知道从哪开始、用什么工具、怎么用，这篇文章就是为你写的。<strong>读完这篇，你至少能省下90%的摸索时间。</strong></p>
+
+        <div class="tip-box">
+          <div class="tip-title">💡 读前须知</div>
+          <p style="margin:0;">本文面向零基础用户，不需要任何技术背景。如果你已经有基础，可以直接跳到感兴趣的章节。</p>
+        </div>
+
+        <h2 id="what-is-ai">一、AI到底是什么？</h2>
+        <p>简单来说，AI就是一个"超级助手"。它能帮你写文章、做图片、分析数据、回答问题，甚至帮你写代码。你不需要懂技术，只需要学会"怎么跟它说话"。</p>
+        <p>2026年的AI已经非常成熟，普通人用好AI，效率能提升3-10倍。</p>
+
+        <h2 id="tools-overview">二、最值得用的AI工具清单</h2>
+        <p>下面是我亲测好用、适合普通人的AI工具，按场景分类：</p>
+
+        <h3 id="tool-chat">2.1 AI对话工具</h3>
+        <ul>
+          <li><strong>ChatGPT</strong>：最全能的AI助手，写作、翻译、编程、分析都能做</li>
+          <li><strong>Claude</strong>：长文理解和创作能力出色，适合写长文</li>
+          <li><strong>文心一言</strong>：国产首选，中文理解能力强</li>
+          <li><strong>Kimi</strong>：支持超长文本，适合读论文和长文档</li>
+        </ul>
+
+        <h3 id="tool-image">2.2 AI绘画工具</h3>
+        <ul>
+          <li><strong>Midjourney</strong>：画质最高，适合做头像、插画、海报</li>
+          <li><strong>DALL-E 3</strong>：ChatGPT内置，直接对话生成图片</li>
+          <li><strong>Stable Diffusion</strong>：免费开源，本地运行，可玩性最高</li>
+        </ul>
+
+        <h3 id="tool-video">2.3 AI视频工具</h3>
+        <ul>
+          <li><strong>剪映</strong>：AI字幕、AI配音、智能剪辑，免费好用</li>
+          <li><strong>Runway</strong>：AI生成视频片段，效果惊艳</li>
+          <li><strong>Suno</strong>：AI生成音乐，做BGM首选</li>
+        </ul>
+
+        <!-- 文中广告位 -->
+        <div class="ad-banner" style="margin:var(--space-xl) 0;">
+          <div class="ad-label">📢 推荐好物</div>
+          <h3 style="font-size:1.1rem;margin-bottom:var(--space-sm);">搭配29元235G精品流量卡，随时随地用AI</h3>
+          <p style="color:var(--text-secondary);font-size:.85rem;margin-bottom:var(--space-md);">全国通用 · 无合约 · 适合学生和上班族</p>
+          <a href="../pages/recommend.html" class="btn btn-accent btn-sm">查看详情 →</a>
+        </div>
+
+        <h2 id="how-to-start">三、新手怎么开始？</h2>
+        <p>按照这个顺序来，一周就能上手：</p>
+        <ol>
+          <li><strong>第1天</strong>：注册ChatGPT或文心一言，随便聊聊，感受AI能力</li>
+          <li><strong>第2-3天</strong>：用AI写一篇文章或回复，体验提效</li>
+          <li><strong>第4-5天</strong>：试试AI画图，生成一张头像或海报</li>
+          <li><strong>第6-7天</strong>：用AI帮你完成一个真实任务（写邮件、做方案等）</li>
+        </ol>
+
+        <div class="tip-box">
+          <div class="tip-title">🔑 核心技巧</div>
+          <p style="margin:0;">跟AI对话时，<strong>说清楚你的需求、背景和期望</strong>，效果会好10倍。比如不要只说"帮我写文章"，而要说"帮我写一篇800字的公众号文章，主题是XX，风格轻松幽默，面向25-35岁上班族"。</p>
+        </div>
+
+        <h2 id="prompts">四、高效提示词模板</h2>
+        <p>提示词（Prompt）就是你跟AI"说话"的方式。好的提示词能让AI输出质量翻倍。</p>
+        <blockquote>
+          <strong>万能公式：</strong>角色 + 任务 + 背景 + 格式 + 限制条件<br>
+          例如："你是一个资深文案，请帮我写一篇产品介绍，产品是XX，面向XX人群，字数500字以内，风格专业但不枯燥。"
+        </blockquote>
+        <p>我整理了<strong>100+场景的提示词模板</strong>，涵盖办公、写作、剪辑、电商等，订阅邮箱就能免费领取。</p>
+
+        <h2 id="side-income">五、用AI做副业的3个方向</h2>
+        <ul>
+          <li><strong>内容创作</strong>：用AI辅助写公众号、小红书、知乎，批量产出优质内容</li>
+          <li><strong>卖虚拟产品</strong>：AI模板、教程、素材包，一次制作反复卖</li>
+          <li><strong>接单服务</strong>：AI写作、AI设计、AI视频剪辑，帮别人提效赚钱</li>
+        </ul>
+
+        <h2 id="summary">六、总结</h2>
+        <p>AI不是来取代你的，而是来帮你的。<strong>越早学会用AI，越早受益。</strong>从今天开始，花1小时试试AI，你会发现一个全新的世界。</p>
+
+        <div class="tip-box">
+          <div class="tip-title">📦 免费资源</div>
+          <p style="margin:0;">订阅邮箱，免费领取：<strong>100+AI提示词模板 + AI工具对比表 + 副业入门指南</strong>。<a href="#subscribe" style="color:#065f46;font-weight:700;">点击领取 →</a></p>
+        </div>
+      </div>
+
+      <!-- 文末互动区 -->
+      <div class="article-footer">
+        <!-- 打赏区 -->
+        <div class="donate-section">
+          <h3>☕ 觉得有用？请作者喝杯咖啡</h3>
+          <p style="color:var(--text-secondary);font-size:.9rem;margin:var(--space-sm) 0;">你的支持是我持续更新的动力 ❤️</p>
+          <div style="display:flex;gap:var(--space-md);justify-content:center;margin-top:var(--space-md);flex-wrap:wrap;">
+            <a href="../pages/donate.html" class="btn btn-accent btn-sm">☕ 打赏 5元</a>
+            <a href="../pages/donate.html" class="btn btn-accent btn-sm">🥤 打赏 10元</a>
+            <a href="../pages/donate.html" class="btn btn-accent btn-sm">🎉 打赏 20元</a>
+          </div>
+        </div>
+
+        <!-- 分享栏 -->
+        <div class="share-bar">
+          <span style="font-size:.9rem;font-weight:600;color:var(--text-secondary);">分享到：</span>
+          <button type="button" class="share-btn">📋 复制链接</button>
+          <button type="button" class="share-btn">💬 微信</button>
+          <button type="button" class="share-btn">📱 微博</button>
+          <button type="button" class="share-btn">📤 更多分享</button>
+        </div>
+
+        <!-- 相关推荐 -->
+        <h3 style="font-size:1.2rem;margin-bottom:var(--space-md);">📚 相关推荐</h3>
+        <div class="related-grid">
+          <a href="prompts-guide.html" class="card">
+            <div class="card-body">
+              <h3 class="card-title">100+AI提示词模板：办公/写作/剪辑全覆盖</h3>
+              <div class="card-meta">
+                <span>⏱ 5分钟</span>
+                
+              </div>
+            </div>
+          </a>
+          <a href="ai-side-income.html" class="card">
+            <div class="card-body">
+              <h3 class="card-title">AI副业实操：如何用AI月入3000+</h3>
+              <div class="card-meta">
+                <span>⏱ 12分钟</span>
+                
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- 订阅框 -->
+        <div id="subscribe" style="margin-top:var(--space-xl);">
+          <div class="subscribe-box">
+            <h3>🎁 免费领取AI资源包</h3>
+            <p>包含：100+提示词模板、AI工具对比表、副业入门指南</p>
+            <form action="YOUR_MAILCHIMP_URL" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="subscribe-form" target="_blank" novalidate>
+              <input type="email" name="EMAIL" placeholder="输入你的邮箱地址..." aria-label="邮箱地址" required>
+              <button type="submit" id="mc-embedded-subscribe">免费领取</button>
+              <!-- 防机器人 -->
+              <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_XXXXX" tabindex="-1" value=""></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧边栏 -->
+    <aside class="article-sidebar">
+      <!-- TOC目录 -->
+      <button type="button" class="toc-toggle" onclick="toggleToc(this)">📑 文章目录</button>
+      <div class="toc">
+        <h4>📑 文章目录</h4>
+        <a href="#what-is-ai">一、AI到底是什么？</a>
+        <a href="#tools-overview">二、最值得用的AI工具</a>
+        <a href="#tool-chat">&nbsp;&nbsp;2.1 AI对话工具</a>
+        <a href="#tool-image">&nbsp;&nbsp;2.2 AI绘画工具</a>
+        <a href="#tool-video">&nbsp;&nbsp;2.3 AI视频工具</a>
+        <a href="#how-to-start">三、新手怎么开始？</a>
+        <a href="#prompts">四、高效提示词模板</a>
+        <a href="#side-income">五、AI做副业方向</a>
+        <a href="#summary">六、总结</a>
+      </div>
+
+      <!-- 侧边广告 -->
+      <div style="margin-top:var(--space-lg);">
+        <div class="ad-banner" style="padding:var(--space-md);">
+          <div class="ad-label">📢 推荐</div>
+          <p style="font-size:.85rem;font-weight:600;margin:var(--space-sm) 0;">AI提示词模板包</p>
+          <p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:var(--space-sm);">100+场景，复制即用</p>
+          <a href="../pages/shop.html" class="btn btn-primary btn-sm" style="font-size:.8rem;">¥9.9 购买</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;line-height:1.6;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../articles/ai-knowledge.html">AI知识</a>
+        <a href="../pages/shop.html">商店</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="disclaimer.html">免责声明</a>
+        <a href="privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利 · 部分链接含推广佣金</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>
+
+
+
+
+
+

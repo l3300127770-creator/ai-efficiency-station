@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打赏支持 - AI效率站</title>
+  <meta property="og:title" content="打赏支持 - AI效率站">
+  <meta property="og:description" content="感谢你的支持！每一份打赏都是我持续创作的动力。">
+  <meta property="og:type" content="website">
+  <meta name="description" content="感谢你的支持！每一份打赏都是我持续更新的动力。">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .donate-hero {
+      background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #ede9fe 100%);
+      padding: var(--space-2xl) 0 var(--space-xl);
+      text-align: center;
+    }
+    .donate-hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: var(--space-xs); }
+    .donate-hero p { color: var(--text-secondary); font-size: 1.05rem; }
+
+    .donate-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl) var(--space-lg);
+      text-align: center;
+      max-width: 420px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .donate-card h3 { font-size: 1.15rem; margin-bottom: var(--space-md); }
+
+    .qr-box {
+      width: 180px; height: 180px;
+      margin: 0 auto var(--space-md);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .qr-box img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .donate-amounts {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-md);
+    }
+    .amount-btn {
+      padding: 10px 22px;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      background: #fff;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .amount-btn:hover, .amount-btn.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+      transform: scale(1.05);
+    }
+
+    .donate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .donate-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+    }
+
+    .thanks-list {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .thanks-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .thanks-item:last-child { border-bottom: none; }
+    .thanks-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .thanks-info { flex: 1; }
+    .thanks-name { font-weight: 600; font-size: .95rem; }
+    .thanks-msg { font-size: .85rem; color: var(--text-secondary); margin-top: 2px; }
+    .thanks-amount { font-weight: 700; color: var(--accent); font-size: .95rem; flex-shrink: 0; }
+
+    .leave-msg-box {
+      max-width: 480px;
+      margin: var(--space-xl) auto 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../articles/ai-knowledge.html">AI知识</a>
+      <a href="../pages/shop.html">商店</a>
+      <a href="../pages/recommend.html">推荐好物</a>
+      <a href="../pages/donate.html" class="active">打赏支持</a>
+      <a href="../pages/about.html">关于</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="donate-hero">
+  <div class="container">
+    <h1>☕ 请我喝杯咖啡</h1>
+    <p>内容免费，咖啡自费 😄 随缘打赏</p>
+  </div>
+</section>
+
+<!-- 选择金额 -->
+<section class="section">
+  <div class="container">
+    <div class="donate-card">
+      <p style="font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:var(--space-sm);">如果我的内容帮到了你，请我喝杯咖啡 ☕</p>
+      <p style="font-size:.88rem;color:var(--text-secondary);margin-bottom:var(--space-lg);">随意金额，扫码即可，感谢支持 ❤️</p>
+      <p style="font-size:.82rem;color:var(--text-light);margin-bottom:var(--space-md);">💡 常见打赏：¥5 / ¥10 / ¥20 / ¥50，多少都是鼓励</p>
+
+      <!-- 收款码 -->
+      <div class="donate-grid">
+        <div style="text-align:center;">
+          <div class="qr-box">
+            <img src="../img/qrcodes/wechat-pay.png" alt="微信收款码">
+          </div>
+          <p style="font-size:.88rem;font-weight:600;color:var(--text-secondary);">💚 微信扫一扫</p>
+        </div>
+        <div style="text-align:center;">
+          <div class="qr-box">
+            <img src="../img/qrcodes/alipay.jpg" alt="支付宝收款码">
+          </div>
+          <p style="font-size:.88rem;font-weight:600;color:var(--text-secondary);">💙 支付宝扫一扫</p>
+        </div>
+      </div>
+
+      <!-- 提示 -->
+      <p style="font-size:.82rem;color:var(--text-light);margin-top:var(--space-md);">扫码后输入你想打赏的金额，备注昵称可上致谢墙</p>
+    </div>
+  </div>
+</section>
+
+<!-- 打赏后留言 -->
+<section class="section" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header">
+      <h2>💬 打赏后留言</h2>
+      <p>留个名，我把你写在致谢墙上</p>
+    </div>
+    <div class="leave-msg-box">
+      <p style="font-size:.92rem;color:var(--text-secondary);margin-bottom:var(--space-lg);line-height:1.7;">
+        打赏完成后，点击下方按钮留下你的昵称和一句想说的话，<br>我会把你的名字展示在下方致谢墙上 🙏
+      </p>
+      <a href="https://form.wjx.com/vm/eOvZSHS.aspx" class="btn btn-primary btn-lg" style="justify-content:center;" target="_blank" rel="noopener noreferrer">
+        ✍️ 我要留言
+      </a>
+      <p style="font-size:.78rem;color:var(--text-light);margin-top:var(--space-sm);">也可以发邮件到 1683303069@qq.com 留言</p>
+    </div>
+  </div>
+</section>
+
+<!-- 致谢墙 -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>❤️ 感谢这些朋友的支持</h2>
+      <p>排名不分先后，每一份支持都弥足珍贵</p>
+    </div>
+    <div class="thanks-list" id="thanksList">
+      <div style="text-align:center;padding:var(--space-xl);color:var(--text-light);font-size:.92rem;">
+        🌟 加载中...
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIP入口 -->
+<section class="section" style="background:var(--bg-secondary);">
+  <div class="container" style="max-width:600px;">
+    <div style="background:linear-gradient(135deg,var(--primary),#7c3aed);border-radius:var(--radius-lg);padding:var(--space-xl);text-align:center;color:#fff;">
+      <h3 style="font-size:1.3rem;margin-bottom:var(--space-sm);color:#fff;">👑 想要更多支持？</h3>
+      <p style="opacity:.9;margin-bottom:var(--space-md);font-size:.95rem;">加入年度VIP会员，享受全部产品免费下载、专属社群和1对1答疑。</p>
+      <a href="../pages/checkout.html?name=年度VIP会员&price=99&original=299&id=VIP001" class="btn btn-accent btn-lg">了解VIP会员 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../articles/ai-knowledge.html">AI知识</a>
+        <a href="../pages/shop.html">商店</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="disclaimer.html">免责声明</a>
+        <a href="privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+
+<script>
+// 动态渲染致谢墙
+(function() {
+  var container = document.getElementById('thanksList');
+  if (!container) return;
+
+  // 读取 thanks.json
+  fetch('../data/thanks.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:var(--space-xl);color:var(--text-light);font-size:.92rem;">🌟 致谢墙正在准备中，欢迎成为第一位打赏者！<br><span style="font-size:.82rem;">打赏后留言，你的名字会出现在这里</span></div>';
+        return;
+      }
+
+      // 按日期倒序排列（最新的在前）
+      data.sort(function(a, b) {
+        return (b.date || '').localeCompare(a.date || '');
+      });
+
+      var html = '';
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i];
+        var emoji = item.emoji || '😊';
+        var name = escapeHtml(item.name || '匿名');
+        var msg = escapeHtml(item.msg || '');
+        var amount = item.amount || '';
+        var date = item.date || '';
+
+        html += '<div class="thanks-item">';
+        html += '<div class="thanks-avatar">' + emoji + '</div>';
+        html += '<div class="thanks-info">';
+        html += '<div class="thanks-name">' + name;
+        if (date) html += ' <span style="font-size:.75rem;color:var(--text-light);font-weight:400;">' + date + '</span>';
+        html += '</div>';
+        if (msg) html += '<div class="thanks-msg">"' + msg + '"</div>';
+        html += '</div>';
+        if (amount) html += '<div class="thanks-amount">¥' + amount + '</div>';
+        html += '</div>';
+      }
+      container.innerHTML = html;
+    })
+    .catch(function() {
+      container.innerHTML = '<div style="text-align:center;padding:var(--space-xl);color:var(--text-light);font-size:.92rem;">🌟 致谢墙正在准备中，欢迎成为第一位打赏者！</div>';
+    });
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+})();
+</script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>

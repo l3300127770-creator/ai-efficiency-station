@@ -1,0 +1,479 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI求职简历+面试题库</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#ecfdf5;color:#1f2937;line-height:1.7}
+.hero{background:linear-gradient(135deg,#059669,#10b981,#34d399);color:#fff;padding:60px 20px 50px;text-align:center}
+.hero h1{font-size:2.2em;margin-bottom:12px;font-weight:800}
+.hero p{font-size:1.1em;opacity:.9;max-width:680px;margin:0 auto 20px;line-height:1.8}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);padding:4px 16px;border-radius:20px;font-size:.85em;margin-bottom:18px}
+.usage-box{background:rgba(255,255,255,.15);border-radius:12px;padding:20px 24px;max-width:640px;margin:0 auto;text-align:left;font-size:.95em}
+.usage-box h3{margin-bottom:8px;font-size:1em}
+.usage-box ol{padding-left:20px}
+.usage-box li{margin-bottom:4px}
+.toc{background:#fff;border-radius:16px;box-shadow:0 2px 16px rgba(0,0,0,.06);padding:28px 32px;margin:30px auto;max-width:960px}
+.toc h2{font-size:1.2em;margin-bottom:14px;color:#059669}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.toc a{display:block;padding:10px 14px;background:#ecfdf5;border-radius:8px;text-decoration:none;color:#065f46;font-weight:600;font-size:.92em;transition:all .2s}
+.toc a:hover{background:#d1fae5;transform:translateX(4px)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto;max-width:960px;padding:0 16px}
+.filter-btn{padding:8px 18px;border:2px solid #d1d5db;background:#fff;border-radius:20px;cursor:pointer;font-size:.88em;font-weight:600;color:#374151;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#10b981;color:#fff;border-color:#10b981}
+.section{margin:36px auto;max-width:960px;padding:0 16px}
+.section-title{font-size:1.5em;font-weight:800;color:#065f46;margin-bottom:6px;padding-bottom:10px;border-bottom:3px solid #10b981;display:flex;align-items:center;gap:10px}
+.section-title .icon{font-size:1.3em}
+.section-desc{color:#6b7280;font-size:.92em;margin-bottom:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:22px;overflow:hidden;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.card-header{background:linear-gradient(135deg,#ecfdf5,#d1fae5);padding:18px 24px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.card-header h3{font-size:1.1em;color:#065f46}
+.tag{display:inline-block;background:#10b981;color:#fff;padding:2px 12px;border-radius:12px;font-size:.78em;font-weight:600}
+.card-body{padding:24px}
+.block{margin-bottom:22px}
+.block-label{font-weight:700;color:#059669;font-size:.9em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.block-label::before{content:"";display:inline-block;width:4px;height:16px;background:#10b981;border-radius:2px}
+.template-text{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;font-size:.9em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#374151;max-height:400px;overflow-y:auto}
+.prompt-text{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;font-size:.88em;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:#92400e}
+.tips-list{padding-left:20px}
+.tips-list li{margin-bottom:6px;font-size:.9em;color:#4b5563}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{padding:8px 20px;border:none;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-copy{background:#10b981;color:#fff}
+.btn-copy:hover{background:#059669;transform:translateY(-1px)}
+.btn-prompt{background:#f59e0b;color:#fff}
+.btn-prompt:hover{background:#d97706}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:#065f46;color:#fff;padding:12px 28px;border-radius:10px;font-size:.92em;font-weight:600;opacity:0;transition:all .35s ease;z-index:9999;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{text-align:center;padding:40px 20px;margin-top:50px;background:#065f46;color:#fff}
+.footer p{margin-bottom:6px;font-size:.9em;opacity:.85}
+.footer a{color:#34d399;text-decoration:none}
+.back-top{position:fixed;bottom:30px;right:30px;width:44px;height:44px;background:#10b981;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.3em;box-shadow:0 2px 12px rgba(0,0,0,.15);opacity:0;transition:all .3s;z-index:999}
+.back-top.show{opacity:1}
+.back-top:hover{background:#059669;transform:translateY(-2px)}
+@media(max-width:600px){.hero{padding:40px 16px 36px}.hero h1{font-size:1.5em}.card-body{padding:16px}.toc{padding:20px 16px;margin:20px 10px}.toc-grid{grid-template-columns:1fr}.filter-bar{padding:0 10px}.filter-btn{padding:6px 12px;font-size:.8em}.section{margin:24px auto;padding:0 10px}.section-title{font-size:1.2em}.template-text,.prompt-text{font-size:.84em;padding:12px 14px}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <span class="badge">📄 求职必备 · 拿offer神器</span>
+  <h1>AI求职简历+面试题库</h1>
+  <p>AI优化简历各模块+50+高频面试题+STAR法则改写+薪资谈判话术，让你的求职成功率翻倍。</p>
+  <div class="usage-box">
+    <h3>📖 使用说明</h3>
+    <ol>
+      <li>先用AI简历模板优化你的简历各模块</li>
+      <li>用STAR法则改写工作经历，让HR眼前一亮</li>
+      <li>用面试题库提前准备，不打无准备之仗</li>
+      <li>薪资谈判话术帮你争取最高薪资</li>
+    </ol>
+  </div>
+</div>
+
+<div class="toc">
+  <h2>📑 目录导航</h2>
+  <div class="toc-grid">
+    <a href="#s1">📄 板块一：AI简历优化模板</a>
+    <a href="#s2">⭐ 板块二：STAR法则改写</a>
+    <a href="#s3">🎯 板块三：高频面试题库</a>
+    <a href="#s4">💰 板块四：薪资谈判话术</a>
+    <a href="#s5">📧 板块五：求职信/自我介绍</a>
+    <a href="#s6">📋 板块六：求职SOP清单</a>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button type="button" class="filter-btn active" data-filter="all">全部</button>
+  <button type="button" class="filter-btn" data-filter="template">📝 模板</button>
+  <button type="button" class="filter-btn" data-filter="prompt">🤖 提示词</button>
+  <button type="button" class="filter-btn" data-filter="tips">💡 技巧</button>
+</div>
+
+<div class="section" id="s1" data-category="template">
+  <div class="section-title"><span class="icon">📄</span> AI简历优化模板</div>
+  <div class="section-desc">用AI优化简历每个模块，让HR看一眼就想约你面试</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📝 简历各模块优化模板</h3><span class="tag">核心</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">个人信息模块</div>
+        <div class="template-text" id="r1t">📌 个人信息写法：
+
+✅ 正确写法：
+姓名：张三 | 手机：138-xxxx-xxxx | 邮箱：zhangsan@email.com
+求职意向：产品经理 | 期望城市：深圳 | 到岗时间：随时
+
+❌ 常见错误：
+- 写太多无关信息（身高体重/星座/政治面貌）
+- 用QQ邮箱显得不专业（建议用163/Gmail）
+- 没有写求职意向，HR不知道你投什么岗位
+- 贴生活照而非职业照</div>
+      </div>
+      <div class="block">
+        <div class="block-label">自我评价模块</div>
+        <div class="template-text" id="r2t">📌 自我评价万能公式：
+
+公式：[年限经验] + [核心能力] + [成果数据] + [职业目标]
+
+✅ 优秀示例：
+"3年互联网产品经理经验，擅长用户增长和数据分析。
+主导过DAU从10万到100万的产品增长项目，
+熟悉B端和C端产品全流程。希望在AI方向深耕。"
+
+❌ 反面示例：
+"本人性格开朗，工作认真负责，有团队合作精神。
+（这是废话，所有人都会这么写，没有任何区分度）"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI简历优化提示词</div>
+        <div class="prompt-text" id="r1p">你是一个资深HR和职业规划师。请帮我优化以下简历内容。
+
+我的基本信息：
+- 目标岗位：[填写]
+- 工作年限：[填写]
+- 学历：[填写]
+- 核心技能：[填写]
+
+需要优化的简历原文：
+[粘贴你的简历内容]
+
+要求：
+1. 优化"自我评价"模块：用[年限+能力+成果+目标]公式，控制在3-4行
+2. 优化"工作经历"模块：用STAR法则改写每条经历（情境→任务→行动→结果）
+3. 所有成果都要量化（数字/百分比/金额）
+4. 去掉无关信息和废话
+5. 关键词要匹配目标岗位的JD（职位描述）
+6. 语言简洁有力，避免"负责""参与"等弱动词，用"主导""推动""实现"等强动词
+7. 最后给出整体优化建议（结构/内容/排版）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r1t','个人信息')">📋 复制模板</button>
+        <button type="button" class="btn btn-copy" onclick="copyText('r2t','自我评价')">📋 复制自我评价</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('r1p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s2" data-category="template">
+  <div class="section-title"><span class="icon">⭐</span> STAR法则改写</div>
+  <div class="section-desc">Situation(情境)→Task(任务)→Action(行动)→Result(结果)，让工作经历更有说服力</div>
+
+  <div class="card">
+    <div class="card-header"><h3>⭐ STAR法则实战示例</h3><span class="tag">必备技能</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">STAR法则改写示例</div>
+        <div class="template-text" id="r3t">📌 STAR法则改写前后对比：
+
+❌ 改写前（普通写法）：
+"负责公司公众号运营，写文章，做活动。"
+
+✅ 改写后（STAR法则）：
+S（情境）：接手公司公众号时，粉丝仅5000，阅读量平均200
+T（任务）：6个月内将粉丝提升至5万，建立稳定的内容体系
+A（行动）：
+- 搭建选题库，建立每周3篇的内容排期
+- 优化标题和封面，测试不同打开率
+- 策划3场裂变活动，设计分享激励机制
+R（结果）：
+- 6个月粉丝从5000增长至6.2万（+1140%）
+- 平均阅读量从200提升至3500
+- 单篇最高阅读10万+，带来200+精准客户
+
+━━━━━━━━━━━━━━━━━━
+
+❌ 改写前：
+"在公司做销售，完成了业绩目标。"
+
+✅ STAR改写后：
+S：入职时负责空白区域，无客户资源积累
+T：季度销售目标50万，需要从0开拓市场
+A：
+- 分析区域行业分布，锁定制造业为目标客户
+- 陌拜+电话开发，日均触达30+潜在客户
+- 建立客户分层体系，重点客户每周跟进
+R：
+- 首季度完成68万业绩，达成率136%
+- 开发新客户23家，其中3家年框客户
+- 获评季度销售冠军</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI改写提示词</div>
+        <div class="prompt-text" id="r2p">你是一个简历优化专家。请用STAR法则帮我改写以下工作经历。
+
+我的岗位：[填写岗位名称]
+工作内容描述（原始版本）：
+[粘贴你的工作经历描述]
+
+要求：
+1. 用STAR法则改写每一条工作经历
+2. S（情境）：用1句话描述背景/挑战
+3. T（任务）：明确你的职责和目标
+4. A（行动）：列出你采取的具体行动（3-4条，用强动词开头）
+5. R（结果）：用数字量化成果（金额/百分比/数量/排名）
+6. 每条经历改写后控制在5-8行
+7. 用"主导""推动""实现""优化"等强动词，避免"负责""参与"
+8. 如果原始描述缺少数据，用合理的行业数据补充（标注为估算）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r3t','STAR示例')">📋 复制示例</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('r2p','改写提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s3" data-category="template">
+  <div class="section-title"><span class="icon">🎯</span> 高频面试题库（50+题）</div>
+  <div class="section-desc">覆盖自我介绍/优缺点/职业规划/行为面试/压力面试五大类</div>
+
+  <div class="card">
+    <div class="card-header"><h3>🎯 通用面试高频题+回答模板</h3><span class="tag">必准备</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">TOP10必问题及回答框架</div>
+        <div class="template-text" id="r4t">📌 面试TOP10必问题：
+
+1. 请做一下自我介绍（1-2分钟）
+框架：基本信息→核心经历→为什么来面试
+"我是[姓名]，[X]年[岗位]经验。在[公司]负责[核心工作]，取得了[关键成果]。我对贵公司的[岗位/业务]非常感兴趣，因为[原因]。"
+
+2. 你的优点是什么？
+公式：优点+具体案例+对岗位的价值
+"我的优点是执行力强。在上一份工作中，[具体案例]，这个能力在[目标岗位]中能帮助[价值]。"
+
+3. 你的缺点是什么？
+公式：真实但不致命的缺点+改进措施+进展
+"我有时候过于追求细节，会影响效率。现在我会用[方法]来平衡，[具体改进]。"
+
+4. 为什么从上一家公司离职？
+✅ 安全回答：职业发展/寻求新挑战/业务调整
+❌ 雷区：吐槽前公司/领导/同事
+
+5. 你的职业规划是什么？
+公式：短期（1-2年）+中期（3-5年）+与公司发展的结合
+"短期希望在[岗位]上深耕，中期希望能带团队/成为专家。贵公司的[业务方向]和我的规划非常匹配。"
+
+6. 你对加班怎么看？
+"我认为高效的产出比时长更重要。如果项目需要，加班是应该的。同时我也会优化工作流程，减少不必要的加班。"
+
+7. 你的期望薪资是多少？
+（详见薪资谈判板块）
+
+8. 你有什么问题想问我们？
+✅ 好问题：团队结构/成长路径/业务挑战
+❌ 烂问题：没有/只问薪资福利
+
+9. 描述一个你遇到的困难及如何克服
+用STAR法则回答（见STAR板块）
+
+10. 为什么选择我们公司？
+"我关注贵公司很久了，[具体了解的产品/业务/新闻]。我认为[行业判断]，而贵公司在[具体优势]方面领先，我希望能参与其中。"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI模拟面试提示词</div>
+        <div class="prompt-text" id="r3p">你是一个资深面试官，正在面试我。请根据以下信息对我进行模拟面试。
+
+我的背景：
+- 目标岗位：[填写]
+- 工作经验：[填写]
+- 核心技能：[填写]
+
+请按以下流程进行：
+1. 先问一个自我介绍（给我30秒思考时间提示）
+2. 问3个岗位相关的专业问题
+3. 问2个行为面试题（STAR法则类）
+4. 问1个压力面试题
+5. 每个问题后，等我回答，然后给出评分（1-10分）和改进建议
+6. 最后面试结束时，给出整体评价和需要加强的地方
+
+注意：
+- 问题难度适中偏上，模拟真实面试压力
+- 如果我的回答有明显漏洞，追问细节
+- 语气像真实面试官，专业但不刁难</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r4t','面试题库')">📋 复制题库</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('r3p','模拟面试')">🤖 复制模拟面试提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s4" data-category="tips">
+  <div class="section-title"><span class="icon">💰</span> 薪资谈判话术</div>
+  <div class="section-desc">不要说"看公司安排"，用数据和策略争取最高薪资</div>
+
+  <div class="card">
+    <div class="card-header"><h3>💰 薪资谈判攻略</h3><span class="tag">多赚20%</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">薪资谈判话术模板</div>
+        <div class="template-text" id="r5t">📌 薪资谈判核心策略：
+
+原则1：永远不要先报价
+"我想先了解一下这个岗位的薪资范围，再结合我的期望来谈。"
+
+原则2：报价要比期望高15-20%
+期望月薪15K → 报价17K-18K（留谈判空间）
+
+原则3：用数据支撑你的报价
+"根据我了解的市场行情，[岗位]在[城市]的薪资范围是[X]-[Y]。
+结合我[X]年的经验和[具体成果]，我的期望是[报价]。"
+
+━━━━━━━━━━━━━━
+
+场景1：HR问期望薪资
+"基于我的经验和市场行情，我的期望是[X]K。当然薪资只是一部分，
+我也很看重贵公司的发展平台和成长空间。"
+
+场景2：HR压价
+"我理解贵公司有预算考虑。不过[X]K是我综合评估后的合理期望，
+我相信入职后能创造远超这个数字的价值。如果基本薪资有困难，
+我们可以在奖金/期权/试用期等方面探讨。"
+
+场景3：拿到多个offer
+"感谢您的offer，我对贵公司非常认可。不过目前我手上有另一个offer，
+薪资是[X]K。如果贵公司能匹配到[Y]K，我今天就能确认。"
+
+场景4：试用期后谈加薪
+"入职[X]个月以来，我完成了[具体成果]。希望能和您聊一下薪资调整的事。
+目前市场行情和我的贡献来看，[期望薪资]是比较合理的。"</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r5t','薪资话术')">📋 复制话术</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s5" data-category="template">
+  <div class="section-title"><span class="icon">📧</span> 求职信/自我介绍模板</div>
+  <div class="section-desc">投简历时附一段走心的自我介绍，让HR记住你</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📧 求职信模板</h3><span class="tag">加分项</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">求职信模板</div>
+        <div class="template-text" id="r6t">📌 求职信/打招呼话术（投简历时附带）：
+
+模板1 - 简洁版（适合Boss直聘/拉勾）：
+"您好！我对贵司[岗位名称]很感兴趣。我有[X]年[领域]经验，
+在[上家公司]主导了[核心成果]。期待有机会详细交流！"
+
+模板2 - 详细版（适合邮件投递）：
+"尊敬的HR：
+您好！我是[姓名]，[X]年[岗位]经验，目前在[公司]担任[职位]。
+
+我对贵公司的[具体业务/产品]非常关注，尤其认同[某个理念/方向]。
+
+核心优势：
+1. [最突出的成果/能力]
+2. [第二突出的成果/能力]
+3. [与岗位匹配的技能]
+
+附件是我的简历，期待有机会进一步交流。
+祝工作顺利！
+[姓名] [手机] [邮箱]"
+
+模板3 - 内推版：
+"Hi [推荐人姓名]推荐！
+我是[姓名]，[推荐人]推荐我关注贵司的[岗位]。
+我有[X]年[领域]经验，[1句核心成果]。
+方便的话希望能约个时间聊聊！"</div>
+      </div>
+      <div class="block">
+        <div class="block-label">AI提示词</div>
+        <div class="prompt-text" id="r4p">你是一个求职顾问。请帮我写一段求职自我介绍/求职信。
+
+我的信息：
+- 姓名：[填写]
+- 目标岗位：[填写]
+- 目标公司：[填写]
+- 工作经验：[填写年限和核心经历]
+- 核心优势：[填写2-3个]
+
+要求：
+1. 写3个版本：简洁版（50字）、标准版（150字）、详细版（300字）
+2. 简洁版适合Boss直聘在线聊天
+3. 标准版适合简历自我介绍
+4. 详细版适合邮件投递
+5. 每个版本都要突出与目标岗位的匹配度
+6. 语言专业但不刻板，展示个人特色
+7. 结尾要有明确的行动呼吁（希望面试/进一步沟通）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r6t','求职信')">📋 复制模板</button>
+        <button type="button" class="btn btn-prompt" onclick="copyText('r4p','AI提示词')">🤖 复制AI提示词</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s6" data-category="tips">
+  <div class="section-title"><span class="icon">📋</span> 求职SOP清单</div>
+  <div class="section-desc">从准备到拿offer，每一步都不落下</div>
+
+  <div class="card">
+    <div class="card-header"><h3>📋 求职全流程清单</h3><span class="tag">系统化</span></div>
+    <div class="card-body">
+      <div class="block">
+        <div class="block-label">求职SOP</div>
+        <div class="template-text" id="r7t">📋 求职全流程清单：
+
+【第1周：准备阶段】
+□ 明确求职方向（岗位+行业+城市）
+□ 调研目标岗位JD（看20+个招聘要求）
+□ 梳理自己的核心优势和成果
+□ AI优化简历（用STAR法则改写经历）
+□ 准备3个版本的自我介绍
+□ 注册/更新招聘平台（Boss/拉勾/猎聘/智联）
+
+【第2-3周：海投阶段】
+□ 每天投递10-20个岗位
+□ 针对重点岗位定制简历和求职信
+□ 记录投递表（公司/岗位/日期/状态）
+□ 准备面试题库（用AI模拟面试）
+
+【第4周+：面试阶段】
+□ 面试前调研公司（产品/业务/竞品/新闻）
+□ 面试前准备3个要问面试官的问题
+□ 面试后24小时内发感谢信
+□ 每次面试后复盘总结
+
+【Offer阶段】
+□ 对比多个offer（薪资/成长/平台/距离）
+□ 薪资谈判（用数据和策略争取）
+□ 确认入职细节（日期/材料/体检）
+□ 婉拒其他offer（保持好关系）</div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-copy" onclick="copyText('r7t','求职SOP')">📋 复制清单</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="footer">
+  <p><strong>AI求职简历+面试题库</strong></p>
+  <p>让你的求职成功率翻倍</p>
+  <p style="margin-top:12px">📧 联系邮箱：<a href="mailto:1683303069@qq.com">1683303069@qq.com</a></p>
+  <p style="margin-top:4px;font-size:.8em;opacity:.7">© 2025 版权所有 · 仅供个人学习使用 · 未经授权禁止转载商用</p>
+</div>
+<script>
+function copyText(id,label){var el=document.getElementById(id);if(!el)return;var text=el.innerText||el.textContent;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){showToast(label+' 已复制到剪贴板 ✅')}).catch(function(){fallbackCopy(text,label)})}else{fallbackCopy(text,label)}}
+function fallbackCopy(text,label){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showToast(label+' 已复制到剪贴板 ✅')}catch(e){showToast('复制失败，请手动选择复制 ❌')}document.body.removeChild(ta)}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show')},2200)}
+document.querySelectorAll('.filter-btn').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});this.classList.add('active');var f=this.getAttribute('data-filter');document.querySelectorAll('.section').forEach(function(sec){if(f==='all'||sec.getAttribute('data-category')===f){sec.style.display=''}else{sec.style.display='none'}})})});
+window.addEventListener('scroll',function(){var btn=document.getElementById('backTop');if(window.scrollY>400){btn.classList.add('show')}else{btn.classList.remove('show')}});
+</script>
+</body>
+</html>

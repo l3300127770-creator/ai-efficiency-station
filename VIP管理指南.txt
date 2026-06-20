@@ -1,0 +1,56 @@
+# VIP下载页管理指南
+
+## 文件位置
+页面文件：pages/vip-download.html
+
+---
+
+## 修改VIP密码
+
+1. 用记事本打开 pages/vip-download.html
+2. 搜索 ai2026vip（约第203行）
+3. 把 ai2026vip 改成你的新密码
+4. 保存文件
+5. 把新密码通知VIP用户
+
+示例（改之前）：
+  if (pwd === 'ai2026vip') {
+
+示例（改之后）：
+  if (pwd === 'mynew2026') {
+
+---
+
+## 添加/修改下载链接
+
+1. 用记事本打开 pages/vip-download.html
+2. 搜索 ⬇️ 下载（约第120-160行）
+3. 把 href="#" 改成你的网盘链接
+
+示例（改之前）：
+  <a href="#" class="btn btn-primary btn-sm" onclick="alert('请将下载链接替换为此处');return false;">⬇️ 下载</a>
+
+示例（改之后）：
+  <a href="https://pan.baidu.com/s/xxxxx" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+
+---
+
+## 添加新产品
+
+在 download-grid 区域内复制一段卡片，修改标题、描述和链接即可：
+
+  <div class="download-card">
+    <div style="font-size:2rem;margin-bottom:var(--space-sm);">📦</div>
+    <h3>产品名称</h3>
+    <p>产品描述文字</p>
+    <a href="下载链接" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+  </div>
+
+---
+
+## 注意事项
+
+- 密码建议每1-2个月更换一次
+- 下载链接不要公开分享，只告诉VIP用户
+- 页面已设置 noindex，搜索引擎不会收录
+- VIP用户验证后，同一浏览器会话内无需重复输入密码

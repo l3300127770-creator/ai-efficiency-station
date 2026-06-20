@@ -1,0 +1,546 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理面板 - AI效率站</title>
+  <meta property="og:title" content="管理面板 - AI效率站">
+  <meta property="og:description" content="网站管理面板，仅供站长使用。">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: #f1f5f9; }
+    .admin-header {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      color: #fff;
+      padding: var(--space-xl) 0;
+    }
+    .admin-header h1 { font-size: 1.6rem; margin-bottom: var(--space-xs); }
+    .admin-header p { color: #94a3b8; font-size: .9rem; }
+    .admin-section {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+    }
+    .admin-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .admin-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: var(--space-lg) 0 var(--space-sm);
+      color: var(--text-secondary);
+    }
+    .admin-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      transition: background .2s;
+    }
+    .admin-item:hover { background: var(--bg-secondary); }
+    .admin-item .icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .admin-item .info { flex: 1; }
+    .admin-item .info h4 { font-size: .95rem; font-weight: 600; margin-bottom: 2px; }
+    .admin-item .info p { font-size: .85rem; color: var(--text-secondary); margin: 0; }
+    .admin-item .info code {
+      background: #f1f5f9;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: .8rem;
+      color: var(--danger);
+    }
+    .admin-item .actions { flex-shrink: 0; }
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .92rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist input[type="checkbox"] {
+      width: 18px; height: 18px;
+      accent-color: var(--primary);
+    }
+    .tip-card {
+      background: #ecfdf5;
+      border-left: 4px solid var(--success);
+      padding: var(--space-md);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-md) 0;
+    }
+    .tip-card h4 { color: #065f46; margin-bottom: var(--space-xs); }
+    .tip-card p { font-size: .88rem; color: #065f46; margin: 0; }
+    .warn-card {
+      background: #fffbeb;
+      border-left: 4px solid var(--accent);
+      padding: var(--space-md);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-md) 0;
+    }
+    .file-path {
+      display: inline-block;
+      background: #1e293b;
+      color: #a5f3fc;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: .82rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-header">
+  <div class="container">
+    <h1>⚙️ 网站管理面板</h1>
+    <p>所有需要替换的内容集中在这里，按步骤操作即可完成网站配置</p>
+  </div>
+</div>
+
+<div class="container" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);">
+
+  <!-- ===== 上线前必做清单 ===== -->
+  <div class="admin-section">
+    <h2>📋 上线前必做清单</h2>
+    <ul class="checklist">
+      <li><input type="checkbox"> 替换收款码（微信+支付宝）</li>
+      <li><input type="checkbox"> 替换联系邮箱</li>
+      <li><input type="checkbox"> 替换推广链接（流量卡/云服务/工具）</li>
+      <li><input type="checkbox"> 替换商品购买链接</li>
+      <li><input type="checkbox"> 替换首页统计数据</li>
+      <li><input type="checkbox"> 替换致谢名单</li>
+      <li><input type="checkbox"> 替换社媒账号信息</li>
+      <li><input type="checkbox"> 绑定域名并部署</li>
+    </ul>
+  </div>
+
+  <!-- ===== 收款码 ===== -->
+  <div class="admin-section">
+    <h2>💰 收款码配置</h2>
+    <div class="tip-card">
+      <h4>💡 怎么放收款码？</h4>
+      <p>1. 截图你的微信/支付宝收款码，保存为图片（如 wechat-qr.png）<br>
+         2. 把图片放到 <span class="file-path">images/</span> 文件夹<br>
+         3. 打开下面的文件，找到占位区域，替换图片路径</p>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">💚</div>
+      <div class="info">
+        <h4>微信赞赏码</h4>
+        <p>文件：<code>pages/donate.html</code></p>
+        <p>页面已嵌入 <code>微信收款码</code> 图片，如需更换可在 <code>pages/donate.html</code> 替换 <code>img/qrcodes/wechat-pay.png</code>。</p>
+        <p><code>&lt;img src="img/qrcodes/wechat-pay.png" alt="微信赞赏码" style="width:160px;height:160px;"&gt;</code></p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">💙</div>
+      <div class="info">
+        <h4>支付宝赞赏码</h4>
+        <p>文件：<code>pages/donate.html</code></p>
+        <p>页面已嵌入 <code>支付宝收款码</code> 图片，如需更换可在 <code>pages/donate.html</code> 替换 <code>img/qrcodes/alipay.jpg</code>。</p>
+      </div>
+    </div>
+
+    <h3>也可用第三方收款链接</h3>
+    <div class="tip-card">
+      <h4>💡 不想放二维码？用收款链接</h4>
+      <p>如果你有爱发卡、Stripe等支付平台，可以把打赏按钮改成：<br>
+         <code>&lt;a href="https://你的支付链接"&gt;打赏 5元&lt;/a&gt;</code><br>
+         这样用户点击直接跳转支付页面，体验更好。</p>
+    </div>
+  </div>
+
+  <!-- ===== 联系方式 ===== -->
+  <div class="admin-section">
+    <h2>📬 联系方式配置</h2>
+    <div class="admin-item">
+      <div class="icon">📧</div>
+      <div class="info">
+        <h4>邮箱地址</h4>
+        <p>当前联系邮箱已设置为 <code>1683303069@qq.com</code>。</p>
+        <p>涉及文件：<code>index.html</code> <code>pages/about.html</code> <code>pages/recommend.html</code> <code>pages/shop.html</code></p>
+        <p>如需修改邮箱，可在相关页面搜索 <code>1683303069@qq.com</code> 统一替换。</p>
+      </div>
+    </div>
+    <div class="admin-item">
+      <div class="icon">💬</div>
+      <div class="info">
+        <h4>微信号</h4>
+        <p>文件：<code>pages/about.html</code></p>
+        <p>页面当前联系方式已更新为 <code>QQ: 1683303069</code> 和 <code>抖音: 41131245469</code>。如需调整可直接编辑 <code>pages/about.html</code>。</p>
+      </div>
+    </div>
+    <div class="admin-item">
+      <div class="icon">📱</div>
+      <div class="info">
+        <h4>公众号/社媒</h4>
+        <p>文件：<code>pages/about.html</code></p>
+        <p>搜索 <code>AI效率站（同名）</code> 和 <code>小红书/知乎</code> 替换为你的真实账号</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 推广链接 ===== -->
+  <div class="admin-section">
+    <h2>🔗 推广链接配置</h2>
+    <div class="tip-card">
+      <h4>💡 推广链接怎么获取？</h4>
+      <p>1. <strong>流量卡</strong>：在运营商推广平台（如京东联盟、多多进宝）申请推广链接<br>
+         2. <strong>云服务</strong>：在Cloudflare/Vercel等平台申请affiliate链接<br>
+         3. <strong>AI工具</strong>：在各工具官网找affiliate/推广入口<br>
+         4. <strong>通用</strong>：用淘宝联盟、京东联盟等获取CPS链接</p>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">📶</div>
+      <div class="info">
+        <h4>流量卡推广链接</h4>
+        <p>文件：<code>pages/recommend.html</code></p>
+        <p>搜索 <code>立即办理</code>（共2个），替换 <code>href="#"</code> 为真实链接</p>
+        <p>当前状态：<code>href="#"</code>（占位）</p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">☁️</div>
+      <div class="info">
+        <h4>云服务推广链接</h4>
+        <p>文件：<code>pages/recommend.html</code></p>
+        <p>搜索 <code>前往注册</code>（共2个），替换链接</p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">🤖</div>
+      <div class="info">
+        <h4>AI工具推广链接</h4>
+        <p>文件：<code>pages/recommend.html</code></p>
+        <p>搜索 <code>前往使用</code>（共2个），替换链接</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 商品链接 ===== -->
+  <div class="admin-section">
+    <h2>🛒 商品购买链接配置</h2>
+    <div class="tip-card">
+      <h4>💡 推荐的收款方案（零预算）</h4>
+      <p><strong>方案A：表单收款（最简单）</strong><br>
+         用腾讯文档/金数据创建订单表单（含邮箱+付款截图字段），用户填完表单后你手动发货到邮箱。<br><br>
+         <strong>方案B：爱发卡/独角数卡（自动发货）</strong><br>
+         搭建一个自动发卡平台，用户付款后自动收到卡密/下载链接。需要一台服务器或用免费主机。<br><br>
+         <strong>方案C：小鹅通/知识星球（付费内容）</strong><br>
+         适合卖课程和专栏，平台帮你处理支付和交付。<br><br>
+         <strong>方案D：Stripe/PayPal（国际收款）</strong><br>
+         适合有海外用户的情况，需要申请商户账号。</p>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">📦</div>
+      <div class="info">
+        <h4>商品1：AI提示词模板包</h4>
+        <p>文件：<code>pages/shop.html</code>，搜索 <code>product1</code></p>
+        <p>找到模态框中的 <code>立即购买 · ¥9.9</code>，替换 <code>href="#"</code> 为支付链接或表单链接</p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">📊</div>
+      <div class="info">
+        <h4>商品2：Notion模板</h4>
+        <p>文件：<code>pages/shop.html</code>，搜索 <code>product2</code></p>
+        <p>同上方式替换购买链接</p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">🎬</div>
+      <div class="info">
+        <h4>商品3-5：视频教程/绘画模板/办公模板</h4>
+        <p>文件：<code>pages/shop.html</code>，搜索 <code>product3</code> <code>product4</code> <code>product5</code></p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">👑</div>
+      <div class="info">
+        <h4>商品6：VIP会员</h4>
+        <p>文件：<code>pages/shop.html</code>，搜索 <code>product6</code></p>
+        <p>VIP购买后需要加用户进群，建议链接指向微信客服或群二维码页面</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 首页数据 ===== -->
+  <div class="admin-section">
+    <h2>📊 首页数据配置</h2>
+    <div class="admin-item">
+      <div class="icon">🔢</div>
+      <div class="info">
+        <h4>统计数据</h4>
+        <p>文件：<code>index.html</code></p>
+        <p>搜索 <code>stat-num</code>，替换 <code>50+</code> <code>20+</code> <code>1000+</code> 为真实数据</p>
+        <p>建议：初期可以写小一点（如 10+、5+、100+），等数据好看再更新</p>
+      </div>
+    </div>
+
+    <div class="admin-item">
+      <div class="icon">📢</div>
+      <div class="info">
+        <h4>公告条内容</h4>
+        <p>文件：<code>index.html</code></p>
+        <p>搜索 <code>新上线</code>，修改公告文字和链接</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 致谢名单 ===== -->
+  <div class="admin-section">
+    <h2>❤️ 致谢名单配置</h2>
+    <div class="admin-item">
+      <div class="icon">📝</div>
+      <div class="info">
+        <h4>打赏致谢墙</h4>
+        <p>文件：<code>pages/donate.html</code></p>
+        <p>搜索 <code>thanks-item</code>，修改或添加感谢条目</p>
+        <p>每个条目格式：头像emoji + 名字 + 留言 + 金额</p>
+        <p>当前占位：小明同学、AI爱好者、副业小李、设计师阿杰</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 添加新内容指南 ===== -->
+  <div class="admin-section">
+    <h2>📝 添加新内容指南</h2>
+
+    <h3>添加新文章</h3>
+    <div class="admin-item">
+      <div class="icon">📄</div>
+      <div class="info">
+        <h4>步骤</h4>
+        <p>1. 复制 <code>articles/ai-knowledge.html</code>，改文件名（如 <code>ai-xxx.html</code>）<br>
+           2. 修改 &lt;title&gt;、og标签、&lt;h1&gt;标题、面包屑<br>
+           3. 替换 <code>.article-content</code> 中的正文<br>
+           4. 更新 <code>.toc</code> 目录（和正文h2/h3的id对应）<br>
+           5. 更新 <code>.related-grid</code> 相关推荐链接<br>
+           6. 在 <code>index.html</code> 首页添加新文章卡片</p>
+      </div>
+    </div>
+
+    <h3>添加新商品</h3>
+    <div class="admin-item">
+      <div class="icon">📦</div>
+      <div class="info">
+        <h4>步骤</h4>
+        <p>1. 在 <code>pages/shop.html</code> 复制一个现有商品卡片块<br>
+           2. 修改 <code>data-category</code> 分类标签<br>
+           3. 修改标题、描述、价格、emoji图标<br>
+           4. 复制对应的模态框，修改内容和购买链接<br>
+           5. 如需新分类，在筛选栏添加新的 <code>filter-btn</code></p>
+      </div>
+    </div>
+
+    <h3>添加新推荐</h3>
+    <div class="admin-item">
+      <div class="icon">🌟</div>
+      <div class="info">
+        <h4>步骤</h4>
+        <p>1. 在 <code>pages/recommend.html</code> 复制一个现有推荐卡片<br>
+           2. 修改标题、描述、标签、优缺点<br>
+           3. 替换推广链接（<code>href="#"</code> → 真实链接）<br>
+           4. 如需新分类，添加新的 <code>category-title</code></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 部署指南 ===== -->
+
+  <!-- ===== 邮件订阅配置 ===== -->
+  <div class="admin-section">
+    <h2>📧 邮件订阅配置（Mailchimp）</h2>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-md);">用户填邮箱后自动收到资源邮件，全自动运行，零维护。</p>
+
+    <h3>第一步：注册Mailchimp（免费）</h3>
+    <div class="admin-item">
+      <div class="icon">1️⃣</div>
+      <div class="info">
+        <h4>注册账号</h4>
+        <p>访问 <a href="https://mailchimp.com" target="_blank">mailchimp.com</a> → 点 Sign Up Free → 填写邮箱和密码<br>
+        免费版支持：500联系人 + 每月1000封邮件 + 自动化工作流</p>
+      </div>
+    </div>
+
+    <h3>第二步：创建Audience（受众）</h3>
+    <div class="admin-item">
+      <div class="icon">2️⃣</div>
+      <div class="info">
+        <h4>设置受众列表</h4>
+        <p>登录后 → Audience → All contacts → Create Audience<br>
+        Audience name: <code>AI效率站订阅者</code><br>
+        Default from email: 你的真实邮箱<br>
+        Default from name: <code>AI效率站</code></p>
+      </div>
+    </div>
+
+    <h3>第三步：创建Signup Form（注册表单）</h3>
+    <div class="admin-item">
+      <div class="icon">3️⃣</div>
+      <div class="info">
+        <h4>获取表单URL</h4>
+        <p>Audience → Signup forms → Form builder<br>
+        或者直接用 Embedded forms：<br>
+        Audience → Signup forms → Embedded forms<br>
+        复制表单中的 <code>action="https://xxx.usXX.list-manage.com/subscribe/post?u=XXXXX&amp;id=XXXXX"</code><br>
+        这个URL就是你需要填入网站的 <code>YOUR_MAILCHIMP_URL</code></p>
+      </div>
+    </div>
+
+    <h3>第四步：替换网站中的占位URL</h3>
+    <div class="admin-item">
+      <div class="icon">4️⃣</div>
+      <div class="info">
+        <h4>全局替换</h4>
+        <p>在编辑器中按 Ctrl+H → 搜索 <code>YOUR_MAILCHIMP_URL</code> → 替换为你的Mailchimp表单URL<br>
+        同时找到 <code>name="b_XXXXX"</code> 中的 <code>XXXXX</code> 替换为你的真实值（防机器人字段）<br>
+        涉及文件：index.html、3篇文章、shop.html（共5个文件）</p>
+      </div>
+    </div>
+
+    <h3>第五步：创建Welcome Email（欢迎邮件）</h3>
+    <div class="admin-item">
+      <div class="icon">5️⃣</div>
+      <div class="info">
+        <h4>设置自动化欢迎邮件</h4>
+        <p>Mailchimp → Automations → Create → Welcome new subscribers<br>
+        邮件内容模板：</p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin:8px 0;font-size:.85rem;">
+          <strong>主题：</strong>🎁 你的AI资源包已就绪！<br><br>
+          你好！感谢订阅AI效率站 ✨<br><br>
+          你承诺的资源包来了：<br>
+          👉 <a href="#">点击下载 100+AI提示词模板</a><br>
+          👉 <a href="#">点击下载 AI工具对比表</a><br>
+          👉 <a href="#">点击下载 副业入门指南</a><br><br>
+          后续我会不定期推送AI干货和实用工具，敬请期待！<br><br>
+          —— AI效率站
+        </div>
+        <p>资源文件建议用百度网盘/Google Drive分享链接。</p>
+      </div>
+    </div>
+
+    <h3>第六步：创建Automation（自动化推送）</h3>
+    <div class="admin-item">
+      <div class="icon">6️⃣</div>
+      <div class="info">
+        <h4>新文章自动推送（可选）</h4>
+        <p>Mailchimp → Automations → Create → 自定义<br>
+        触发条件：当Audience有新联系人时 → 发送最新文章摘要<br>
+        或者：定期（每周/每月）发送Newsletter汇总</p>
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <h4>💡 替代方案：Resend（更技术向）</h4>
+      <p>如果你熟悉API调用，可以用 <a href="https://resend.com" target="_blank">Resend</a>（免费3000封/月）。<br>
+         需要配合Cloudflare Workers做后端API，但自定义程度更高。<br>
+         适合想完全控制邮件内容和发送逻辑的用户。</p>
+    </div>
+
+    <div class="warn-card">
+      <h4 style="color:#92400e;margin-bottom:var(--space-xs);">⚠️ 注意事项</h4>
+      <p style="font-size:.88rem;color:#92400e;margin:0;">
+        1. Mailchimp免费版有品牌Logo在邮件底部（可接受）<br>
+        2. 确保邮件内容不被判定为垃圾邮件（避免过多营销词汇）<br>
+        3. 资源下载链接建议用网盘分享，不要直接附件（避免被拦截）<br>
+        4. 首次发送前用自己的邮箱测试一遍
+      </p>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <h2>🚀 部署上线指南</h2>
+    <div class="tip-card">
+      <h4>💡 推荐方案：Cloudflare Pages（免费+国内可访问）</h4>
+      <p>1. 注册 <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a><br>
+         2. 创建项目，上传整个网站文件夹<br>
+         3. 绑定你的域名（在Cloudflare DNS设置）<br>
+         4. 自动HTTPS，全球CDN，免费额度足够<br>
+         5. 后续更新：直接上传新文件即可</p>
+    </div>
+
+    <div class="tip-card">
+      <h4>💡 备选方案：GitHub Pages</h4>
+      <p>1. 创建GitHub仓库，上传所有文件<br>
+         2. 在 Settings → Pages 启用<br>
+         3. 绑定自定义域名<br>
+         4. 每次 git push 自动更新</p>
+    </div>
+
+    <div class="warn-card">
+      <h4 style="color:#92400e;margin-bottom:var(--space-xs);">⚠️ 部署前检查</h4>
+      <p style="font-size:.88rem;color:#92400e;margin:0;">确保所有占位内容（邮箱、链接、收款码）已替换为真实内容。可以用本页面的检查清单逐项确认。</p>
+    </div>
+  </div>
+
+  <!-- ===== 常用搜索关键词 ===== -->
+  <div class="admin-section">
+    <h2>🔍 常用搜索替换关键词</h2>
+    <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:var(--space-md);">在编辑器中按 Ctrl+H 打开搜索替换，用以下关键词快速定位需要修改的内容：</p>
+    <table class="compare-table">
+      <tr><th>搜索关键词</th><th>含义</th><th>所在文件</th></tr>
+      <tr><td><code>1683303069@qq.com</code></td><td>已替换为真实邮箱</td><td>3个文件</td></tr>
+      <tr><td><code>href="#"</code></td><td>占位链接</td><td>所有页面</td></tr>
+      <tr><td><code>替换为</code></td><td>收款码占位</td><td>donate.html</td></tr>
+      <tr><td><code>小明同学</code></td><td>占位致谢</td><td>donate.html</td></tr>
+      <tr><td><code>stat-num</code></td><td>统计数据</td><td>index.html</td></tr>
+      <tr><td><code>data-filter</code></td><td>商店筛选器</td><td>shop.html</td></tr>
+      <tr><td><code>data-category</code></td><td>商品分类标签</td><td>shop.html</td></tr>
+      <tr><td><code>推广链接</code></td><td>佣金标注</td><td>recommend.html</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 管理面板（仅供站长使用，建议部署时删除此页面或设为私密）</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// 勾选框本地保存
+document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function(cb, i) {
+  var key = 'admin_check_' + i;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', function() {
+    localStorage.setItem(key, cb.checked);
+  });
+});
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notion个人管理系统模板 - 完整搭建教程</title>
+<style>
+:root{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-tertiary:#334155;--text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--accent-light:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--border:#334155;--gradient-1:linear-gradient(135deg,#3b82f6,#8b5cf6);--gradient-2:linear-gradient(135deg,#22c55e,#3b82f6);--shadow:0 4px 24px rgba(0,0,0,0.3);--radius:12px}*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.8;font-size:16px}.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);padding:80px 20px 60px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}.hero::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(59,130,246,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(139,92,246,0.06) 0%,transparent 50%);animation:float 20s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(2deg)}}.hero-content{position:relative;z-index:1;max-width:800px;margin:0 auto}.hero h1{font-size:2.5em;font-weight:800;background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;letter-spacing:-1px}.hero .subtitle{font-size:1.2em;color:var(--text-secondary);margin-bottom:30px}.hero-badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:20px;font-size:0.85em;color:var(--text-secondary)}.system-overview{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:900px;margin:30px auto 0}.overview-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:20px 12px;text-align:center;transition:all 0.3s;cursor:pointer}.overview-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 30px rgba(59,130,246,0.15)}.overview-card .icon{font-size:2em;margin-bottom:8px}.overview-card .label{font-size:0.85em;color:var(--text-secondary);font-weight:600}.nav-bar{position:sticky;top:0;z-index:100;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px}.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;padding:12px 0}.nav-inner::-webkit-scrollbar{display:none}.nav-link{flex-shrink:0;padding:8px 18px;border-radius:8px;font-size:0.9em;color:var(--text-secondary);text-decoration:none;transition:all 0.2s;white-space:nowrap;font-weight:500}.nav-link:hover,.nav-link.active{background:var(--bg-tertiary);color:var(--text-primary)}.container{max-width:1100px;margin:0 auto;padding:40px 20px}.toc{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:30px;margin-bottom:50px}.toc h2{font-size:1.3em;margin-bottom:20px;display:flex;align-items:center;gap:10px}.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}.toc-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-secondary);transition:all 0.2s;font-size:0.95em}.toc-item:hover{background:var(--bg-tertiary);color:var(--text-primary)}.toc-item .num{width:28px;height:28px;border-radius:8px;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;font-size:0.8em;font-weight:700;color:var(--accent);flex-shrink:0}.module{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:40px;overflow:hidden}.module-header{padding:28px 30px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid transparent;transition:all 0.3s;user-select:none}.module-header:hover{background:rgba(59,130,246,0.05)}.module-header.open{border-bottom-color:var(--border)}.module-title-area{display:flex;align-items:center;gap:16px}.module-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6em;flex-shrink:0}.module-title-area h2{font-size:1.4em;font-weight:700}.module-title-area .desc{font-size:0.9em;color:var(--text-secondary);margin-top:2px}.toggle-icon{width:36px;height:36px;border-radius:8px;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;transition:transform 0.3s;font-size:0.9em;color:var(--text-secondary);flex-shrink:0}.module-header.open .toggle-icon{transform:rotate(180deg)}.module-body{max-height:0;overflow:hidden;transition:max-height 0.5s ease}.module-body.open{max-height:999999px}.module-content{padding:30px}.subsection{margin-bottom:35px}.subsection:last-child{margin-bottom:0}.subsection h3{font-size:1.15em;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px}.subsection p{margin-bottom:12px;color:var(--text-secondary)}.steps{counter-reset:step-counter}.step{position:relative;padding:20px 20px 20px 60px;margin-bottom:16px;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;counter-increment:step-counter}.step::before{content:counter(step-counter);position:absolute;left:18px;top:20px;width:28px;height:28px;background:var(--gradient-1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8em;font-weight:700;color:white}.step-title{font-weight:700;margin-bottom:6px;font-size:1em}.step-desc{color:var(--text-secondary);font-size:0.95em}.step-tip{margin-top:10px;padding:10px 14px;background:rgba(59,130,246,0.1);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:0.9em;color:var(--accent-light)}.table-wrap{overflow-x:auto;margin:16px 0}table{width:100%;border-collapse:collapse;font-size:0.92em}th{background:var(--bg-tertiary);padding:12px 16px;text-align:left;font-weight:600;color:var(--text-primary);border:1px solid var(--border);white-space:nowrap}td{padding:10px 16px;border:1px solid var(--border);color:var(--text-secondary)}tr:nth-child(even){background:rgba(15,23,42,0.4)}.tag{display:inline-block;padding:2px 10px;border-radius:4px;font-size:0.82em;font-weight:600}.tag-text{background:rgba(59,130,246,0.15);color:#60a5fa}.tag-number{background:rgba(34,197,94,0.15);color:#4ade80}.tag-select{background:rgba(245,158,11,0.15);color:#fbbf24}.tag-date{background:rgba(168,85,247,0.15);color:#c084fc}.tag-formula{background:rgba(239,68,68,0.15);color:#f87171}.tag-relation{background:rgba(236,72,153,0.15);color:#f472b6}.tag-checkbox{background:rgba(20,184,166,0.15);color:#2dd4bf}.code-block{position:relative;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:14px 0;font-family:"Cascadia Code","Fira Code",monospace;font-size:0.9em;color:var(--text-secondary);overflow-x:auto;line-height:1.7}.copy-btn{position:absolute;top:10px;right:10px;padding:5px 12px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:6px;color:var(--text-secondary);font-size:0.8em;cursor:pointer;transition:all 0.2s}.copy-btn:hover{background:var(--accent);color:white;border-color:var(--accent)}.callout{padding:18px 20px;border-radius:10px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}.callout-icon{font-size:1.3em;flex-shrink:0;margin-top:2px}.callout-info{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2)}.callout-success{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2)}.callout-warning{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2)}.callout-text{font-size:0.95em;color:var(--text-secondary)}.visual-mock{background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0}.mock-titlebar{background:var(--bg-tertiary);padding:8px 16px;display:flex;align-items:center;gap:8px;font-size:0.85em;color:var(--text-muted)}.mock-dot{width:10px;height:10px;border-radius:50%}.mock-body{padding:20px}.mock-kanban{display:flex;gap:12px;overflow-x:auto}.mock-column{min-width:200px;flex:1;background:var(--bg-secondary);border-radius:8px;padding:12px}.mock-column-title{font-size:0.85em;font-weight:600;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}.mock-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px;font-size:0.85em;color:var(--text-secondary)}.progress-bar{background:var(--bg-tertiary);border-radius:6px;height:8px;overflow:hidden;margin:8px 0}.progress-fill{height:100%;border-radius:6px}.habit-cell{width:20px;height:20px;border-radius:4px;display:inline-block}.faq-item{background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden}.faq-q{padding:18px 24px;cursor:pointer;font-weight:600;display:flex;justify-content:space-between;align-items:center;transition:background 0.2s}.faq-q:hover{background:rgba(59,130,246,0.05)}.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}.faq-a.open{max-height:1000px}.faq-a-content{padding:0 24px 20px;color:var(--text-secondary);font-size:0.95em}.footer{text-align:center;padding:40px 20px;border-top:1px solid var(--border);color:var(--text-muted);font-size:0.9em}.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-primary);padding:12px 24px;border-radius:10px;font-size:0.9em;z-index:9999;opacity:0;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);pointer-events:none;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}kbd{display:inline-block;padding:2px 8px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:4px;font-size:0.85em;font-family:inherit;color:var(--text-secondary);box-shadow:0 1px 0 var(--border)}@media(max-width:768px){.hero h1{font-size:1.8em}.system-overview{grid-template-columns:repeat(3,1fr)}.module-header{padding:20px}.module-content{padding:20px}.toc-grid{grid-template-columns:1fr}.mock-kanban{flex-direction:column}.nav-link{padding:6px 12px;font-size:0.82em}.module-title-area h2{font-size:1.15em}.module-icon{width:40px;height:40px;font-size:1.3em}table{font-size:0.82em}th,td{padding:8px 10px}}@media(max-width:480px){.system-overview{grid-template-columns:repeat(2,1fr)}.hero{padding:50px 16px 40px}.container{padding:20px 12px}.step{padding:16px 16px 16px 50px}.step::before{left:12px;width:24px;height:24px;font-size:0.7em}}
+</style>
+</head>
+<body>
+<div class="hero"><div class="hero-content">
+<h1>📋 Notion 个人管理系统模板</h1>
+<p class="subtitle">从零搭建你的第二大脑 · 5大核心模块 · 小白也能轻松上手</p>
+<div class="hero-badges"><span class="badge">📖 完整教程</span><span class="badge">🎯 5大模块</span><span class="badge">⏱️ 约30分钟搭建</span><span class="badge">🆓 免费使用</span></div>
+<div class="system-overview" id="system-overview">
+<div class="overview-card" onclick="scrollToModule('module-goal')"><div class="icon">🎯</div><div class="label">目标管理</div></div>
+<div class="overview-card" onclick="scrollToModule('module-habit')"><div class="icon">✅</div><div class="label">习惯追踪</div></div>
+<div class="overview-card" onclick="scrollToModule('module-finance')"><div class="icon">💰</div><div class="label">财务记账</div></div>
+<div class="overview-card" onclick="scrollToModule('module-knowledge')"><div class="icon">📚</div><div class="label">知识库</div></div>
+<div class="overview-card" onclick="scrollToModule('module-review')"><div class="icon">📝</div><div class="label">周/月复盘</div></div>
+</div></div></div>
+<div class="nav-bar"><div class="nav-inner" id="nav-inner">
+<a class="nav-link active" href="#system-overview">全景图</a><a class="nav-link" href="#toc">目录</a>
+<a class="nav-link" href="#module-goal">🎯 目标管理</a><a class="nav-link" href="#module-habit">✅ 习惯追踪</a>
+<a class="nav-link" href="#module-finance">💰 财务记账</a><a class="nav-link" href="#module-knowledge">📚 知识库</a>
+<a class="nav-link" href="#module-review">📝 周/月复盘</a><a class="nav-link" href="#quickstart">🚀 快速入门</a>
+<a class="nav-link" href="#faq">❓ FAQ</a>
+</div></div>
+<div class="container">
+<div class="toc" id="toc"><h2>📑 目录导航</h2><div class="toc-grid">
+<a class="toc-item" href="#module-goal"><span class="num">1</span>目标管理模块 - 让梦想可量化</a>
+<a class="toc-item" href="#module-habit"><span class="num">2</span>习惯追踪模块 - 养成好习惯</a>
+<a class="toc-item" href="#module-finance"><span class="num">3</span>财务记账模块 - 掌控每一分钱</a>
+<a class="toc-item" href="#module-knowledge"><span class="num">4</span>知识库模块 - 打造第二大脑</a>
+<a class="toc-item" href="#module-review"><span class="num">5</span>周/月复盘模块 - 持续迭代成长</a>
+<a class="toc-item" href="#quickstart"><span class="num">🚀</span>Notion新手入门速查</a>
+<a class="toc-item" href="#shortcuts"><span class="num">⌨️</span>常用快捷键列表</a>
+<a class="toc-item" href="#import-guide"><span class="num">📥</span>模板导入方法说明</a>
+<a class="toc-item" href="#faq"><span class="num">❓</span>常见问题FAQ</a>
+</div></div><!-- MODULE 1: GOAL -->
+<div class="module" id="module-goal"><div class="module-header open" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(59,130,246,0.15)">🎯</div>
+<div><h2>模块一：目标管理</h2><div class="desc">用SMART原则设定目标，让梦想一步步变为现实</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body open"><div class="module-content">
+<div class="subsection"><h3>💡 为什么需要目标管理？</h3>
+<p>很多人年初立下雄心壮志，年末却发现什么都没完成。根本原因是：目标太模糊、没有分解、没有追踪。Notion的目标管理模块帮你把"我想变优秀"变成"本月读完3本书、跑步12次、存款增加2000元"这样具体可执行的行动。</p>
+<p>我们将使用SMART原则设定目标：Specific（具体的）、Measurable（可衡量的）、Achievable（可实现的）、Relevant（相关的）、Time-bound（有时限的）。比如"我要减肥"不符合SMART原则，但"在6月30日前通过每周跑步3次、每次30分钟，将体重从75kg降到70kg"就是完美的SMART目标。</p></div>
+<div class="subsection"><h3>🏗️ 数据库结构设计</h3>
+<p>创建"🎯 目标管理"数据库，选择"Table"视图：</p>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>目标名称</td><td><span class="tag tag-text">Title</span></td><td>标题字段</td><td>每月阅读2本专业书</td></tr>
+<tr><td>目标层级</td><td><span class="tag tag-select">Select</span></td><td>年度/季度/月度</td><td>月度目标</td></tr>
+<tr><td>目标分类</td><td><span class="tag tag-select">Multi-select</span></td><td>职业/健康/学习/财务/人际</td><td>学习</td></tr>
+<tr><td>具体描述</td><td><span class="tag tag-text">Text</span></td><td>用SMART原则描述</td><td>6月读完《深入理解计算机系统》</td></tr>
+<tr><td>开始日期</td><td><span class="tag tag-date">Date</span></td><td>开始执行日期</td><td>2026-06-01</td></tr>
+<tr><td>截止日期</td><td><span class="tag tag-date">Date</span></td><td>截止日期</td><td>2026-06-30</td></tr>
+<tr><td>当前状态</td><td><span class="tag tag-select">Select</span></td><td>未开始/进行中/已完成/已放弃</td><td>进行中</td></tr>
+<tr><td>完成进度</td><td><span class="tag tag-number">Number</span></td><td>0-100百分比</td><td>65</td></tr>
+<tr><td>关键结果</td><td><span class="tag tag-text">Text</span></td><td>2-3个可衡量的关键结果</td><td>KR1:读完2本书; KR2:输出笔记</td></tr>
+<tr><td>关联季度目标</td><td><span class="tag tag-relation">Relation</span></td><td>关联季度目标</td><td>Q2提升技术能力</td></tr>
+<tr><td>优先级</td><td><span class="tag tag-select">Select</span></td><td>P0/P1/P2/P3</td><td>P1重要</td></tr>
+<tr><td>复盘备注</td><td><span class="tag tag-text">Text</span></td><td>反思和调整</td><td>进度偏慢，需增加阅读时间</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🔧 详细搭建步骤</h3>
+<div class="steps">
+<div class="step"><div class="step-title">创建主页面</div><div class="step-desc">左侧栏点击"+ New Page"，输入"🎯 目标管理系统"。选🎯图标，正文输入"/database"，选择"Table - Full page"。</div><div class="step-tip">💡 按 <kbd>/</kbd> 调出命令菜单，输入"table"快速创建。</div></div>
+<div class="step"><div class="step-title">配置基础字段</div><div class="step-desc">重命名Name为"目标名称"，点"+"号按上表依次添加字段，选择正确类型。</div><div class="step-tip">💡 Select字段可一次输入多选项用逗号分隔，如"未开始, 进行中, 已完成, 已放弃"。</div></div>
+<div class="step"><div class="step-title">创建"看板视图"</div><div class="step-desc">点"+ Add a view"，命名"进度看板"，选Board类型。Group by选"当前状态"。拖拽卡片即可改变状态。</div></div>
+<div class="step"><div class="step-title">创建"日历视图"</div><div class="step-desc">添加Calendar视图"时间线"，日期字段选"截止日期"。查看目标时间分布。</div></div>
+<div class="step"><div class="step-title">设置筛选和排序</div><div class="step-desc">Filter："当前状态"≠"已完成"。排序：按"优先级"升序。默认只显示未完成的重要目标。</div></div>
+<div class="step"><div class="step-title">录入年度目标</div><div class="step-desc">录入3-5个年度目标，分解为季度关键结果，再分解为月度执行计划。用Relation字段链接形成层级结构。</div><div class="step-tip">💡 详情页中可添加To-do子任务清单，实现更细粒度管理。</div></div>
+</div></div>
+<div class="subsection"><h3>📊 视图效果示意</h3>
+<div class="visual-mock"><div class="mock-titlebar"><div class="mock-dot" style="background:#ef4444"></div><div class="mock-dot" style="background:#f59e0b"></div><div class="mock-dot" style="background:#22c55e"></div><span>🎯 目标管理 - 看板视图</span></div>
+<div class="mock-body"><div class="mock-kanban">
+<div class="mock-column"><div class="mock-column-title">📋 未开始 (2)</div>
+<div class="mock-card">🎯 考取PMP证书<br><span style="font-size:0.85em;color:var(--text-muted)">截止: 2026-09-30 | P1</span></div>
+<div class="mock-card">🎯 学习投资理财<br><span style="font-size:0.85em;color:var(--text-muted)">截止: 2026-12-31 | P2</span></div></div>
+<div class="mock-column"><div class="mock-column-title">🔄 进行中 (3)</div>
+<div class="mock-card">🎯 每月阅读2本书<br><span style="font-size:0.85em;color:var(--text-muted)">进度: 65% | P1</span><div class="progress-bar"><div class="progress-fill" style="width:65%;background:var(--gradient-1)"></div></div></div>
+<div class="mock-card">🎯 体重降到70kg<br><span style="font-size:0.85em;color:var(--text-muted)">进度: 40% | P0</span><div class="progress-bar"><div class="progress-fill" style="width:40%;background:var(--gradient-2)"></div></div></div>
+<div class="mock-card">🎯 存款增加3万<br><span style="font-size:0.85em;color:var(--text-muted)">进度: 55% | P1</span><div class="progress-bar"><div class="progress-fill" style="width:55%;background:linear-gradient(135deg,#f59e0b,#ef4444)"></div></div></div></div>
+<div class="mock-column"><div class="mock-column-title">✅ 已完成 (1)</div>
+<div class="mock-card" style="opacity:0.7">🎯 搭建个人博客<br><span style="font-size:0.85em;color:var(--success)">✓ 已完成 100%</span></div></div>
+</div></div></div></div>
+<div class="subsection"><h3>🎯 使用技巧</h3>
+<div class="callout callout-info"><div class="callout-icon">💡</div><div class="callout-text"><strong>每周五花10分钟更新进度</strong>，月底做全面复盘。<br><br><strong>目标数量控制在5个以内</strong>，用P0/P1/P2/P3优先级区分。<br><br><strong>善用"已放弃"状态</strong>：放弃不代表失败，是理性的选择。</div></div></div>
+</div></div></div>
+
+<!-- MODULE 2: HABIT -->
+<div class="module" id="module-habit"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(34,197,94,0.15)">✅</div>
+<div><h2>模块二：习惯追踪</h2><div class="desc">每日打卡，可视化你的坚持，让好习惯变成生活方式</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>💡 为什么需要习惯追踪？</h3>
+<p>一个新习惯需要21天初步形成、66天才能稳固。习惯追踪把每一次坚持记录下来，让你看到连续打卡天数在增长，形成正向激励循环。</p>
+<p>习惯分四大类：<strong>健康</strong>（运动、饮食、睡眠）、<strong>学习</strong>（阅读、课程）、<strong>工作</strong>（专注、复盘）、<strong>生活</strong>（整理、社交）。每类2-3个，总计不超过10个。</p></div>
+<div class="subsection"><h3>🏗️ 数据库结构设计</h3>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例</th></tr></thead><tbody>
+<tr><td>日期</td><td><span class="tag tag-date">Date</span></td><td>每天一条</td><td>2026-06-15</td></tr>
+<tr><td>🏃 运动30分钟</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>勾选=完成</td><td>☑️</td></tr>
+<tr><td>📖 阅读30分钟</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>每天阅读</td><td>☑️</td></tr>
+<tr><td>💧 喝8杯水</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>充足饮水</td><td>☐</td></tr>
+<tr><td>🧘 冥想10分钟</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>早晚各5分钟</td><td>☑️</td></tr>
+<tr><td>📝 写日记</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>睡前写3句话</td><td>☑️</td></tr>
+<tr><td>📱 屏幕&lt;2h</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>娱乐时间控制</td><td>☐</td></tr>
+<tr><td>🥗 健康饮食</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>不吃垃圾食品</td><td>☑️</td></tr>
+<tr><td>😴 23点前睡</td><td><span class="tag tag-checkbox">Checkbox</span></td><td>规律作息</td><td>☑️</td></tr>
+<tr><td>今日完成数</td><td><span class="tag tag-formula">Formula</span></td><td>自动统计</td><td>6/8</td></tr>
+<tr><td>完成率</td><td><span class="tag tag-formula">Formula</span></td><td>百分比</td><td>75%</td></tr>
+<tr><td>心情</td><td><span class="tag tag-select">Select</span></td><td>😊/😐/😢/🤩</td><td>😊开心</td></tr>
+<tr><td>备注</td><td><span class="tag tag-text">Text</span></td><td>当日感受</td><td>跑步状态不错</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🔧 详细搭建步骤</h3>
+<div class="steps">
+<div class="step"><div class="step-title">创建数据库</div><div class="step-desc">新建"✅ 习惯追踪"页面，Table数据库。重命名Name为"日期"，类型Date。</div></div>
+<div class="step"><div class="step-title">添加习惯打卡字段</div><div class="step-desc">逐一添加Checkbox字段，名前加emoji图标。先从3-5个核心习惯开始。</div></div>
+<div class="step"><div class="step-title">添加计算公式</div><div class="step-desc">Formula字段"今日完成数"：<br><code style="display:block;margin:8px 0;padding:10px;background:var(--bg-tertiary);border-radius:6px;font-size:0.85em">(prop("🏃 运动30分钟")?1:0)+(prop("📖 阅读30分钟")?1:0)+(prop("💧 喝8杯水")?1:0)+(prop("🧘 冥想10分钟")?1:0)+(prop("📝 写日记")?1:0)+(prop("📱 屏幕&lt;2h")?1:0)+(prop("🥗 健康饮食")?1:0)+(prop("😴 23点前睡")?1:0)</code></div></div>
+<div class="step"><div class="step-title">创建日历视图</div><div class="step-desc">Calendar视图"月度打卡日历"，一目了然看到打卡情况。</div></div>
+<div class="step"><div class="step-title">每天用模板新增</div><div class="step-desc">创建模板，日期当天，Checkbox全取消。每天早上新增，睡前更新。收藏到左侧栏形成"打卡触发"。</div></div>
+</div></div>
+<div class="subsection"><h3>📊 打卡效果示意</h3>
+<div class="visual-mock"><div class="mock-titlebar"><div class="mock-dot" style="background:#ef4444"></div><div class="mock-dot" style="background:#f59e0b"></div><div class="mock-dot" style="background:#22c55e"></div><span>✅ 6月打卡日历</span></div>
+<div class="mock-body">
+<p style="font-size:0.85em;color:var(--text-muted);margin-bottom:12px">本周连续打卡 5 天 🔥 | 本月完成率 78%</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+<span style="font-size:0.8em;color:var(--text-muted)">周一至日：</span>
+<span class="habit-cell" style="background:var(--success)"></span>
+<span class="habit-cell" style="background:var(--success)"></span>
+<span class="habit-cell" style="background:#16a34a"></span>
+<span class="habit-cell" style="background:var(--success)"></span>
+<span class="habit-cell" style="background:#16a34a"></span>
+<span class="habit-cell" style="background:var(--bg-tertiary)"></span>
+<span class="habit-cell" style="background:var(--bg-tertiary);border:1px dashed var(--text-muted)"></span>
+</div>
+<p style="font-size:0.82em;color:var(--text-muted)">🟢 颜色越深完成率越高 | ⬛ 今日/未来</p>
+</div></div></div>
+<div class="subsection"><h3>🎯 使用技巧</h3>
+<div class="callout callout-success"><div class="callout-icon">✅</div><div class="callout-text"><strong>2分钟规则</strong>：告诉自己"只做2分钟"，开始后往往会继续。<br><br><strong>连续打卡</strong>：绿色记录越多，"不想断链"心理越强。<br><br><strong>允许缺席</strong>："不连续缺席两天"比"一天不落"更现实。</div></div></div>
+</div></div></div><!-- MODULE 3: FINANCE -->
+<div class="module" id="module-finance"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(245,158,11,0.15)">💰</div>
+<div><h2>模块三：财务记账</h2><div class="desc">记录每一笔收支，自动生成月度报表，掌控你的财务状况</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>💡 为什么要在Notion记账？</h3>
+<p>记账App虽方便，但数据在别人手里，且功能臃肿。Notion记账优势：数据完全属于你、分类和报表可自定义、能和目标管理联动。核心是"流水账"数据库，通过不同视图呈现多维度财务数据。</p></div>
+<div class="subsection"><h3>🏗️ 数据库结构设计</h3>
+<p>创建"💰 财务记账"数据库：</p>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>记录名称</td><td><span class="tag tag-text">Title</span></td><td>简短描述</td><td>午餐 - 公司食堂</td></tr>
+<tr><td>类型</td><td><span class="tag tag-select">Select</span></td><td>收入/支出/转账</td><td>支出</td></tr>
+<tr><td>金额</td><td><span class="tag tag-number">Number</span></td><td>正数，人民币¥</td><td>25.00</td></tr>
+<tr><td>日期</td><td><span class="tag tag-date">Date</span></td><td>消费/收款日期</td><td>2026-06-15</td></tr>
+<tr><td>一级分类</td><td><span class="tag tag-select">Select</span></td><td>餐饮/交通/购物/住房/娱乐/医疗/教育/工资/副业</td><td>餐饮</td></tr>
+<tr><td>二级标签</td><td><span class="tag tag-select">Multi-select</span></td><td>早餐/午餐/晚餐/外卖/零食</td><td>午餐</td></tr>
+<tr><td>支付方式</td><td><span class="tag tag-select">Select</span></td><td>微信/支付宝/银行卡/现金/信用卡</td><td>微信</td></tr>
+<tr><td>是否必要</td><td><span class="tag tag-select">Select</span></td><td>必要/想要/浪费</td><td>必要</td></tr>
+<tr><td>关联预算</td><td><span class="tag tag-relation">Relation</span></td><td>关联月度预算数据库</td><td>6月餐饮预算</td></tr>
+<tr><td>备注</td><td><span class="tag tag-text">Text</span></td><td>补充说明</td><td>同事聚餐AA</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>📊 月度预算子数据库</h3>
+<p>同页面下再创建"📊 月度预算"数据库：</p>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>月份</td><td><span class="tag tag-text">Title</span></td><td>格式：2026年06月</td><td>2026年06月</td></tr>
+<tr><td>分类</td><td><span class="tag tag-select">Select</span></td><td>和记账一级分类一致</td><td>餐饮</td></tr>
+<tr><td>预算金额</td><td><span class="tag tag-number">Number</span></td><td>本月该分类上限</td><td>2000</td></tr>
+<tr><td>已消费</td><td><span class="tag tag-formula">Formula</span></td><td>通过Relation自动汇总</td><td>1580</td></tr>
+<tr><td>剩余预算</td><td><span class="tag tag-formula">Formula</span></td><td>=预算-已消费</td><td>420</td></tr>
+<tr><td>使用率</td><td><span class="tag tag-formula">Formula</span></td><td>=已消费/预算×100%</td><td>79%</td></tr>
+<tr><td>预警状态</td><td><span class="tag tag-formula">Formula</span></td><td>&lt;80%安全 / 80-100%警告 / &gt;100%超支</td><td>🟡 警告</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🔧 详细搭建步骤</h3>
+<div class="steps">
+<div class="step"><div class="step-title">创建主记账数据库</div><div class="step-desc">新建"💰 财务管理中心"页面，Table数据库。按上表逐一添加字段。金额字段Number格式设为带¥前缀。</div><div class="step-tip">💡 收入类用前缀"📈"（如📈工资），支出类用"📉"（如📉餐饮），筛选时一眼区分。</div></div>
+<div class="step"><div class="step-title">创建分类标签体系</div><div class="step-desc">一级分类：<strong>收入</strong>：📈工资、📈副业、📈理财收益、📈红包奖金、📈其他收入。<strong>支出</strong>：📉餐饮、📉交通、📉购物、📉住房、📉娱乐、📉医疗、📉教育、📉日用品、📉通讯、📉其他。二级标签更细化，如"餐饮"下有：早餐、午餐、晚餐、外卖、零食、饮料、聚餐。</div></div>
+<div class="step"><div class="step-title">创建多维度视图</div><div class="step-desc">Calendar视图"月度日历"——时间维度。Board视图"按分类看板"，Group by选"一级分类"——分类维度。Table视图"本月报表"，筛选日期=本月——详细数据。</div></div>
+<div class="step"><div class="step-title">搭建月度预算数据库</div><div class="step-desc">同页面创建"📊 月度预算"数据库，按上表添加字段。每月初设定各分类预算。通过Relation关联记账记录，实现自动汇总。</div><div class="step-tip">💡 关联设置：记账数据库添加Relation字段→关联到月度预算。每条记账自动关联对应预算。</div></div>
+<div class="step"><div class="step-title">开始记录</div><div class="step-desc">每次消费后花10秒新增记录：名称、类型、金额、日期、分类、支付方式。建议把Notion添加到手机桌面快捷方式。</div><div class="step-tip">💡 关键：每次消费后立刻记录！不要想着"晚上一起记"，10秒即时记录胜过10分钟回忆补录。</div></div>
+</div></div>
+<div class="subsection"><h3>📊 月度报表效果示意</h3>
+<div class="visual-mock"><div class="mock-titlebar"><div class="mock-dot" style="background:#ef4444"></div><div class="mock-dot" style="background:#f59e0b"></div><div class="mock-dot" style="background:#22c55e"></div><span>💰 2026年6月财务报表</span></div>
+<div class="mock-body">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+<div style="background:var(--bg-secondary);padding:14px;border-radius:8px;text-align:center"><div style="font-size:0.82em;color:var(--text-muted)">本月收入</div><div style="font-size:1.4em;font-weight:700;color:var(--success)">¥12,500</div></div>
+<div style="background:var(--bg-secondary);padding:14px;border-radius:8px;text-align:center"><div style="font-size:0.82em;color:var(--text-muted)">本月支出</div><div style="font-size:1.4em;font-weight:700;color:var(--danger)">¥8,350</div></div>
+<div style="background:var(--bg-secondary);padding:14px;border-radius:8px;text-align:center"><div style="font-size:0.82em;color:var(--text-muted)">本月结余</div><div style="font-size:1.4em;font-weight:700;color:var(--accent)">¥4,150</div></div>
+</div>
+<div style="font-size:0.85em">
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>📉 餐饮</span><span>¥1,580 / ¥2,000</span><span style="color:var(--success)">79%</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>📉 交通</span><span>¥420 / ¥500</span><span style="color:var(--success)">84%</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>📉 购物</span><span>¥1,200 / ¥1,000</span><span style="color:var(--danger)">120% ⚠️</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span>📉 住房</span><span>¥3,000 / ¥3,000</span><span style="color:var(--warning)">100%</span></div>
+<div style="display:flex;justify-content:space-between;padding:6px 0"><span>📉 其他</span><span>¥2,150 / ¥2,500</span><span style="color:var(--success)">86%</span></div>
+</div>
+</div></div></div>
+<div class="subsection"><h3>🎯 使用技巧</h3>
+<div class="callout callout-warning"><div class="callout-icon">💰</div><div class="callout-text"><strong>50/30/20法则</strong>：税后收入分配——50%必要支出、30%个人想要、20%储蓄投资。<br><br><strong>"是否必要"的价值</strong>：月底重点看"浪费"类支出，很多人每月10-20%属于浪费。<br><br><strong>定期对账</strong>：每周日花5分钟，对比Notion记录和微信/支付宝账单。</div></div></div>
+</div></div></div>
+
+<!-- MODULE 4: KNOWLEDGE -->
+<div class="module" id="module-knowledge"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(139,92,246,0.15)">📚</div>
+<div><h2>模块四：知识库</h2><div class="desc">构建你的第二大脑，让信息不再碎片化</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>💡 为什么需要知识库？</h3>
+<p>每天接触大量信息，99%看过就忘。知识库的核心：碎片信息系统化存储，建立索引和标签，需要时快速找到。设计"分类+标签"双维度检索——分类解决"在哪找"，标签解决"怎么关联"。</p></div>
+<div class="subsection"><h3>🏗️ 数据库结构设计</h3>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>笔记标题</td><td><span class="tag tag-text">Title</span></td><td>简洁明确的标题</td><td>番茄工作法完整指南</td></tr>
+<tr><td>一级分类</td><td><span class="tag tag-select">Select</span></td><td>技术/职场/思维模型/健康/理财/生活/兴趣</td><td>思维模型</td></tr>
+<tr><td>二级分类</td><td><span class="tag tag-select">Select</span></td><td>根据一级细化</td><td>时间管理</td></tr>
+<tr><td>标签</td><td><span class="tag tag-select">Multi-select</span></td><td>自由标签，跨分类关联</td><td>效率, 方法论, 专注力</td></tr>
+<tr><td>信息来源</td><td><span class="tag tag-select">Select</span></td><td>书籍/文章/视频/播客/课程/经验</td><td>书籍</td></tr>
+<tr><td>来源链接</td><td><span class="tag tag-text">URL</span></td><td>原文链接</td><td>https://...</td></tr>
+<tr><td>重要程度</td><td><span class="tag tag-select">Select</span></td><td>⭐核心/⭐⭐重要/⭐⭐⭐参考</td><td>⭐核心</td></tr>
+<tr><td>创建日期</td><td><span class="tag tag-date">Date</span></td><td>创建日期</td><td>2026-06-15</td></tr>
+<tr><td>最后复习</td><td><span class="tag tag-date">Date</span></td><td>最近复习日期</td><td>2026-06-18</td></tr>
+<tr><td>笔记状态</td><td><span class="tag tag-select">Select</span></td><td>📥待整理/📝已记录/✅已内化</td><td>📝已记录</td></tr>
+<tr><td>关键词摘要</td><td><span class="tag tag-text">Text</span></td><td>3-5个关键词</td><td>25分钟、专注、休息、4轮</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🔧 详细搭建步骤</h3>
+<div class="steps">
+<div class="step"><div class="step-title">创建知识库数据库</div><div class="step-desc">新建"📚 我的知识库"，Table数据库。信息来源选项：📖书籍、📰文章、🎬视频、🎙️播客、🎓课程、💼经验、🧠感悟。</div></div>
+<div class="step"><div class="step-title">设计分类体系</div><div class="step-desc">一级分类不超过7个：<strong>💻技术、💼职场、🧠思维模型、💪健康、💰理财、🏠生活、🎨兴趣</strong>。二级分类在一级下细化。不要追求完美，随笔记增多再调整。</div><div class="step-tip">💡 分类是为了找，不是为了分。纠结时选搜索时最可能想到的那个。</div></div>
+<div class="step"><div class="step-title">创建笔记模板</div><div class="step-desc">在数据库中创建"标准笔记模板"，预设结构：</div>
+<div class="code-block"><button type="button" class="copy-btn" onclick="copyText(this)">复制</button><strong>📝 笔记标题</strong><br><br><strong>## 核心观点</strong><br>用1-3句话总结核心内容<br><br><strong>## 详细内容</strong><br>具体知识点、方法论、案例<br><br><strong>## 我的思考</strong><br>对我有什么启发？可以怎么应用？<br><br><strong>## 行动项</strong><br>- [ ] 基于此打算做什么？<br>- [ ] 需要进一步学习什么？<br><br><strong>## 相关联结</strong><br>和哪些已有笔记有关联？</div></div>
+<div class="step"><div class="step-title">创建多视图浏览</div><div class="step-desc">Board视图"按分类浏览"——按一级分类分列。Gallery视图"卡片浏览"——卡片墙形式，适合浏览回顾。</div></div>
+<div class="step"><div class="step-title">设置快速检索</div><div class="step-desc">添加筛选预设：① "⭐核心笔记"：重要程度=⭐核心。② "📥待整理"：状态=待整理。③ "📚本月新增"：创建日期=本月。</div></div>
+<div class="step"><div class="step-title">开始积累</div><div class="step-desc">遇到值得记录的内容→选"标准笔记模板"→填写标题、分类、标签、来源→记录核心观点和个人思考→标记状态。初期每天至少1条。</div><div class="step-tip">💡 知识库不是书签夹。不要只复制粘贴，要用自己的话重新表述——"翻译"过程就是内化过程。</div></div>
+</div></div>
+<div class="subsection"><h3>🎯 使用技巧</h3>
+<div class="callout callout-info"><div class="callout-icon">💡</div><div class="callout-text"><strong>费曼学习法</strong>：用最简单的语言解释知识点，像教给完全不懂的人。解释不清说明没真正理解。<br><br><strong>定期复习</strong>：每周花30分钟复习旧笔记，只看⭐核心和⭐⭐重要的。更新"最后复习"日期。<br><br><strong>知识关联</strong>：新笔记和已有笔记有联系时互相链接，形成知识网络。</div></div></div>
+</div></div></div><!-- MODULE 5: REVIEW -->
+<div class="module" id="module-review"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(236,72,153,0.15)">📝</div>
+<div><h2>模块五：周/月复盘</h2><div class="desc">定期回顾总结，让经验变成成长的阶梯</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>💡 为什么要做复盘？</h3>
+<p>很多人"很努力"却"没进步"，根本原因是缺少复盘。没有复盘只是重复，不是成长。复盘的本质：回顾过去→分析原因→提炼经验→指导未来。建立"周复盘+月复盘"两个节奏，周复盘轻量快速（15分钟），月复盘深度全面（30-45分钟）。</p></div>
+<div class="subsection"><h3>🏗️ 周复盘数据库结构</h3>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>周次</td><td><span class="tag tag-text">Title</span></td><td>格式：2026-W25</td><td>2026-W25</td></tr>
+<tr><td>日期范围</td><td><span class="tag tag-date">Date</span></td><td>本周起止日期</td><td>06/15 - 06/21</td></tr>
+<tr><td>本周亮点</td><td><span class="tag tag-text">Text</span></td><td>做得好的3件事</td><td>完成项目提案、连续跑步5天</td></tr>
+<tr><td>本周不足</td><td><span class="tag tag-text">Text</span></td><td>需改进的2-3件事</td><td>刷手机时间过长</td></tr>
+<tr><td>目标进度更新</td><td><span class="tag tag-text">Text</span></td><td>各目标本周进展</td><td>阅读: 第2本书读了60%</td></tr>
+<tr><td>习惯完成率</td><td><span class="tag tag-number">Number</span></td><td>本周平均完成率</td><td>82</td></tr>
+<tr><td>本周支出</td><td><span class="tag tag-number">Number</span></td><td>本周总支出</td><td>1850</td></tr>
+<tr><td>下周计划</td><td><span class="tag tag-text">Text</span></td><td>下周最重要的3件事</td><td>完成原型、读完第2本书</td></tr>
+<tr><td>整体评分</td><td><span class="tag tag-select">Select</span></td><td>⭐到⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>本周感悟</td><td><span class="tag tag-text">Text</span></td><td>一句话总结</td><td>坚持比完美更重要</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🏗️ 月复盘数据库结构</h3>
+<div class="table-wrap"><table><thead><tr><th>字段名称</th><th>字段类型</th><th>说明</th><th>示例值</th></tr></thead><tbody>
+<tr><td>月份</td><td><span class="tag tag-text">Title</span></td><td>格式：2026年06月</td><td>2026年06月</td></tr>
+<tr><td>目标完成率</td><td><span class="tag tag-number">Number</span></td><td>本月目标完成百分比</td><td>70</td></tr>
+<tr><td>习惯坚持率</td><td><span class="tag tag-number">Number</span></td><td>习惯打卡平均完成率</td><td>78</td></tr>
+<tr><td>本月收入</td><td><span class="tag tag-number">Number</span></td><td>从财务模块汇总</td><td>12500</td></tr>
+<tr><td>本月支出</td><td><span class="tag tag-number">Number</span></td><td>从财务模块汇总</td><td>8350</td></tr>
+<tr><td>储蓄率</td><td><span class="tag tag-formula">Formula</span></td><td>=(收入-支出)/收入×100%</td><td>33%</td></tr>
+<tr><td>新增笔记数</td><td><span class="tag tag-number">Number</span></td><td>本月新增知识库条目</td><td>15</td></tr>
+<tr><td>最大成就</td><td><span class="tag tag-text">Text</span></td><td>本月最骄傲的事</td><td>完成项目上线</td></tr>
+<tr><td>最大教训</td><td><span class="tag tag-text">Text</span></td><td>最深刻的教训</td><td>熬夜加班效率反而更低</td></tr>
+<tr><td>下月重点</td><td><span class="tag tag-text">Text</span></td><td>下月最聚焦的3个方向</td><td>代码质量、运动、投资学习</td></tr>
+<tr><td>整体评分</td><td><span class="tag tag-select">Select</span></td><td>⭐到⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>🔧 详细搭建步骤</h3>
+<div class="steps">
+<div class="step"><div class="step-title">创建周复盘数据库</div><div class="step-desc">新建"📝 复盘中心"页面，先创建"📋 周复盘"Table数据库。按上表添加字段。</div></div>
+<div class="step"><div class="step-title">设计周复盘模板</div><div class="step-desc">在数据库中创建模板：</div>
+<div class="code-block"><button type="button" class="copy-btn" onclick="copyText(this)">复制</button><strong>📋 周复盘</strong><br><br><strong>## 🌟 本周亮点 TOP3</strong><br>1. <br>2. <br>3. <br><br><strong>## ⚠️ 本周不足</strong><br>1. 问题：___ 原因：___ 改进：___<br>2. 问题：___ 原因：___ 改进：___<br><br><strong>## 🎯 目标进度</strong><br>- 目标1：___（进度___%）<br>- 目标2：___（进度___%）<br><br><strong>## ✅ 习惯完成率</strong><br>平均：___%  最佳：___  需加强：___<br><br><strong>## 💰 财务概况</strong><br>支出：¥___  主要项：___<br><br><strong>## 📅 下周计划 TOP3</strong><br>1. <br>2. <br>3. <br><br><strong>## 💭 一句话感悟</strong><br>___</div></div>
+<div class="step"><div class="step-title">创建月复盘数据库</div><div class="step-desc">同页面创建"📅 月复盘"数据库。月复盘模板包含：① 本月总览、② 目标回顾、③ 习惯分析、④ 财务总结、⑤ 知识积累、⑥ 人际关系、⑦ 情绪健康、⑧ 下月规划。</div></div>
+<div class="step"><div class="step-title">设置日历提醒</div><div class="step-desc">为周复盘添加Calendar视图，日期字段选"日期范围"。建议固定时间：每周日晚8点做周复盘，每月最后一天做月复盘。</div></div>
+<div class="step"><div class="step-title">建立模块间数据关联</div><div class="step-desc">在复盘中添加Relation字段，分别关联：目标管理（查看进度）、习惯追踪（查看完成率）、财务记账（查看收支）。复盘时直接点开关联数据。</div><div class="step-tip">💡 复盘核心不是"记录"而是"改进"。每次一定要写清"问题→原因→改进方案"三步。</div></div>
+</div></div>
+<div class="subsection"><h3>🎯 使用技巧</h3>
+<div class="callout callout-success"><div class="callout-icon">✅</div><div class="callout-text"><strong>KISS原则</strong>：复盘不要写成长篇大论，用bullet point列出关键信息。超过500字说明在"描述"而非"分析"。<br><br><strong>黄金问题</strong>：① 最骄傲的事？② 最大的遗憾？③ 下周最重要的1件事？<br><br><strong>月度对比</strong>：每月复盘时翻看上月记录，对比"下月重点"和实际执行情况。</div></div></div>
+</div></div></div><!-- QUICKSTART -->
+<div class="module" id="quickstart"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(56,189,248,0.15)">🚀</div>
+<div><h2>Notion新手入门速查（10分钟上手）</h2><div class="desc">如果你是第一次使用Notion，先看这里</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>📝 第一步：注册与安装（2分钟）</h3>
+<div class="steps">
+<div class="step"><div class="step-title">注册Notion账号</div><div class="step-desc">浏览器访问 <strong>notion.so</strong>，点"Get Notion free"，用Google账号或邮箱注册。免费版完全够用。</div></div>
+<div class="step"><div class="step-title">下载客户端</div><div class="step-desc">建议同时安装：① 电脑端（Windows/Mac）——主要编辑场所；② 手机端——随时查看和快速记录。同一账号登录，数据自动同步。</div></div>
+</div></div>
+<div class="subsection"><h3>🧱 第二步：理解核心概念（3分钟）</h3>
+<div class="table-wrap"><table><thead><tr><th>概念</th><th>通俗解释</th><th>类比</th></tr></thead><tbody>
+<tr><td><strong>Page（页面）</strong></td><td>一个文档/笔记，可无限嵌套</td><td>文件夹里放子文件夹</td></tr>
+<tr><td><strong>Block（块）</strong></td><td>页面中每个内容单元</td><td>文字、图片、表格都是块</td></tr>
+<tr><td><strong>Database（数据库）</strong></td><td>结构化数据集合，多视图</td><td>像Excel但更强大</td></tr>
+<tr><td><strong>View（视图）</strong></td><td>同一数据的不同展示方式</td><td>表格/看板/日历/画廊</td></tr>
+<tr><td><strong>Property（属性）</strong></td><td>数据库中每一列的字段</td><td>Excel的列头</td></tr>
+<tr><td><strong>Template（模板）</strong></td><td>预设格式的内容模板</td><td>Word的模板</td></tr>
+</tbody></table></div></div>
+<div class="subsection"><h3>⚡ 第三步：必会操作（5分钟）</h3>
+<div class="steps">
+<div class="step"><div class="step-title">输入 / 调出命令菜单</div><div class="step-desc">任意位置输入 <kbd>/</kbd>，弹出命令菜单。这是Notion最核心的操作。输入 <kbd>/table</kbd> 创建表格，<kbd>/heading</kbd> 创建标题，<kbd>/todo</kbd> 创建待办。</div></div>
+<div class="step"><div class="step-title">拖拽排列内容</div><div class="step-desc">每个内容块左侧有"六个点"把手（悬停可见），点击可拖拽移动、复制、删除，也可改变块类型。</div></div>
+<div class="step"><div class="step-title">创建数据库</div><div class="step-desc">输入 <kbd>/database</kbd>，选择类型。推荐从Table开始。点"+"号添加列，点每行展开查看详情。</div></div>
+<div class="step"><div class="step-title">切换视图</div><div class="step-desc">数据库左上角显示当前视图名，点击切换或创建新视图。同一数据库可添加Table/Board/Calendar/Gallery/Timeline等视图。</div></div>
+<div class="step"><div class="step-title">收藏和整理</div><div class="step-desc">右键左侧栏页面→"Add to Favorites"收藏到顶部。建议把核心页面都收藏，方便快速访问。</div></div>
+</div></div>
+</div></div></div>
+
+<!-- SHORTCUTS -->
+<div class="module" id="shortcuts"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(20,184,166,0.15)">⌨️</div>
+<div><h2>常用快捷键列表</h2><div class="desc">掌握这些快捷键，操作效率翻倍</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="table-wrap"><table><thead><tr><th>操作</th><th>Windows</th><th>Mac</th></tr></thead><tbody>
+<tr><td>命令菜单</td><td><kbd>/</kbd></td><td><kbd>/</kbd></td></tr>
+<tr><td>新建页面</td><td><kbd>Ctrl</kbd>+<kbd>N</kbd></td><td><kbd>Cmd</kbd>+<kbd>N</kbd></td></tr>
+<tr><td>搜索</td><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td><kbd>Cmd</kbd>+<kbd>P</kbd></td></tr>
+<tr><td>全局搜索</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td><td><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td></tr>
+<tr><td>打开/关闭侧边栏</td><td><kbd>Ctrl</kbd>+<kbd>\</kbd></td><td><kbd>Cmd</kbd>+<kbd>\</kbd></td></tr>
+<tr><td>撤销</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td><kbd>Cmd</kbd>+<kbd>Z</kbd></td></tr>
+<tr><td>加粗</td><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td><td><kbd>Cmd</kbd>+<kbd>B</kbd></td></tr>
+<tr><td>斜体</td><td><kbd>Ctrl</kbd>+<kbd>I</kbd></td><td><kbd>Cmd</kbd>+<kbd>I</kbd></td></tr>
+<tr><td>行内代码</td><td><kbd>Ctrl</kbd>+<kbd>E</kbd></td><td><kbd>Cmd</kbd>+<kbd>E</kbd></td></tr>
+<tr><td>添加链接</td><td><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td><kbd>Cmd</kbd>+<kbd>K</kbd></td></tr>
+<tr><td>创建待办</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>2</kbd></td><td><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>2</kbd></td></tr>
+<tr><td>创建标题1</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd></td><td><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd></td></tr>
+<tr><td>创建标题2</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>3</kbd></td><td><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>3</kbd></td></tr>
+<tr><td>删除当前行</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Delete</kbd></td><td><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Delete</kbd></td></tr>
+</tbody></table></div>
+<div class="callout callout-info"><div class="callout-icon">💡</div><div class="callout-text">按 <kbd>Ctrl</kbd>+<kbd>/</kbd> 可调出完整快捷键列表。新手先记5个：<kbd>/</kbd>（命令菜单）、<kbd>Ctrl+P</kbd>（搜索）、<kbd>Ctrl+N</kbd>（新建）、<kbd>Ctrl+B</kbd>（加粗）、<kbd>Ctrl+K</kbd>（链接）。</div></div>
+</div></div></div>
+
+<!-- IMPORT GUIDE -->
+<div class="module" id="import-guide"><div class="module-header" onclick="toggleModule(this)">
+<div class="module-title-area"><div class="module-icon" style="background:rgba(168,85,247,0.15)">📥</div>
+<div><h2>模板导入方法说明</h2><div class="desc">如何将模板复制到你的Notion中</div></div></div>
+<div class="toggle-icon">▼</div></div>
+<div class="module-body"><div class="module-content">
+<div class="subsection"><h3>📥 方法一：手动搭建（推荐）</h3>
+<p>按本教程一步步手动创建。虽需30-60分钟，但这是最好的学习方式——你完全理解每个字段的作用，后续可灵活调整。</p>
+<div class="callout callout-success"><div class="callout-icon">✅</div><div class="callout-text">强烈推荐手动搭建！边学边做，完成后你就真正掌握了Notion数据库的核心用法。</div></div></div>
+<div class="subsection"><h3>📥 方法二：Duplicate功能</h3>
+<div class="steps">
+<div class="step"><div class="step-title">获取模板链接</div><div class="step-desc">如果作者提供了Notion模板公开链接，在浏览器中打开。</div></div>
+<div class="step"><div class="step-title">点击"Duplicate"</div><div class="step-desc">页面右上角"Duplicate"按钮，选择Workspace。模板会完整复制到你的Notion中。</div></div>
+<div class="step"><div class="step-title">根据实际调整</div><div class="step-desc">复制后：① 修改分类为你的分类；② 调整预算金额；③ 删减或增加习惯项目；④ 录入你的真实目标。</div></div>
+</div></div>
+<div class="subsection"><h3>📥 方法三：导入CSV/Markdown</h3>
+<div class="steps">
+<div class="step"><div class="step-title">CSV导入数据库</div><div class="step-desc">Notion侧边栏"Import"→"CSV"，选择文件。Notion自动创建数据库并匹配字段。导入后检查字段类型是否正确。</div></div>
+<div class="step"><div class="step-title">Markdown导入笔记</div><div class="step-desc">"Import"→"Markdown"，选择文件或文件夹。Notion保留Markdown格式。</div></div>
+</div></div>
+</div></div></div>
+
+<!-- FAQ -->
+<div id="faq" style="margin-bottom:40px"><h2 style="font-size:1.4em;margin-bottom:20px;display:flex;align-items:center;gap:10px">❓ 常见问题FAQ</h2>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Notion免费版够用吗？需要付费吗？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">个人使用完全够用！免费版限制：单文件5MB、页面历史7天、协作人数限制。本教程所有功能免费版均可正常使用。如果需要更大存储或更长历史，考虑Plus计划（$8/月），但建议先用免费版确认会长期使用再付费。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Notion在国内访问速度慢怎么办？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">① 使用桌面客户端而非网页版，缓存机制改善体验；② 确保网络环境稳定；③ 如果太慢可考虑Obsidian（纯本地），但功能不如Notion；④ Notion持续优化中国区速度。文字编辑体验可接受，主要是视图切换和大文件加载有延迟。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>5个模块太多，应该先搭建哪个？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">按优先级逐步搭建：① <strong>第1周</strong>：习惯追踪——最简单，频率最高，快速熟悉Notion；② <strong>第2周</strong>：财务记账——开始记录收支；③ <strong>第3周</strong>：目标管理——设定并追踪目标；④ <strong>第4周</strong>：知识库和复盘。每个模块先用2周确认能坚持，再搭建下一个。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>数据安全吗？Notion会丢失数据吗？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">Notion使用AWS云服务，有完善备份，数据丢失概率极低。建议：① 定期导出备份（Settings→Export）；② 导出为Markdown/CSV保存到本地；③ 财务数据同时在Excel保留备份。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>手机上可以使用Notion记账吗？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">完全可以！手机App支持所有核心功能。记账：打开App→进入数据库→点"+"新增→填写金额和分类。建议放手机首屏最方便位置。小技巧：手机上只显示4个关键字段（名称/金额/类型/分类），隐藏不常用字段减少拥挤。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>如何在不同数据库之间建立关联？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">① 在数据库A中添加字段，类型选"Relation"；② 选择要关联的数据库B；③ 设置单向或双向关联（推荐双向）；④ 现在A的每条记录都可关联到B的特定记录。例如：周复盘关联目标管理，复盘时直接点击查看进度。</div></div></div>
+
+<div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>公式字段不会写怎么办？</span><span class="toggle-icon" style="width:28px;height:28px;font-size:0.8em">▼</span></div>
+<div class="faq-a"><div class="faq-a-content">① 直接复制本教程的公式粘贴即可（注意字段名一致）；② Notion公式编辑器有自动补全，输入"prop("后列出可用字段；③ Notion官方文档有所有函数说明；④ 先跳过公式，用手动输入代替，熟悉后再补充。</div></div></div>
+
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+<p style="margin-bottom:10px">📋 Notion个人管理系统模板 · 完整搭建教程</p>
+<p>本教程内容原创，供个人学习使用 · 数据安全由用户自行负责</p>
+<p style="margin-top:8px">Built with ❤️ for Notion beginners</p>
+</div>
+
+<div class="toast" id="toast"></div>
+<button type="button" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none;position:fixed;bottom:30px;right:30px;width:48px;height:48px;border-radius:50%;background:var(--accent);color:white;border:none;cursor:pointer;font-size:1.3em;z-index:999;box-shadow:0 4px 16px rgba(59,130,246,0.4);transition:all 0.3s">↑</button>
+
+<script>
+function toggleModule(header){const body=header.nextElementSibling;if(header.classList.contains('open')){header.classList.remove('open');body.classList.remove('open')}else{header.classList.add('open');body.classList.add('open')}}
+function scrollToModule(id){const el=document.getElementById(id);if(!el)return;const header=el.querySelector('.module-header');if(header&&!header.classList.contains('open'))toggleModule(header);setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'start'})},100)}
+function toggleFaq(q){const a=q.nextElementSibling;a.classList.toggle('open');const icon=q.querySelector('.toggle-icon');if(icon)icon.style.transform=a.classList.contains('open')?'rotate(180deg)':'rotate(0deg)'}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function copyText(btn){const block=btn.parentElement;const text=block.innerText.replace('复制','').trim();navigator.clipboard.writeText(text).then(()=>{showToast('✅ 已复制到剪贴板');btn.textContent='已复制!';setTimeout(()=>btn.textContent='复制',2000)}).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✅ 已复制到剪贴板');btn.textContent='已复制!';setTimeout(()=>btn.textContent='复制',2000)})}
+const sections=['system-overview','toc','module-goal','module-habit','module-finance','module-knowledge','module-review','quickstart','shortcuts','import-guide','faq'];
+const navLinks=document.querySelectorAll('.nav-link');
+function updateNav(){let current='';for(const id of sections){const el=document.getElementById(id);if(el){const rect=el.getBoundingClientRect();if(rect.top<=120)current=id}}navLinks.forEach(link=>{const href=link.getAttribute('href');if(href==='#'+current)link.classList.add('active');else link.classList.remove('active')})}
+window.addEventListener('scroll',updateNav,{passive:true});
+const backBtn=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{backBtn.style.display=window.scrollY>600?'block':'none'},{passive:true});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',(e)=>{e.preventDefault();const id=a.getAttribute('href').substring(1);const el=document.getElementById(id);if(el){const header=el.querySelector('.module-header');if(header&&!header.classList.contains('open'))toggleModule(header);setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'start'})},100)}})});
+</script>
+</body></html>

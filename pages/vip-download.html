@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP专属下载 - AI效率站</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .vip-hero {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      padding: var(--space-2xl) 0 var(--space-xl);
+      text-align: center;
+      color: #fff;
+    }
+    .vip-hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: var(--space-xs); color: #fff; }
+    .vip-hero p { opacity: .8; }
+
+    .vip-gate {
+      max-width: 420px;
+      margin: var(--space-2xl) auto;
+      text-align: center;
+    }
+    .vip-gate input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: var(--space-md);
+      transition: border-color .2s;
+    }
+    .vip-gate input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    .vip-error {
+      color: var(--danger);
+      font-size: .88rem;
+      margin-top: var(--space-sm);
+      display: none;
+    }
+
+    .vip-content { display: none; }
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .download-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      transition: box-shadow .2s;
+    }
+    .download-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .download-card h3 { font-size: 1.05rem; margin-bottom: var(--space-sm); }
+    .download-card p { font-size: .85rem; color: var(--text-secondary); margin-bottom: var(--space-md); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="../index.html" class="nav-logo">🤖 <span>AI效率站</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="../index.html">首页</a>
+      <a href="../pages/shop.html">商店</a>
+      <a href="../pages/recommend.html">推荐好物</a>
+      <a href="../pages/about.html">关于</a>
+    </div>
+    <button type="button" class="menu-toggle" aria-label="菜单" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<section class="vip-hero">
+  <div class="container">
+    <h1>👑 VIP专属下载</h1>
+    <p>输入VIP密码，解锁全部资源</p>
+  </div>
+</section>
+
+<!-- 密码验证区 -->
+<section class="section" id="vipGate">
+  <div class="container">
+    <div class="vip-gate">
+      <div style="font-size:3rem;margin-bottom:var(--space-md);">🔐</div>
+      <h2 style="margin-bottom:var(--space-sm);">请输入VIP密码</h2>
+      <p style="color:var(--text-secondary);font-size:.9rem;margin-bottom:var(--space-lg);">付款后发送到你邮箱的密码</p>
+      <input type="password" name="password" id="vipPassword" placeholder="输入密码..." onkeydown="if(event.key==='Enter')checkVip()">
+      <button type="button" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" onclick="checkVip()">🔓 验证并进入</button>
+      <div class="vip-error" id="vipError">❌ 密码错误，请检查后重试</div>
+      <p style="font-size:.82rem;color:var(--text-light);margin-top:var(--space-lg);">
+        还没有VIP？<a href="../pages/checkout.html?name=年度VIP会员&price=99&original=299&id=VIP001">立即开通 →</a><br>
+        忘记密码？发邮件到 1683303069@qq.com 找回
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- VIP内容区（验证后显示） -->
+<section class="section vip-content" id="vipContent">
+  <div class="container">
+    <div class="section-header">
+      <h2>📦 全部资源下载</h2>
+      <p>感谢VIP支持，以下资源全部免费下载</p>
+    </div>
+    <div class="download-grid">
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">📦</div>
+        <h3>AI提示词模板包（100+场景）</h3>
+        <p>覆盖办公、写作、剪辑、电商、客服等场景，复制即用。</p>
+        <a href="https://wwazk.lanzouq.com/ii4Ux3sf3vta" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">📊</div>
+        <h3>Notion个人管理系统模板</h3>
+        <p>目标管理+习惯追踪+财务记录+知识库，一套搞定。</p>
+        <a href="https://wwazk.lanzouq.com/i1lIZ3sf3w9g" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">🎬</div>
+        <h3>AI短视频全流程教程</h3>
+        <p>从选题到发布，用AI完成脚本、配音、剪辑，附素材包。</p>
+        <a href="https://wwazk.lanzouq.com/iyR183sf3wda" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">🎨</div>
+        <h3>AI绘画提示词宝典</h3>
+        <p>500+精选Midjourney/SD提示词，含参数说明和效果图。</p>
+        <a href="https://wwazk.lanzouq.com/id8H73sf3wkh" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">📧</div>
+        <h3>AI办公效率模板包</h3>
+        <p>周报/月报/年终总结/工作汇报/商务邮件/会议纪要模板。</p>
+        <a href="https://wwazk.lanzouq.com/ia5Ef3sf3wqd" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">✍️</div>
+        <h3>AI自媒体写作全攻略</h3>
+        <p>小红书/公众号/头条/短视频，50+爆款模板+AI提示词。</p>
+        <a href="https://wwazk.lanzouq.com/ia5Ef3sf3wqd" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">🛒</div>
+        <h3>AI电商文案模板</h3>
+        <p>标题+卖点+详情页+客服话术+直播脚本，电商卖家必备。</p>
+        <a href="https://wwazk.lanzouq.com/iIA6G3sf8z7c" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">📄</div>
+        <h3>AI求职简历+面试题库</h3>
+        <p>简历优化+STAR法则+50+面试题+薪资谈判，拿offer必备。</p>
+        <a href="https://wwazk.lanzouq.com/ihkxO3sf8zni" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">💰</div>
+        <h3>AI赚钱副业100招</h3>
+        <p>100个AI副业项目+30天启动计划+避坑指南。</p>
+        <a href="https://wwazk.lanzouq.com/iPj6g3sf904f" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">🤖</div>
+        <h3>AI工具效率手册</h3>
+        <p>20+主流AI工具对比+使用技巧+场景速查表。</p>
+        <a href="https://wwazk.lanzouq.com/iWBqz3sf90kb" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">⬇️ 下载</a>
+      </div>
+
+      <div class="download-card" style="border:2px dashed var(--primary);background:var(--primary-light);">
+        <div style="font-size:2rem;margin-bottom:var(--space-sm);">🎁</div>
+        <h3>持续更新中...</h3>
+        <p>后续新增的资源VIP会员均可免费下载，无需额外付费。</p>
+        <span class="card-tag tag-new">✨ 自动解锁</span>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:var(--space-xl);max-width:600px;margin-left:auto;margin-right:auto;">
+      <div class="disclosure">
+        <strong>📢 提示：</strong>下载链接仅限VIP会员个人使用，请勿分享给他人。如有技术问题请联系 1683303069@qq.com
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>🤖 AI效率站</h4>
+        <p style="font-size:.88rem;color:#94a3b8;">用AI提效，用内容变现。</p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <a href="../index.html">首页</a>
+        <a href="../pages/shop.html">商店</a>
+        <a href="../pages/recommend.html">推荐好物</a>
+      </div>
+      <div>
+        <h4>支持与合作</h4>
+        <a href="../pages/donate.html">打赏支持</a>
+        <a href="../pages/about.html">关于我</a>
+      </div>
+      <div>
+        <h4>法律条款</h4>
+        <a href="../pages/disclaimer.html">免责声明</a>
+        <a href="../pages/privacy.html">隐私政策</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AI效率站 · 保留所有权利</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+function checkVip() {
+  var pwd = document.getElementById('vipPassword').value.trim();
+  // VIP密码：ai2026vip （你可以随时修改这个密码）
+  if (pwd === 'ai2026vip') {
+    document.getElementById('vipGate').style.display = 'none';
+    document.getElementById('vipContent').style.display = 'block';
+    localStorage.setItem('vip_verified', '1');
+  } else {
+    var err = document.getElementById('vipError');
+    err.style.display = 'block';
+    setTimeout(function() { err.style.display = 'none'; }, 3000);
+  }
+}
+
+// 如果已验证过，直接显示内容
+if (localStorage.getItem('vip_verified') === '1') {
+  document.getElementById('vipGate').style.display = 'none';
+  document.getElementById('vipContent').style.display = 'block';
+}
+</script>
+
+<button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+</body>
+</html>
