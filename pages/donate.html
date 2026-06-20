@@ -110,6 +110,8 @@
       margin: var(--space-xl) auto 0;
       text-align: center;
     }
+  
+    .qr-box{cursor:pointer;transition:transform .2s}.qr-box:hover{transform:scale(1.03)}.qr-hint-d{font-size:.82rem;color:var(--text-light);text-align:center;margin-top:var(--space-md)}.qr-lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;padding:20px}.qr-lb.show{display:flex}.qr-lb img{max-width:90vw;max-height:70vh;border-radius:12px;background:#fff;padding:12px;box-shadow:0 8px 40px rgba(0,0,0,.3)}.qr-lb .lb-label{color:#fff;font-size:1.1rem;font-weight:600;margin-top:16px}.qr-lb .lb-hint{color:rgba(255,255,255,.7);font-size:.85rem;margin-top:8px}.qr-lb .lb-close{position:absolute;top:16px;right:20px;color:#fff;font-size:2rem;cursor:pointer;background:none;border:none}.qr-lb .lb-ok{margin-top:16px;padding:12px 32px;background:#fff;color:#1f2937;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer}
   </style>
 </head>
 <body>
@@ -150,20 +152,20 @@
       <div class="donate-grid">
         <div style="text-align:center;">
           <div class="qr-box">
-            <img src="../img/qrcodes/wechat-pay.png" alt="微信收款码">
+            <img src="../img/qrcodes/wechat-pay.png" alt="微信收款码（点击放大）" onclick="showQR('../img/qrcodes/wechat-pay.png','💚 微信收款码')" style="cursor:pointer">
           </div>
           <p style="font-size:.88rem;font-weight:600;color:var(--text-secondary);">💚 微信扫一扫</p>
         </div>
         <div style="text-align:center;">
           <div class="qr-box">
-            <img src="../img/qrcodes/alipay.jpg" alt="支付宝收款码">
+            <img src="../img/qrcodes/alipay.jpg" alt="支付宝收款码（点击放大）" onclick="showQR('../img/qrcodes/alipay.jpg','💙 支付宝收款码')" style="cursor:pointer">
           </div>
           <p style="font-size:.88rem;font-weight:600;color:var(--text-secondary);">💙 支付宝扫一扫</p>
         </div>
       </div>
 
       <!-- 提示 -->
-      <p style="font-size:.82rem;color:var(--text-light);margin-top:var(--space-md);">扫码后输入你想打赏的金额，备注昵称可上致谢墙</p>
+      <p style="font-size:.82rem;color:var(--text-light);margin-top:var(--space-md);">扫码后输入你想打赏的金额，备注昵称可上致谢墙<br><span class="qr-hint-d">点击收款码可放大，长按保存到相册后扫码</span></p>
     </div>
   </div>
 </section>
@@ -301,5 +303,7 @@
 </script>
 
 <button type="button" class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
+<div class="qr-lb" id="qrLB" onclick="hideQR()"><button type="button" class="lb-close" onclick="hideQR()">&times;</button><img id="qrLBImg" src="" alt="收款码"><div class="lb-label" id="qrLBLabel"></div><div class="lb-hint">长按图片保存到相册，然后打开微信/支付宝扫码</div><button type="button" class="lb-ok" onclick="event.stopPropagation();hideQR()">我知道了</button></div>
+<script>function showQR(s,l){event.stopPropagation();var b=document.getElementById('qrLB');document.getElementById('qrLBImg').src=s;document.getElementById('qrLBLabel').textContent=l;b.classList.add('show');document.body.style.overflow='hidden'}function hideQR(){document.getElementById('qrLB').classList.remove('show');document.body.style.overflow=''}document.addEventListener('keydown',function(e){if(e.key==='Escape')hideQR()})</script>
 </body>
 </html>
